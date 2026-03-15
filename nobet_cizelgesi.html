@@ -15,15 +15,16 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}
   body::before{content:'';position:fixed;inset:0;
-    background-image:linear-gradient(rgba(59,130,246,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.03) 1px,transparent 1px);
+    background-image:linear-gradient(rgba(59,130,246,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(59,130,246,.03) 1px,transparent 1px);
     background-size:40px 40px;pointer-events:none;z-index:0}
-  .app{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:24px}
+  .app{position:relative;z-index:1;max-width:1600px;margin:0 auto;padding:24px}
 
-  header{display:flex;align-items:center;gap:16px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
-  .logo{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+  header{display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+  .logo{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
   header h1{font-family:var(--mono);font-size:18px;font-weight:600}
   header p{font-size:12px;color:var(--text2);margin-top:2px}
-  .hbadge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent2);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);padding:4px 10px;border-radius:20px}
+  .hbadge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent2);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);padding:4px 10px;border-radius:20px;white-space:nowrap}
 
   .tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content}
   .tab{padding:8px 20px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
@@ -32,69 +33,97 @@
   .panel{display:none}.panel.active{display:block}
 
   .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
-  .ctitle{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent2);letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+  .ctitle{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent2);letter-spacing:1px;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:8px}
   .ctitle::before{content:'';width:3px;height:14px;background:var(--accent2);border-radius:2px}
 
   label{display:block;font-size:12px;color:var(--text2);font-weight:500;margin-bottom:6px;margin-top:14px}
-  input[type=text],input[type=date],input[type=number],select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;transition:border-color .2s}
+  input[type=text],input[type=date],input[type=number],select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;transition:border-color .2s}
   input:focus,select:focus{border-color:var(--accent)}
   select option{background:var(--bg)}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .setup-grid{display:grid;grid-template-columns:360px 1fr;gap:20px}
+  .setup-grid{display:grid;grid-template-columns:340px 1fr;gap:20px}
 
-  /* Bölge listesi */
-  .bolge-list{display:flex;flex-direction:column;gap:6px;max-height:300px;overflow-y:auto}
-  .bolge-item{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px}
-  .bno{font-family:var(--mono);font-size:11px;border-radius:4px;padding:2px 7px;flex-shrink:0;min-width:36px;text-align:center}
+  .bolge-list{display:flex;flex-direction:column;gap:5px;max-height:280px;overflow-y:auto}
+  .bolge-item{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 11px}
+  .bno{font-family:var(--mono);font-size:11px;border-radius:4px;padding:2px 6px;flex-shrink:0;min-width:34px;text-align:center}
   .bolge-item input{border:none;background:transparent;padding:0;font-size:13px;flex:1}
   .bolge-item input:focus{outline:none}
-  .bx{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;line-height:1;transition:color .2s}
+  .bx{background:none;border:none;color:var(--text3);cursor:pointer;font-size:17px;line-height:1;transition:color .2s}
   .bx:hover{color:var(--danger)}
-  .btn-add{background:none;border:1px dashed var(--border);border-radius:8px;color:var(--text2);font-family:var(--sans);font-size:13px;padding:8px;cursor:pointer;transition:all .2s;width:100%}
+  .btn-add{background:none;border:1px dashed var(--border);border-radius:8px;color:var(--text2);font-family:var(--sans);font-size:13px;padding:7px;cursor:pointer;transition:all .2s;width:100%}
   .btn-add:hover{border-color:var(--accent);color:var(--accent)}
 
-  /* Gün grupları */
-  .gun-groups{display:flex;flex-direction:column;gap:12px}
-  .gun-group{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px}
-  .gun-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-  .gun-label{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent2)}
-  .gun-count{font-size:11px;color:var(--text3)}
-  .gun-nb-list{display:flex;flex-direction:column;gap:5px;max-height:220px;overflow-y:auto}
-  .nb-item{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:6px 10px}
-  .nbno{font-family:var(--mono);font-size:11px;color:var(--text3);min-width:22px}
-  .nb-item input{border:none;background:transparent;padding:0;font-size:13px;flex:1}
+  .gun-groups{display:flex;flex-direction:column;gap:10px}
+  .gun-group{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px}
+  .gun-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .gun-label{font-family:var(--mono);font-size:12px;font-weight:600}
+  .gun-nb-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:5px;max-height:200px;overflow-y:auto}
+  .nb-item{display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:6px 10px}
+  .nbno{font-family:var(--mono);font-size:10px;color:var(--text3);min-width:20px}
+  .nb-item input{border:none;background:transparent;padding:0;font-size:12px;flex:1;min-width:0}
   .nb-item input:focus{outline:none}
 
-  /* Butonlar */
-  .btn{padding:10px 20px;border-radius:8px;border:none;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+  .btn{padding:9px 18px;border-radius:8px;border:none;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px}
   .btn-p{background:var(--accent);color:white}.btn-p:hover{background:#2563eb}
   .btn-o{background:transparent;border:1px solid var(--border);color:var(--text2)}.btn-o:hover{border-color:var(--accent);color:var(--accent)}
-  .btn-sm{padding:7px 14px;font-size:12px}
+  .btn-sm{padding:6px 13px;font-size:12px}
 
-  /* Toolbar */
-  .toolbar{display:flex;gap:12px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
+  /* AYLIK ÇİZELGE */
+  .monthly-toolbar{display:flex;gap:12px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
   .nav{display:flex;align-items:center;gap:8px}
   .btn-nav{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:all .2s}
   .btn-nav:hover{border-color:var(--accent);color:var(--accent)}
-  .wlabel{font-family:var(--mono);font-size:13px;color:var(--text);min-width:230px;text-align:center}
+  .month-label{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--text);min-width:180px;text-align:center}
 
-  /* Tablolar */
-  .twrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th{background:var(--surface2);padding:12px 14px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap}
-  td{padding:10px 14px;border-bottom:1px solid rgba(42,48,64,.5);border-right:1px solid rgba(42,48,64,.3);vertical-align:middle}
-  tr:last-child td{border-bottom:none}
-  td:last-child{border-right:none}
-  tbody tr:hover td{background:rgba(28,32,48,.6)}
-  .td-b{font-family:var(--mono);font-size:12px;font-weight:500;background:var(--surface)!important;min-width:130px}
-  .tc{text-align:center}
-  .today-bg{background:rgba(59,130,246,.05)!important}
-  .today-th{color:var(--accent)!important}
+  /* AYLIK TABLO */
+  .monthly-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
+  .monthly-table{border-collapse:collapse;font-size:12px;min-width:900px;width:100%}
 
-  .pill{display:inline-block;font-family:var(--mono);font-size:11px;padding:3px 10px;border-radius:20px;white-space:nowrap}
-  .izin{font-size:11px;color:var(--text3);font-family:var(--mono)}
+  /* Sütun başlıkları: Bölge | 1. | 2. | 3. | ... (her gün) */
+  .monthly-table thead th{
+    background:var(--surface2);padding:10px 8px;
+    font-family:var(--mono);font-size:10px;color:var(--text2);
+    border-bottom:1px solid var(--border);white-space:nowrap;text-align:center
+  }
+  .monthly-table thead th.th-bolge{text-align:left;min-width:110px;color:var(--accent2)}
+  .monthly-table thead th.th-weekend{color:var(--text3)!important;opacity:.5}
+  .monthly-table thead th.th-today{color:var(--accent)!important}
 
-  .infobox{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.8}
+  .monthly-table tbody td{
+    padding:7px 6px;border-bottom:1px solid rgba(42,48,64,.4);
+    border-right:1px solid rgba(42,48,64,.25);text-align:center;vertical-align:middle
+  }
+  .monthly-table tbody tr:last-child td{border-bottom:none}
+  .monthly-table tbody td:last-child{border-right:none}
+  .monthly-table tbody tr:hover td{background:rgba(28,32,48,.5)}
+  .td-bolge-name{
+    text-align:left!important;font-family:var(--mono);font-size:11px;font-weight:600;
+    background:var(--surface)!important;padding-left:14px!important;white-space:nowrap
+  }
+  .td-weekend{background:rgba(255,255,255,.015)!important;color:var(--text3)}
+  .td-today{background:rgba(59,130,246,.07)!important}
+  .td-empty{color:var(--text3);font-size:10px}
+
+  .name-cell{
+    display:inline-block;font-size:11px;padding:2px 8px;border-radius:12px;
+    white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis;
+    cursor:default
+  }
+
+  /* Tooltip */
+  .name-cell:hover::after{
+    content:attr(title);position:fixed;background:#1e293b;color:var(--text);
+    padding:5px 10px;border-radius:6px;font-size:11px;font-family:var(--mono);
+    border:1px solid var(--border);z-index:100;pointer-events:none;
+    white-space:nowrap;transform:translate(10px,-50%)
+  }
+
+  /* Legend */
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)}
+  .leg-dot{width:8px;height:8px;border-radius:50%}
+
+  .infobox{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:11px 15px;font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.8}
   .infobox strong{color:var(--accent2)}
 
   .toast{position:fixed;bottom:24px;right:24px;background:var(--success);color:white;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;z-index:1000;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none}
@@ -102,6 +131,14 @@
   ::-webkit-scrollbar{width:5px;height:5px}
   ::-webkit-scrollbar-track{background:transparent}
   ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+  @media print{
+    body{background:white;color:black}
+    .tabs,.monthly-toolbar,.hbadge{display:none}
+    .monthly-table thead th{background:#f1f5f9;color:#334155}
+    .td-bolge-name{background:#f8fafc!important}
+    .name-cell{border:1px solid #e2e8f0!important;background:#f0f9ff!important;color:#1e40af!important}
+  }
 </style>
 </head>
 <body>
@@ -111,42 +148,41 @@
   <div class="logo">🛡</div>
   <div>
     <h1>NÖBET ÇİZELGESİ SİSTEMİ</h1>
-    <p>Haftada 1 gün nöbet · Her hafta farklı bölge</p>
+    <p>Haftada 1 gün nöbet · Haftalık bölge rotasyonu · Aylık görünüm</p>
   </div>
   <div class="hbadge" id="hbadge">— kurulum bekleniyor —</div>
 </header>
 
 <div class="tabs">
   <button class="tab active" onclick="showTab('setup',this)">⚙ Kurulum</button>
-  <button class="tab" onclick="showTab('cizelge',this)">📅 Bölge Çizelgesi</button>
+  <button class="tab" onclick="showTab('aylik',this)">📅 Aylık Çizelge</button>
   <button class="tab" onclick="showTab('kisi',this)">👤 Kişi Bazlı</button>
 </div>
 
-<!-- KURULUM -->
+<!-- ===== KURULUM ===== -->
 <div id="panel-setup" class="panel active">
   <div class="setup-grid">
+    <div style="display:flex;flex-direction:column;gap:14px">
 
-    <div style="display:flex;flex-direction:column;gap:16px">
       <div class="card">
         <div class="ctitle">Genel Ayarlar</div>
         <label>Başlangıç Tarihi (İlk Pazartesi)</label>
-        <input type="date" id="startDate" />
+        <input type="date" id="startDate"/>
         <div class="row2" style="margin-top:0">
           <div><label>Bölge Sayısı</label><input type="number" id="bolgeCount" value="8" min="1" max="20" onchange="updateBolgeList()"/></div>
           <div><label>Çalışma Günleri</label>
-            <select id="workDays">
+            <select id="workDays" onchange="renderGunGroups()">
               <option value="5">Pzt–Cum (5 gün)</option>
               <option value="6">Pzt–Cmt (6 gün)</option>
-              <option value="7">Her Gün</option>
+              <option value="7">Her Gün (7 gün)</option>
             </select>
           </div>
         </div>
-        <div class="infobox" style="margin-top:16px">
-          <strong>Sistem Mantığı:</strong><br>
-          • Her kişi <strong>haftada sadece 1 gün</strong> nöbet tutar<br>
-          • O gün <strong>8 farklı kişi</strong> nöbete girer (1 kişi/bölge)<br>
-          • Her hafta bölgeler <strong>1 ileri kayar</strong><br>
-          &nbsp;&nbsp;→ Bu hafta Zemin → Haftaya A1 → Sonraki A2...
+        <div class="infobox" style="margin-top:14px">
+          <strong>Mantık:</strong><br>
+          • Her kişi <strong>haftada 1 gün</strong> nöbet tutar<br>
+          • O gün <strong>bölge sayısı kadar kişi</strong> nöbette<br>
+          • Her hafta bölgeler <strong>1 ileri</strong> kayar
         </div>
         <button class="btn btn-p" onclick="applySetup()">✓ Kurulumu Uygula</button>
       </div>
@@ -154,59 +190,65 @@
       <div class="card">
         <div class="ctitle">Bölgeler</div>
         <div class="bolge-list" id="bolgeList"></div>
-        <button class="btn-add" style="margin-top:8px" onclick="addBolge()">+ Bölge Ekle</button>
+        <button class="btn-add" style="margin-top:7px" onclick="addBolge()">+ Bölge Ekle</button>
       </div>
     </div>
 
-    <!-- Sağ: Gün bazlı nöbetçi ataması -->
     <div class="card">
-      <div class="ctitle">Nöbetçiler — Gün Bazlı Atama</div>
-      <p style="font-size:12px;color:var(--text2);margin-bottom:14px">
-        Her gün için <strong style="color:var(--accent2)">bölge sayısı kadar</strong> kişi atayın. 
-        Bu kişiler o gün nöbet tutacak, bölgeleri her hafta otomatik değişecek.
-      </p>
-      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+      <div class="ctitle">Nöbetçiler — Gün Bazlı</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
         <button class="btn btn-o btn-sm" onclick="autoFill()">🔀 Örnek İsim Doldur</button>
+        <span style="font-size:11px;color:var(--text3);align-self:center">Her gün için bölge sayısı kadar kişi girin</span>
       </div>
       <div class="gun-groups" id="gunGroups"></div>
     </div>
-
   </div>
 </div>
 
-<!-- BÖLGE ÇİZELGESİ -->
-<div id="panel-cizelge" class="panel">
-  <div class="toolbar">
+<!-- ===== AYLIK ÇİZELGE ===== -->
+<div id="panel-aylik" class="panel">
+
+  <div class="monthly-toolbar">
     <div class="nav">
-      <button class="btn-nav" onclick="prevW()">←</button>
-      <div class="wlabel" id="wlabel">—</div>
-      <button class="btn-nav" onclick="nextW()">→</button>
+      <button class="btn-nav" onclick="prevMonth()">←</button>
+      <div class="month-label" id="monthLabel">—</div>
+      <button class="btn-nav" onclick="nextMonth()">→</button>
     </div>
-    <button class="btn btn-o btn-sm" onclick="goToday()">Bugün</button>
+    <button class="btn btn-o btn-sm" onclick="goThisMonth()">Bu Ay</button>
     <div style="margin-left:auto;display:flex;gap:8px">
       <button class="btn btn-o btn-sm" onclick="exportCSV()">↓ CSV</button>
       <button class="btn btn-o btn-sm" onclick="window.print()">🖨 Yazdır</button>
     </div>
   </div>
-  <div class="twrap">
-    <table><thead id="cThead"></thead><tbody id="cTbody"></tbody></table>
+
+  <!-- Renk legend -->
+  <div class="legend" id="legend"></div>
+
+  <div class="monthly-wrap">
+    <table class="monthly-table">
+      <thead id="mThead"></thead>
+      <tbody id="mTbody"></tbody>
+    </table>
   </div>
+
 </div>
 
-<!-- KİŞİ BAZLI -->
+<!-- ===== KİŞİ BAZLI ===== -->
 <div id="panel-kisi" class="panel">
-  <div class="toolbar">
+  <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
     <div class="nav">
-      <button class="btn-nav" onclick="prevWK()">←</button>
-      <div class="wlabel" id="wlabelK">—</div>
-      <button class="btn-nav" onclick="nextWK()">→</button>
+      <button class="btn-nav" onclick="prevMonthK()">←</button>
+      <div class="month-label" id="monthLabelK">—</div>
+      <button class="btn-nav" onclick="nextMonthK()">→</button>
     </div>
-    <button class="btn btn-o btn-sm" onclick="goTodayK()">Bugün</button>
-    <input type="text" id="kSearch" placeholder="İsim ara..." style="width:200px;padding:7px 12px;font-size:12px;margin-left:8px" oninput="renderKisi()"/>
-    <span style="font-size:12px;color:var(--text3);margin-left:4px">— haftada 1 gün nöbet, bölge değişiyor</span>
+    <button class="btn btn-o btn-sm" onclick="goThisMonthK()">Bu Ay</button>
+    <input type="text" id="kSearch" placeholder="İsim ara..." style="width:200px;padding:7px 12px;font-size:12px" oninput="renderKisi()"/>
   </div>
-  <div class="twrap">
-    <table><thead id="kThead"></thead><tbody id="kTbody"></tbody></table>
+  <div class="monthly-wrap">
+    <table class="monthly-table" style="min-width:600px">
+      <thead id="kThead"></thead>
+      <tbody id="kTbody"></tbody>
+    </table>
   </div>
 </div>
 
@@ -222,45 +264,66 @@ const S = {
   bolgeCount: 8,
   workDays: 5,
   bolgeNames: [],
-  // gunNobetcileri[d] = [kişi adı, kişi adı, ...] (d: 0=Pzt, 1=Sal, ...)
-  // Her gün bolgeCount kadar kişi
-  gunNobetcileri: {},
-  wo: 0,
-  wok: 0,
+  gunNobetcileri: {}, // {dayOfWeek: [name0, name1, ...]}
+  monthOffset: 0,
+  monthOffsetK: 0,
 };
 
-const DAY = ['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'];
+const DAY_SHORT = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+const DAY_FULL  = ['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'];
+const MONTH_TR  = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+
 const C = [
-  {bg:'rgba(96,165,250,.15)',t:'#60a5fa',b:'rgba(96,165,250,.3)'},
-  {bg:'rgba(52,211,153,.15)',t:'#34d399',b:'rgba(52,211,153,.3)'},
-  {bg:'rgba(167,139,250,.15)',t:'#a78bfa',b:'rgba(167,139,250,.3)'},
-  {bg:'rgba(244,114,182,.15)',t:'#f472b6',b:'rgba(244,114,182,.3)'},
-  {bg:'rgba(251,146,60,.15)',t:'#fb923c',b:'rgba(251,146,60,.3)'},
-  {bg:'rgba(250,204,21,.15)',t:'#facc15',b:'rgba(250,204,21,.3)'},
-  {bg:'rgba(34,211,238,.15)',t:'#22d3ee',b:'rgba(34,211,238,.3)'},
-  {bg:'rgba(248,113,113,.15)',t:'#f87171',b:'rgba(248,113,113,.3)'},
+  {bg:'rgba(96,165,250,.18)',t:'#60a5fa',b:'rgba(96,165,250,.35)'},
+  {bg:'rgba(52,211,153,.18)',t:'#34d399',b:'rgba(52,211,153,.35)'},
+  {bg:'rgba(167,139,250,.18)',t:'#a78bfa',b:'rgba(167,139,250,.35)'},
+  {bg:'rgba(244,114,182,.18)',t:'#f472b6',b:'rgba(244,114,182,.35)'},
+  {bg:'rgba(251,146,60,.18)',t:'#fb923c',b:'rgba(251,146,60,.35)'},
+  {bg:'rgba(250,204,21,.18)',t:'#facc15',b:'rgba(250,204,21,.35)'},
+  {bg:'rgba(34,211,238,.18)',t:'#22d3ee',b:'rgba(34,211,238,.35)'},
+  {bg:'rgba(248,113,113,.18)',t:'#f87171',b:'rgba(248,113,113,.35)'},
+  {bg:'rgba(129,140,248,.18)',t:'#818cf8',b:'rgba(129,140,248,.35)'},
+  {bg:'rgba(45,212,191,.18)',t:'#2dd4bf',b:'rgba(45,212,191,.35)'},
 ];
 
 // ============================================================
 // CORE LOGIC
 // ============================================================
-// gunNobetcileri[d][i] = i. slot için kişi adı
-// Bu kişinin d. gündeki bölgesi:
-//   initBolge = i  (0. kişi → 0. bölge, 1. kişi → 1. bölge, ...)
-//   weekNum = wo (hafta offset)
-//   bolge = (initBolge + weekNum) % bolgeCount
+// Her gün nöbet tutacak kişiler: S.gunNobetcileri[dayOfWeek][slotIndex]
+// slot 0 → başlangıç bölgesi = 0, slot 1 → başlangıç = 1, ...
+// weekNum: başlangıç tarihinden kaçıncı hafta
+// O haftaki bölge: (slotIndex + weekNum) % bolgeCount
 
-function getBolgeForSlot(slotIndex, weekOffset) {
-  return (slotIndex + weekOffset) % S.bolgeCount;
+function getWeekNum(date) {
+  // Başlangıç tarihinden itibaren kaçıncı hafta (0-based)
+  const start = new Date(S.startDate); start.setHours(0,0,0,0);
+  const d = new Date(date); d.setHours(0,0,0,0);
+  return Math.floor((d - start) / (7 * 86400000));
 }
 
-// Belirli bir günün nöbet listesi: [{name, bolgeIndex}]
-function getDaySchedule(dayIndex, weekOffset) {
-  const list = S.gunNobetcileri[dayIndex] || [];
-  return list.map((name, i) => ({
-    name,
-    bolgeIndex: getBolgeForSlot(i, weekOffset),
-  }));
+function getBolge(slotIndex, weekNum) {
+  return ((slotIndex + weekNum) % S.bolgeCount + S.bolgeCount) % S.bolgeCount;
+}
+
+// Verilen tarih için nöbet listesi: [{name, bolgeIndex, slotIndex}]
+function getScheduleForDate(date) {
+  if (!S.startDate) return [];
+  const d = new Date(date); d.setHours(0,0,0,0);
+  const start = new Date(S.startDate); start.setHours(0,0,0,0);
+  const diffDays = Math.round((d - start) / 86400000);
+  if (diffDays < 0) return [];
+
+  // Haftanın günü (Pazartesi=0)
+  const jsDay = d.getDay(); // 0=Pazar, 1=Pzt...
+  const dayOfWeek = jsDay === 0 ? 6 : jsDay - 1; // Pzt=0, ..., Paz=6
+
+  if (dayOfWeek >= S.workDays) return []; // çalışma günü değil
+
+  const weekNum = getWeekNum(d);
+  const list = S.gunNobetcileri[dayOfWeek] || [];
+  return list
+    .map((name, i) => ({ name, bolgeIndex: getBolge(i, weekNum), slotIndex: i }))
+    .filter(x => x.name);
 }
 
 // ============================================================
@@ -283,7 +346,7 @@ function showTab(n, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('panel-' + n).classList.add('active');
   btn.classList.add('active');
-  if (n === 'cizelge') renderCizelge();
+  if (n === 'aylik') renderMonthly();
   if (n === 'kisi') renderKisi();
 }
 
@@ -326,44 +389,38 @@ function renderGunGroups() {
   const wd = parseInt(document.getElementById('workDays').value) || 5;
   const bc = parseInt(document.getElementById('bolgeCount').value) || 8;
   const container = document.getElementById('gunGroups');
-  
-  // Mevcut değerleri kaydet
-  const savedVals = {};
-  container.querySelectorAll('[data-nb]').forEach(inp => {
-    savedVals[inp.dataset.nb] = inp.value;
-  });
-
+  const saved = {};
+  container.querySelectorAll('[data-nb]').forEach(inp => { saved[inp.dataset.nb] = inp.value; });
   container.innerHTML = '';
   for (let d = 0; d < wd; d++) {
-    const c = C[d % C.length];
-    let nbRows = '';
+    const dc = C[d % C.length];
+    let rows = '';
     for (let i = 0; i < bc; i++) {
       const key = `${d}_${i}`;
-      const saved = savedVals[key] || (S.gunNobetcileri[d] && S.gunNobetcileri[d][i]) || '';
-      nbRows += `
-        <div class="nb-item">
-          <span class="nbno" style="color:${C[i%C.length].t}">${i+1}.</span>
-          <input type="text" data-nb="${key}" data-day="${d}" data-slot="${i}"
-            value="${saved}" placeholder="${S.bolgeNames[i] || 'Bölge '+(i+1)} nöbetçisi"
-            oninput="liveUpdate(this)"/>
-        </div>`;
+      const sv = saved[key] || (S.gunNobetcileri[d] && S.gunNobetcileri[d][i]) || '';
+      const bc2 = C[i % C.length];
+      rows += `<div class="nb-item">
+        <span class="nbno" style="color:${bc2.t}">${i+1}.</span>
+        <input type="text" data-nb="${key}" data-day="${d}" data-slot="${i}"
+          value="${sv}" placeholder="Bölge ${i+1} nöbetçisi" oninput="liveUpdate(this)"/>
+      </div>`;
     }
     container.insertAdjacentHTML('beforeend', `
       <div class="gun-group">
         <div class="gun-header">
-          <span class="gun-label" style="color:${c.t}">● ${DAY[d]}</span>
-          <span class="gun-count">${bc} nöbetçi · 1 kişi/bölge</span>
+          <span class="gun-label" style="color:${dc.t}">● ${DAY_FULL[d]}</span>
+          <span style="font-size:11px;color:var(--text3)">${bc} kişi · 1 kişi/bölge</span>
         </div>
-        <div class="gun-nb-list">${nbRows}</div>
+        <div class="gun-nb-list">${rows}</div>
       </div>`);
   }
 }
 
 function liveUpdate(inp) {
   const d = parseInt(inp.dataset.day);
-  const slot = parseInt(inp.dataset.slot);
+  const s = parseInt(inp.dataset.slot);
   if (!S.gunNobetcileri[d]) S.gunNobetcileri[d] = [];
-  S.gunNobetcileri[d][slot] = inp.value.trim();
+  S.gunNobetcileri[d][s] = inp.value.trim();
 }
 
 function autoFill() {
@@ -386,160 +443,229 @@ function applySetup() {
   S.startDate = new Date(sv + 'T00:00:00');
   S.bolgeCount = parseInt(document.getElementById('bolgeCount').value);
   S.workDays = parseInt(document.getElementById('workDays').value);
-
   S.bolgeNames = [];
   for (let i = 0; i < S.bolgeCount; i++) {
     const e = document.getElementById('blg_'+i);
     S.bolgeNames.push(e ? e.value.trim() || `Bölge ${i+1}` : `Bölge ${i+1}`);
   }
-
-  // Tüm inputları oku
   S.gunNobetcileri = {};
   document.querySelectorAll('[data-nb]').forEach(inp => {
-    const d = parseInt(inp.dataset.day);
-    const slot = parseInt(inp.dataset.slot);
+    const d = parseInt(inp.dataset.day), s = parseInt(inp.dataset.slot);
     if (!S.gunNobetcileri[d]) S.gunNobetcileri[d] = [];
-    S.gunNobetcileri[d][slot] = inp.value.trim();
+    S.gunNobetcileri[d][s] = inp.value.trim();
   });
-
-  // Toplam kişi sayısı
   let total = 0;
-  Object.values(S.gunNobetcileri).forEach(arr => { total += arr.filter(x=>x).length; });
-  if (total === 0) { toast('En az 1 nöbetçi girin!', 1); return; }
+  Object.values(S.gunNobetcileri).forEach(a => { total += a.filter(x=>x).length; });
+  if (!total) { toast('En az 1 nöbetçi girin!', 1); return; }
+  document.getElementById('hbadge').textContent = `${total} nöbetçi · ${S.bolgeCount} bölge · ${S.workDays} gün/hafta`;
 
-  document.getElementById('hbadge').textContent =
-    `${total} nöbetçi · ${S.bolgeCount} bölge · ${S.workDays} gün/hafta`;
-  toast(`✓ Kurulum tamam`);
+  // Başlangıç ayına git
+  const sd = S.startDate;
+  S.monthOffset = 0;
+  S.monthOffsetK = 0;
+
+  toast('✓ Kurulum tamam!');
 }
 
 // ============================================================
-// BÖLGE ÇİZELGESİ  — satır=bölge, sütun=gün
+// AYLIK ÇİZELGE
+// Satır = Bölge, Sütun = Ayın Her Günü
 // ============================================================
-function renderCizelge() {
-  if (!S.startDate) return;
-  const wo = S.wo;
-  const ws = addDays(S.startDate, wo * 7);
-  document.getElementById('wlabel').textContent = fmtRange(ws);
+function getMonthDates(offset) {
+  if (!S.startDate) {
+    const now = new Date();
+    const base = new Date(now.getFullYear(), now.getMonth() + offset, 1);
+    return { year: base.getFullYear(), month: base.getMonth() };
+  }
+  const base = new Date(S.startDate.getFullYear(), S.startDate.getMonth() + offset, 1);
+  return { year: base.getFullYear(), month: base.getMonth() };
+}
+
+function renderMonthly() {
+  if (!S.startDate) {
+    document.getElementById('mThead').innerHTML = '';
+    document.getElementById('mTbody').innerHTML =
+      '<tr><td colspan="35" style="text-align:center;color:var(--text3);padding:40px">Önce Kurulum sekmesinden ayarları yapın ve "Kurulumu Uygula" butonuna basın.</td></tr>';
+    return;
+  }
+
+  const { year, month } = getMonthDates(S.monthOffset);
+  document.getElementById('monthLabel').textContent = `${MONTH_TR[month]} ${year}`;
+
   const today = new Date(); today.setHours(0,0,0,0);
 
-  // Thead
-  let th = '<tr><th style="text-align:left;min-width:130px;color:var(--accent2)">BÖLGE</th>';
-  for (let d = 0; d < S.workDays; d++) {
-    const day = addDays(ws, d);
-    const isTd = day.getTime() === today.getTime();
-    th += `<th class="tc${isTd?' today-th':''}">${DAY[d]}<br><span style="font-weight:400;color:var(--text3)">${fmt(day)}</span></th>`;
+  // Ayın tüm günlerini üret
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const days = [];
+  for (let d = 1; d <= daysInMonth; d++) {
+    days.push(new Date(year, month, d));
   }
-  th += '</tr>';
-  document.getElementById('cThead').innerHTML = th;
 
-  // Tbody — satır=bölge
-  let tb = '';
+  // Thead: Bölge | 1(Pzt) | 2(Sal) | ...
+  let th = '<tr><th class="th-bolge">BÖLGE</th>';
+  days.forEach(day => {
+    const jsDay = day.getDay(); // 0=Pazar
+    const dow = jsDay === 0 ? 6 : jsDay - 1; // 0=Pzt
+    const isWeekend = dow >= S.workDays;
+    const isToday = day.getTime() === today.getTime();
+    const cls = isToday ? ' th-today' : isWeekend ? ' th-weekend' : '';
+    th += `<th class="${cls}" style="min-width:38px">
+      <div style="font-size:12px;font-weight:600">${day.getDate()}</div>
+      <div style="font-size:9px;opacity:.7">${DAY_SHORT[dow]}</div>
+    </th>`;
+  });
+  th += '</tr>';
+  document.getElementById('mThead').innerHTML = th;
+
+  // Legend
+  let leg = '';
   for (let b = 0; b < S.bolgeCount; b++) {
     const c = C[b % C.length];
-    tb += `<tr><td class="td-b" style="color:${c.t}">
-      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${c.t};margin-right:8px"></span>
-      ${S.bolgeNames[b]}
-    </td>`;
-    for (let d = 0; d < S.workDays; d++) {
-      const day = addDays(ws, d);
-      const isTd = day.getTime() === today.getTime();
-      const schedule = getDaySchedule(d, wo);
-      const person = schedule.find(x => x.bolgeIndex === b);
-      const bg = isTd ? ' today-bg' : '';
-      if (person && person.name) {
-        tb += `<td class="tc${bg}"><span class="pill" style="background:${c.bg};color:${c.t};border:1px solid ${c.b}">${person.name}</span></td>`;
-      } else {
-        tb += `<td class="tc${bg}"><span class="izin">—</span></td>`;
+    leg += `<div class="leg-item"><span class="leg-dot" style="background:${c.t}"></span>${S.bolgeNames[b]}</div>`;
+  }
+  document.getElementById('legend').innerHTML = leg;
+
+  // Tbody: her satır bir bölge
+  let tb = '';
+  for (let b = 0; b < S.bolgeCount; b++) {
+    const bc = C[b % C.length];
+    tb += `<tr>
+      <td class="td-bolge-name" style="color:${bc.t}">
+        <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${bc.t};margin-right:7px"></span>
+        ${S.bolgeNames[b]}
+      </td>`;
+
+    days.forEach(day => {
+      const jsDay = day.getDay();
+      const dow = jsDay === 0 ? 6 : jsDay - 1;
+      const isWeekend = dow >= S.workDays;
+      const isToday = day.getTime() === today.getTime();
+
+      if (isWeekend) {
+        tb += `<td class="td-weekend"><span style="font-size:9px;color:var(--text3)">—</span></td>`;
+        return;
       }
-    }
+
+      const schedule = getScheduleForDate(day);
+      const person = schedule.find(x => x.bolgeIndex === b);
+      const todayCls = isToday ? ' td-today' : '';
+
+      if (person) {
+        const firstName = person.name.split(' ')[0]; // İlk ad (kısalt)
+        tb += `<td class="${todayCls}">
+          <span class="name-cell" title="${person.name}"
+            style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b}">
+            ${firstName}
+          </span>
+        </td>`;
+      } else {
+        tb += `<td class="${todayCls}"><span class="td-empty">·</span></td>`;
+      }
+    });
+
     tb += '</tr>';
   }
-  document.getElementById('cTbody').innerHTML = tb;
+  document.getElementById('mTbody').innerHTML = tb;
 }
 
-function prevW() { S.wo--; renderCizelge(); }
-function nextW() { S.wo++; renderCizelge(); }
-function goToday() {
+function prevMonth() { S.monthOffset--; renderMonthly(); }
+function nextMonth() { S.monthOffset++; renderMonthly(); }
+function goThisMonth() {
   if (!S.startDate) return;
-  const t = new Date(); t.setHours(0,0,0,0);
-  S.wo = Math.floor((t - S.startDate) / (7*86400000));
-  renderCizelge();
+  const now = new Date();
+  S.monthOffset = (now.getFullYear() - S.startDate.getFullYear()) * 12 + (now.getMonth() - S.startDate.getMonth());
+  renderMonthly();
 }
 
 // ============================================================
-// KİŞİ BAZLI — satır=kişi, sütun=hafta
-// Her kişi haftada 1 gün nöbet → o günü ve bölgeyi göster
+// KİŞİ BAZLI AYLIK
+// Satır = Kişi, Sütun = Ayın Her İş Günü
 // ============================================================
 function renderKisi() {
   if (!S.startDate) return;
-  const wo = S.wok;
-  const ws = addDays(S.startDate, wo * 7);
-  document.getElementById('wlabelK').textContent = fmtRange(ws);
+  const { year, month } = getMonthDates(S.monthOffsetK);
+  document.getElementById('monthLabelK').textContent = `${MONTH_TR[month]} ${year}`;
   const today = new Date(); today.setHours(0,0,0,0);
   const search = (document.getElementById('kSearch').value || '').toLowerCase();
 
-  // Tüm kişileri topla: {name, day, slot}
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const workDays = [];
+  for (let d = 1; d <= daysInMonth; d++) {
+    const day = new Date(year, month, d);
+    const jsDay = day.getDay();
+    const dow = jsDay === 0 ? 6 : jsDay - 1;
+    if (dow < S.workDays) workDays.push({ day, dow });
+  }
+
+  // Thead
+  let th = '<tr><th style="text-align:left;min-width:150px">NÖBETÇİ</th><th style="text-align:center;min-width:70px">Nöbet Günü</th>';
+  workDays.forEach(({ day, dow }) => {
+    const isToday = day.getTime() === today.getTime();
+    th += `<th class="tc${isToday?' th-today':''}" style="min-width:42px">
+      <div style="font-size:12px;font-weight:600">${day.getDate()}</div>
+      <div style="font-size:9px;opacity:.7">${DAY_SHORT[dow]}</div>
+    </th>`;
+  });
+  th += '</tr>';
+
+  // Tüm kişiler
   const allPersons = [];
   for (let d = 0; d < S.workDays; d++) {
     const list = S.gunNobetcileri[d] || [];
     list.forEach((name, slot) => {
       if (name && (!search || name.toLowerCase().includes(search))) {
-        allPersons.push({ name, day: d, slot });
+        allPersons.push({ name, dow: d, slot });
       }
     });
   }
 
-  // Thead: Kişi | Nöbet Günü | Bu Hafta Bölgesi | Sonraki 4 Hafta
-  let th = '<tr>';
-  th += '<th style="text-align:left;min-width:160px">NÖBETÇİ</th>';
-  th += '<th style="text-align:center">Nöbet Günü</th>';
-  // 5 hafta göster (mevcut + sonraki 4)
-  for (let w = 0; w < 5; w++) {
-    const wws = addDays(ws, w * 7);
-    const wwe = addDays(wws, S.workDays - 1);
-    const isCurrent = w === 0;
-    th += `<th class="tc${isCurrent?' today-th':''}" style="min-width:110px">
-      ${w === 0 ? 'Bu Hafta' : w + '. Hafta Sonra'}<br>
-      <span style="font-weight:400;color:var(--text3);font-size:10px">${fmt(wws)}–${fmt(wwe)}</span>
-    </th>`;
-  }
-  th += '</tr>';
-
   let tb = '';
   allPersons.forEach(person => {
-    const dayC = C[person.day % C.length];
-    tb += '<tr>';
-    tb += `<td style="font-weight:500;white-space:nowrap">${person.name}</td>`;
-    tb += `<td class="tc"><span class="pill" style="background:${dayC.bg};color:${dayC.t};border:1px solid ${dayC.b}">${DAY[person.day]}</span></td>`;
-
-    for (let w = 0; w < 5; w++) {
-      const weekOffset = wo + w;
-      const bolgeIdx = getBolgeForSlot(person.slot, weekOffset);
-      const c = C[bolgeIdx % C.length];
-      const bolgeAd = S.bolgeNames[bolgeIdx] || `Bölge ${bolgeIdx+1}`;
-      const isCurrent = w === 0;
-      // O haftanın nöbet günü
-      const nobetGunu = addDays(addDays(S.startDate, weekOffset * 7), person.day);
-      const isToday = nobetGunu.getTime() === today.getTime();
-      const bgStyle = isToday ? 'background:rgba(59,130,246,0.08);' : '';
-      tb += `<td class="tc" style="${bgStyle}${isCurrent?'font-weight:600':''}">
-        <span class="pill" style="background:${c.bg};color:${c.t};border:1px solid ${c.b}">${bolgeAd}</span>
-        <div style="font-size:10px;color:var(--text3);margin-top:3px;font-family:var(--mono)">${fmt(nobetGunu)}</div>
+    const dc = C[person.dow % C.length];
+    tb += `<tr>
+      <td style="font-weight:500;white-space:nowrap;font-size:12px">${person.name}</td>
+      <td style="text-align:center">
+        <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:12px;background:${dc.bg};color:${dc.t};border:1px solid ${dc.b}">
+          ${DAY_SHORT[person.dow]}
+        </span>
       </td>`;
-    }
+
+    workDays.forEach(({ day, dow }) => {
+      const isToday = day.getTime() === today.getTime();
+
+      if (dow !== person.dow) {
+        // Bu gün kişinin nöbet günü değil
+        tb += `<td style="${isToday?'background:rgba(59,130,246,.05)':''}"><span class="td-empty" style="font-size:9px">·</span></td>`;
+        return;
+      }
+
+      // Nöbet günü — hangi bölge?
+      const weekNum = getWeekNum(day);
+      const bolgeIdx = getBolge(person.slot, weekNum);
+      const bc = C[bolgeIdx % C.length];
+      const bname = S.bolgeNames[bolgeIdx] || `B${bolgeIdx+1}`;
+
+      tb += `<td style="text-align:center;${isToday?'background:rgba(59,130,246,.08)':''}">
+        <span class="name-cell" title="${bname}"
+          style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b};font-size:10px">
+          ${bname}
+        </span>
+      </td>`;
+    });
+
     tb += '</tr>';
   });
 
   document.getElementById('kThead').innerHTML = th;
-  document.getElementById('kTbody').innerHTML = tb || '<tr><td colspan="10" style="text-align:center;color:var(--text3);padding:30px">Kişi bulunamadı</td></tr>';
+  document.getElementById('kTbody').innerHTML = tb || `<tr><td colspan="40" style="text-align:center;color:var(--text3);padding:30px">Kişi bulunamadı</td></tr>`;
 }
 
-function prevWK() { S.wok--; renderKisi(); }
-function nextWK() { S.wok++; renderKisi(); }
-function goTodayK() {
+function prevMonthK() { S.monthOffsetK--; renderKisi(); }
+function nextMonthK() { S.monthOffsetK++; renderKisi(); }
+function goThisMonthK() {
   if (!S.startDate) return;
-  const t = new Date(); t.setHours(0,0,0,0);
-  S.wok = Math.floor((t - S.startDate) / (7*86400000));
+  const now = new Date();
+  S.monthOffsetK = (now.getFullYear() - S.startDate.getFullYear()) * 12 + (now.getMonth() - S.startDate.getMonth());
   renderKisi();
 }
 
@@ -548,22 +674,35 @@ function goTodayK() {
 // ============================================================
 function exportCSV() {
   if (!S.startDate) return;
-  const wo = S.wo;
-  const ws = addDays(S.startDate, wo * 7);
+  const { year, month } = getMonthDates(S.monthOffset);
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const days = [];
+  for (let d = 1; d <= daysInMonth; d++) days.push(new Date(year, month, d));
+
   let csv = 'Bölge';
-  for (let d = 0; d < S.workDays; d++) csv += `,${DAY[d]} ${fmt(addDays(ws,d))}`;
+  days.forEach(day => {
+    const dow = day.getDay() === 0 ? 6 : day.getDay() - 1;
+    if (dow < S.workDays) csv += `,${day.getDate()} ${DAY_SHORT[dow]}`;
+  });
   csv += '\n';
+
   for (let b = 0; b < S.bolgeCount; b++) {
     csv += `"${S.bolgeNames[b]}"`;
-    for (let d = 0; d < S.workDays; d++) {
-      const schedule = getDaySchedule(d, wo);
-      const person = schedule.find(x => x.bolgeIndex === b);
-      csv += person && person.name ? `,"${person.name}"` : ',—';
-    }
+    days.forEach(day => {
+      const dow = day.getDay() === 0 ? 6 : day.getDay() - 1;
+      if (dow >= S.workDays) return;
+      const sch = getScheduleForDate(day);
+      const p = sch.find(x => x.bolgeIndex === b);
+      csv += p ? `,"${p.name}"` : ',—';
+    });
     csv += '\n';
   }
+
   const bl = new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
-  const a = document.createElement('a'); a.href=URL.createObjectURL(bl); a.download=`nobet_${iso(ws)}.csv`; a.click();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(bl);
+  a.download = `nobet_${MONTH_TR[month]}_${year}.csv`;
+  a.click();
 }
 
 // ============================================================
@@ -572,7 +711,6 @@ function exportCSV() {
 function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r}
 function iso(d){return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`}
 function fmt(d){return `${p(d.getDate())}.${p(d.getMonth()+1)}.${d.getFullYear()}`}
-function fmtRange(ws){return `${fmt(ws)} – ${fmt(addDays(ws,S.workDays-1))}`}
 function p(n){return String(n).padStart(2,'0')}
 function toast(msg,err){
   const t=document.getElementById('toast');
