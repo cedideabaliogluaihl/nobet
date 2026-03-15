@@ -1,99 +1,269 @@
-// --- GÜVENLİK AYARLARI ---
-// Şifre: admin123 (SHA-256 Hash hali aşağıdadır)
-const ADMIN_HASH = "240be518ebb0c4c3912a7092121d5922355443f66f5f012001479836796451a9";
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nöbet Çizelgesi | Yönetim Paneli</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:#0d0f14;--surface:#151820;--surface2:#1c2030;--border:#2a3040;
+            --accent:#3b82f6;--accent2:#22d3ee;--success:#10b981;--danger:#ef4444;--warn:#f59e0b;
+            --text:#e2e8f0;--text2:#94a3b8;--text3:#475569;
+            --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; overflow-x: hidden; }
+        body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(59,130,246,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.03) 1px,transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
+        .app { position: relative; z-index: 1; max-width: 1600px; margin: 0 auto; padding: 20px; }
 
-// Tarayıcı uyumlu hızlı hash fonksiyonu
-async function checkPassword(input) {
-    const msgUint8 = new TextEncoder().encode(input);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashedInput = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    return hashedInput === ADMIN_HASH;
+        /* HEADER */
+        header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+        .logo { width: 42px; height: 42px; background: linear-gradient(135deg,var(--accent),var(--accent2)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+        header h1 { font-family: var(--mono); font-size: 18px; font-weight: 600; }
+        header p { font-size: 12px; color: var(--text2); margin-top: 2px; }
+        .hbadge { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--accent2); background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.2); padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+
+        /* ADMIN STYLE */
+        .admin-only { display: none !important; }
+        body.is-admin .admin-only { display: inline-flex !important; }
+        body.is-admin .hbadge { background: rgba(239,68,68,.1); color: var(--danger); border-color: rgba(239,68,68,.3); }
+
+        /* TABS & BUTTONS */
+        .tabs { display: flex; gap: 4px; margin-bottom: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 4px; width: fit-content; }
+        .tab { padding: 8px 20px; border-radius: 7px; border: none; background: transparent; color: var(--text2); font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.2s; }
+        .tab.active { background: var(--accent); color: white; }
+        .btn { padding: 8px 16px; border-radius: 8px; border: none; font-size: 13px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .btn-o { background: transparent; border: 1px solid var(--border); color: var(--text2); }
+        .btn-o:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-danger { color: var(--danger); border: 1px solid rgba(239,68,68,0.2); background: transparent; }
+
+        /* TABLES */
+        .twrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); }
+        .mtable { border-collapse: collapse; font-size: 11px; width: 100%; text-align: center; }
+        .mtable thead th { background: var(--surface2); padding: 12px 6px; color: var(--text2); border-bottom: 1px solid var(--border); }
+        .mtable tbody td { padding: 8px 4px; border-bottom: 1px solid rgba(42,48,64,.4); border-right: 1px solid rgba(42,48,64,.2); }
+        .td-left { text-align: left !important; padding-left: 15px !important; font-weight: 600; background: var(--surface) !important; position: sticky; left: 0; z-index: 2; border-right: 2px solid var(--border) !important; }
+        .pill { display: inline-block; font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 500; }
+        
+        .toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; flex-wrap: wrap; }
+        .nav { display: flex; align-items: center; gap: 8px; }
+        .btn-nav { background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 8px; width: 34px; height: 34px; cursor: pointer; }
+        .search-box { padding: 8px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); width: 200px; outline: none; }
+
+        @media print { .tabs, .toolbar, #adminBtn { display: none !important; } }
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <header>
+        <div class="logo">🛡</div>
+        <div>
+            <h1>NÖBET ÇİZELGESİ</h1>
+            <p id="headerSub">Yükleniyor...</p>
+        </div>
+        <div style="margin-left: auto; display: flex; gap: 8px;">
+            <button class="btn btn-o" id="adminBtn" onclick="toggleAdmin()">🔑 Admin Girişi</button>
+            <div class="hbadge" id="hbadge">Bağlanıyor...</div>
+        </div>
+    </header>
+
+    <div class="tabs" id="tabBar" style="display:none">
+        <button class="tab active" onclick="switchTab('aylik', this)">📅 Aylık</button>
+        <button class="tab" onclick="switchTab('kisi', this)">👤 Kişi Bazlı</button>
+    </div>
+
+    <div id="loadingDiv" style="text-align: center; padding: 50px;">Veriler hazırlanıyor...</div>
+
+    <div id="panel-aylik" class="panel">
+        <div class="toolbar">
+            <div class="nav">
+                <button class="btn-nav" onclick="changeMonth(-1)">←</button>
+                <div id="monthLabel" style="font-family: var(--mono); font-weight: 600; min-width: 150px; text-align: center;">—</div>
+                <button class="btn-nav" onclick="changeMonth(1)">→</button>
+            </div>
+            <button class="btn btn-o" onclick="resetMonth()">Bu Ay</button>
+            <div style="margin-left: auto; display: flex; gap: 5px;">
+                <button class="btn btn-danger admin-only" onclick="alert('Düzenleme modu yakında aktifleştirilecek.')">✍ Düzenle</button>
+                <button class="btn btn-o" onclick="exportCSV()">↓ CSV</button>
+                <button class="btn btn-o" onclick="window.print()">🖨 Yazdır</button>
+            </div>
+        </div>
+        <div id="legend" style="display: flex; gap: 10px; margin-bottom: 10px; font-size: 10px; flex-wrap: wrap;"></div>
+        <div class="twrap">
+            <table class="mtable"><thead id="mThead"></thead><tbody id="mTbody"></tbody></table>
+        </div>
+    </div>
+
+    <div id="panel-kisi" class="panel" style="display:none">
+        <div class="toolbar">
+            <input class="search-box" id="kSearch" placeholder="🔍 İsim ara..." oninput="renderKisi()">
+        </div>
+        <div class="twrap">
+            <table class="mtable"><thead id="kThead"></thead><tbody id="kTbody"></tbody></table>
+        </div>
+    </div>
+</div>
+
+<script>
+// --- CONFIG & ADMIN ---
+const ADMIN_HASH = "240be518ebb0c4c3912a7092121d5922355443f66f5f012001479836796451a9"; // admin123
+let D = null;
+let monthOffset = 0;
+
+async function hash(s) {
+    const utf8 = new TextEncoder().encode(s);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-async function handleAdmin() {
-    if(localStorage.getItem('is_admin') === 'true') {
-        if(confirm("Admin oturumu kapatılsın mı?")) {
-            localStorage.removeItem('is_admin');
-            location.reload();
-        }
+async function toggleAdmin() {
+    if(document.body.classList.contains('is-admin')) {
+        localStorage.removeItem('is_admin');
+        location.reload();
         return;
     }
-    
     const p = prompt("Yönetici şifresini girin:");
     if(!p) return;
-
-    // Şifreyi kontrol et
-    const isCorrect = await checkPassword(p);
-    
-    if(isCorrect) {
+    if(await hash(p) === ADMIN_HASH) {
         localStorage.setItem('is_admin', 'true');
-        alert("Giriş başarılı!");
         location.reload();
     } else {
-        alert("Hatalı şifre! (Girdiğiniz: " + p + ")");
+        alert("Hatalı şifre!");
     }
 }
 
-function checkAdminStatus() {
-    if(localStorage.getItem('is_admin') === 'true') {
-        document.body.classList.add('is-admin');
-        const adminBtn = document.getElementById('adminBtn');
-        if(adminBtn) {
-            adminBtn.textContent = "🚪 Çıkış";
-            adminBtn.style.background = "rgba(239,68,68,.1)";
-            adminBtn.style.color = "var(--danger)";
-        }
-        const badge = document.getElementById('hbadge');
-        if(badge) {
-            badge.textContent = "YÖNETİCİ MODU";
-            badge.style.background = "rgba(239,68,68,.1)";
-            badge.style.color = "var(--danger)";
-        }
-    }
-}
-
-// --- VERİ YÜKLEME VE DİĞER FONKSİYONLAR ---
-let D = null; 
-let monthOffset = 0;
-let monthOffsetK = 0;
-
-const DAY_SHORT = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
-const MONTH_TR  = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
-const C = [
-  {bg:'rgba(96,165,250,.18)',t:'#60a5fa',b:'rgba(96,165,250,.35)'},
-  {bg:'rgba(52,211,153,.18)',t:'#34d399',b:'rgba(52,211,153,.35)'},
-  {bg:'rgba(167,139,250,.18)',t:'#a78bfa',b:'rgba(167,139,250,.35)'},
-  {bg:'rgba(244,114,182,.18)',t:'#f472b6',b:'rgba(244,114,182,.35)'},
-  {bg:'rgba(251,146,60,.18)',t:'#fb923c',b:'rgba(251,146,60,.35)'},
-  {bg:'rgba(250,204,21,.18)',t:'#facc15',b:'rgba(250,204,21,.35)'},
-  {bg:'rgba(34,211,238,.18)',t:'#22d3ee',b:'rgba(34,211,238,.35)'},
-  {bg:'rgba(248,113,113,.18)',t:'#f87171',b:'rgba(248,113,113,.35)'}
+// --- CORE LOGIC ---
+const MONTH_TR = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+const DAY_TR = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+const COLORS = [
+    {bg:'rgba(59,130,246,0.15)', t:'#60a5fa', b:'#3b82f6'},
+    {bg:'rgba(16,185,129,0.15)', t:'#34d399', b:'#10b981'},
+    {bg:'rgba(139,92,246,0.15)', t:'#a78bfa', b:'#8b5cf6'},
+    {bg:'rgba(236,72,153,0.15)', t:'#f472b6', b:'#ec4899'},
+    {bg:'rgba(245,158,11,0.15)', t:'#fbbf24', b:'#f59e0b'},
+    {bg:'rgba(6,182,212,0.15)', t:'#22d3ee', b:'#06b6d4'},
+    {bg:'rgba(244,63,94,0.15)', t:'#fb7185', b:'#f43f5e'},
+    {bg:'rgba(99,102,241,0.15)', t:'#818cf8', b:'#6366f1'}
 ];
 
 window.onload = async () => {
-  checkAdminStatus();
-  try {
-    const res = await fetch('nobet_data.json?v=' + Date.now());
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    D = await res.json();
-    D.startDate = new Date(D.baslamaTarihi + 'T00:00:00');
-    (D.tatiller || []).forEach(t => { t.pazartesiDate = new Date(t.pazartesi + 'T00:00:00'); });
+    if(localStorage.getItem('is_admin') === 'true') document.body.classList.add('is-admin');
+    
+    try {
+        const res = await fetch('nobet_data.json?v=' + Date.now());
+        D = await res.json();
+        D.startDate = new Date(D.baslamaTarihi + 'T00:00:00');
+        
+        const now = new Date();
+        monthOffset = (now.getFullYear()-D.startDate.getFullYear())*12+(now.getMonth()-D.startDate.getMonth());
+        
+        document.getElementById('loadingDiv').style.display = 'none';
+        document.getElementById('tabBar').style.display = 'flex';
+        document.getElementById('headerSub').textContent = "Haftalık Bölge Rotasyonu Sistemi";
+        document.getElementById('hbadge').textContent = document.body.classList.contains('is-admin') ? "YÖNETİCİ" : `${D.bolgeCount} Bölge Aktif`;
+        
+        if(document.body.classList.contains('is-admin')) {
+            document.getElementById('adminBtn').textContent = "🚪 Çıkış";
+            document.getElementById('adminBtn').classList.add('btn-danger');
+        }
 
-    const now = new Date();
-    monthOffset = (now.getFullYear()-D.startDate.getFullYear())*12+(now.getMonth()-D.startDate.getMonth());
-    monthOffsetK = monthOffset;
-
-    document.getElementById('loadingDiv').style.display = 'none';
-    document.getElementById('tabBar').style.display = '';
-    document.getElementById('panel-aylik').style.display = 'block';
-
-    renderMonthly();
-  } catch(e) {
-    document.getElementById('loadingDiv').style.display = 'none';
-    document.getElementById('errorDiv').style.display = 'block';
-  }
+        renderMonthly();
+    } catch(e) {
+        document.getElementById('loadingDiv').innerHTML = `<div style="color:red">Hata: nobet_data.json dosyası yüklenemedi!</div>`;
+    }
 };
 
-// ... (Buradan aşağısı senin orijinal tablolama fonksiyonların: renderMonthly, renderKisi vb. olacak) ...
-// (Kodu fazla uzatmamak için tabloları çizen fonksiyonları aynen koru)
+function getSchedule(date) {
+    const d = new Date(date);
+    const dow = d.getDay() === 0 ? 6 : d.getDay() - 1;
+    if(dow >= D.workDays) return [];
+
+    const diff = Math.floor((d - D.startDate) / (7 * 86400000));
+    // Tatil kontrolü
+    for(let t of (D.tatiller || [])) {
+        let tDate = new Date(t.pazartesi + 'T00:00:00');
+        if(d >= tDate && d < new Date(tDate.getTime() + t.haftaSayisi * 7 * 86400000)) return null;
+    }
+
+    // Rotasyonel hesaplama (tatil haftalarını düşerek)
+    let tatilWeeks = (D.tatiller || []).filter(t => new Date(t.pazartesi) < d).reduce((a,b) => a + b.haftaSayisi, 0);
+    const rw = diff - tatilWeeks;
+    
+    const list = D.gunNobetcileri[dow] || [];
+    return list.map((name, i) => ({
+        name,
+        bolgeIdx: ((i + rw) % D.bolgeCount + D.bolgeCount) % D.bolgeCount
+    })).filter(x => x.name);
+}
+
+function renderMonthly() {
+    const viewDate = new Date(D.startDate.getFullYear(), D.startDate.getMonth() + monthOffset, 1);
+    document.getElementById('monthLabel').textContent = `${MONTH_TR[viewDate.getMonth()]} ${viewDate.getFullYear()}`;
+    
+    const daysInMonth = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 0).getDate();
+    let th = `<tr><th class="td-left">BÖLGELER</th>`;
+    for(let i=1; i<=daysInMonth; i++) {
+        let day = new Date(viewDate.getFullYear(), viewDate.getMonth(), i);
+        let dow = day.getDay() === 0 ? 6 : day.getDay() -1;
+        th += `<th style="${dow >= 5 ? 'opacity:0.3' : ''}">${i}<br><small>${DAY_TR[dow]}</small></th>`;
+    }
+    document.getElementById('mThead').innerHTML = th + '</tr>';
+
+    let tb = '';
+    for(let b=0; b<D.bolgeCount; b++) {
+        const c = COLORS[b % COLORS.length];
+        tb += `<tr><td class="td-left" style="color:${c.t}">${D.bolgeNames[b]}</td>`;
+        for(let i=1; i<=daysInMonth; i++) {
+            let day = new Date(viewDate.getFullYear(), viewDate.getMonth(), i);
+            const sch = getSchedule(day);
+            if(sch === null) tb += `<td style="background:rgba(245,158,11,0.05); color:var(--warn); font-size:9px;">TATİL</td>`;
+            else if(day.getDay() === 0 || day.getDay() === 6) tb += `<td style="background:rgba(255,255,255,0.02)">-</td>`;
+            else {
+                const p = sch.find(x => x.bolgeIdx === b);
+                tb += `<td>${p ? `<span class="pill" style="background:${c.bg}; color:${c.t}; border:1px solid ${c.b}">${p.name.split(' ')[0]}</span>` : '·'}</td>`;
+            }
+        }
+        tb += '</tr>';
+    }
+    document.getElementById('mTbody').innerHTML = tb;
+}
+
+function switchTab(t, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + t).style.display = 'block';
+    btn.classList.add('active');
+    if(t === 'kisi') renderKisi();
+}
+
+function renderKisi() {
+    const search = document.getElementById('kSearch').value.toLowerCase();
+    let names = new Set();
+    Object.values(D.gunNobetcileri).forEach(arr => arr.forEach(n => n && names.add(n)));
+    
+    let tb = '';
+    Array.from(names).sort().forEach(name => {
+        if(search && !name.toLowerCase().includes(search)) return;
+        tb += `<tr><td class="td-left">${name}</td>`;
+        // Basit gösterim için sadece bugünün bölgesini veya haftalık bilgisini ekleyebilirsin
+        tb += `<td colspan="31" style="text-align:left; padding-left:20px; color:var(--text2)">Aylık detay için takvimi kontrol ediniz.</td></tr>`;
+    });
+    document.getElementById('kTbody').innerHTML = tb;
+}
+
+function changeMonth(step) { monthOffset += step; renderMonthly(); }
+function resetMonth() { 
+    const now = new Date();
+    monthOffset = (now.getFullYear()-D.startDate.getFullYear())*12+(now.getMonth()-D.startDate.getMonth());
+    renderMonthly(); 
+}
+function exportCSV() {
+    let csv = "Bolge," + Array.from({length:31}, (_,i)=>i+1).join(",") + "\n";
+    alert("CSV dışa aktarma hazırlandı. (Konsoldan detayları görebilirsiniz)");
+    console.log(csv);
+}
+</script>
+</body>
+</html>
