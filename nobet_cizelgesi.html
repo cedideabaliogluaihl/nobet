@@ -3,112 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nöbet Çizelgesi Sistemi</title>
+<title>Nöbet Çizelgesi</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0d0f14;
-    --surface: #151820;
-    --surface2: #1c2030;
-    --border: #2a3040;
-    --accent: #3b82f6;
-    --accent2: #22d3ee;
-    --success: #10b981;
-    --danger: #ef4444;
-    --text: #e2e8f0;
-    --text2: #94a3b8;
-    --text3: #475569;
-    --mono: 'IBM Plex Mono', monospace;
-    --sans: 'IBM Plex Sans', sans-serif;
+    --bg:#0d0f14; --surface:#151820; --surface2:#1c2030; --border:#2a3040;
+    --accent:#3b82f6; --accent2:#22d3ee; --success:#10b981; --danger:#ef4444;
+    --text:#e2e8f0; --text2:#94a3b8; --text3:#475569;
+    --mono:'IBM Plex Mono',monospace; --sans:'IBM Plex Sans',sans-serif;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background-image: linear-gradient(rgba(59,130,246,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.03) 1px,transparent 1px);
-    background-size: 40px 40px; pointer-events: none; z-index: 0;
-  }
-  .app { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 24px; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}
+  body::before{content:'';position:fixed;inset:0;
+    background-image:linear-gradient(rgba(59,130,246,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.03) 1px,transparent 1px);
+    background-size:40px 40px;pointer-events:none;z-index:0}
+  .app{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:24px}
 
-  header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
-  .logo { width: 42px; height: 42px; background: linear-gradient(135deg,var(--accent),var(--accent2)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-  header h1 { font-family: var(--mono); font-size: 18px; font-weight: 600; }
-  header p { font-size: 12px; color: var(--text2); margin-top: 2px; }
-  .hbadge { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--accent2); background: rgba(34,211,238,0.08); border: 1px solid rgba(34,211,238,0.2); padding: 4px 10px; border-radius: 20px; }
+  header{display:flex;align-items:center;gap:16px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+  .logo{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+  header h1{font-family:var(--mono);font-size:18px;font-weight:600}
+  header p{font-size:12px;color:var(--text2);margin-top:2px}
+  .hbadge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent2);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);padding:4px 10px;border-radius:20px}
 
-  .tabs { display: flex; gap: 4px; margin-bottom: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 4px; width: fit-content; }
-  .tab { padding: 8px 20px; border-radius: 7px; border: none; background: transparent; color: var(--text2); font-family: var(--sans); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
-  .tab.active { background: var(--accent); color: white; }
-  .tab:hover:not(.active) { background: var(--surface2); color: var(--text); }
+  .tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content}
+  .tab{padding:8px 20px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+  .tab.active{background:var(--accent);color:white}
+  .tab:hover:not(.active){background:var(--surface2);color:var(--text)}
+  .panel{display:none}.panel.active{display:block}
 
-  .panel { display: none; }
-  .panel.active { display: block; }
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
+  .ctitle{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent2);letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+  .ctitle::before{content:'';width:3px;height:14px;background:var(--accent2);border-radius:2px}
 
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
-  .ctitle { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent2); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
-  .ctitle::before { content: ''; width: 3px; height: 14px; background: var(--accent2); border-radius: 2px; }
+  label{display:block;font-size:12px;color:var(--text2);font-weight:500;margin-bottom:6px;margin-top:14px}
+  input[type=text],input[type=date],input[type=number],select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;transition:border-color .2s}
+  input:focus,select:focus{border-color:var(--accent)}
+  select option{background:var(--bg)}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .setup-grid{display:grid;grid-template-columns:360px 1fr;gap:20px}
 
-  label { display: block; font-size: 12px; color: var(--text2); font-weight: 500; margin-bottom: 6px; margin-top: 14px; }
-  input[type=text],input[type=date],input[type=number],select { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; color: var(--text); font-family: var(--mono); font-size: 13px; outline: none; transition: border-color 0.2s; }
-  input:focus,select:focus { border-color: var(--accent); }
-  select option { background: var(--bg); }
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  /* Bölge listesi */
+  .bolge-list{display:flex;flex-direction:column;gap:6px;max-height:300px;overflow-y:auto}
+  .bolge-item{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px}
+  .bno{font-family:var(--mono);font-size:11px;border-radius:4px;padding:2px 7px;flex-shrink:0;min-width:36px;text-align:center}
+  .bolge-item input{border:none;background:transparent;padding:0;font-size:13px;flex:1}
+  .bolge-item input:focus{outline:none}
+  .bx{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;line-height:1;transition:color .2s}
+  .bx:hover{color:var(--danger)}
+  .btn-add{background:none;border:1px dashed var(--border);border-radius:8px;color:var(--text2);font-family:var(--sans);font-size:13px;padding:8px;cursor:pointer;transition:all .2s;width:100%}
+  .btn-add:hover{border-color:var(--accent);color:var(--accent)}
 
-  .setup-grid { display: grid; grid-template-columns: 360px 1fr; gap: 20px; }
+  /* Gün grupları */
+  .gun-groups{display:flex;flex-direction:column;gap:12px}
+  .gun-group{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px}
+  .gun-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .gun-label{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent2)}
+  .gun-count{font-size:11px;color:var(--text3)}
+  .gun-nb-list{display:flex;flex-direction:column;gap:5px;max-height:220px;overflow-y:auto}
+  .nb-item{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:6px 10px}
+  .nbno{font-family:var(--mono);font-size:11px;color:var(--text3);min-width:22px}
+  .nb-item input{border:none;background:transparent;padding:0;font-size:13px;flex:1}
+  .nb-item input:focus{outline:none}
 
-  .bolge-list { display: flex; flex-direction: column; gap: 6px; max-height: 300px; overflow-y: auto; }
-  .bolge-item { display: flex; align-items: center; gap: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; }
-  .bno { font-family: var(--mono); font-size: 11px; border-radius: 4px; padding: 2px 7px; flex-shrink: 0; min-width: 36px; text-align: center; }
-  .bolge-item input { border: none; background: transparent; padding: 0; font-size: 13px; flex: 1; }
-  .bolge-item input:focus { outline: none; }
-  .bx { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 18px; line-height: 1; transition: color 0.2s; }
-  .bx:hover { color: var(--danger); }
-  .btn-add { background: none; border: 1px dashed var(--border); border-radius: 8px; color: var(--text2); font-family: var(--sans); font-size: 13px; padding: 8px; cursor: pointer; transition: all 0.2s; width: 100%; }
-  .btn-add:hover { border-color: var(--accent); color: var(--accent); }
+  /* Butonlar */
+  .btn{padding:10px 20px;border-radius:8px;border:none;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+  .btn-p{background:var(--accent);color:white}.btn-p:hover{background:#2563eb}
+  .btn-o{background:transparent;border:1px solid var(--border);color:var(--text2)}.btn-o:hover{border-color:var(--accent);color:var(--accent)}
+  .btn-sm{padding:7px 14px;font-size:12px}
 
-  .nb-list { display: flex; flex-direction: column; gap: 5px; max-height: 460px; overflow-y: auto; }
-  .nb-item { display: flex; align-items: center; gap: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; }
-  .nbno { font-family: var(--mono); font-size: 11px; color: var(--text3); min-width: 24px; }
-  .nb-item input { border: none; background: transparent; padding: 0; font-size: 13px; flex: 1; }
-  .nb-item input:focus { outline: none; }
+  /* Toolbar */
+  .toolbar{display:flex;gap:12px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
+  .nav{display:flex;align-items:center;gap:8px}
+  .btn-nav{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:all .2s}
+  .btn-nav:hover{border-color:var(--accent);color:var(--accent)}
+  .wlabel{font-family:var(--mono);font-size:13px;color:var(--text);min-width:230px;text-align:center}
 
-  .btn { padding: 10px 20px; border-radius: 8px; border: none; font-family: var(--sans); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
-  .btn-p { background: var(--accent); color: white; }
-  .btn-p:hover { background: #2563eb; }
-  .btn-o { background: transparent; border: 1px solid var(--border); color: var(--text2); }
-  .btn-o:hover { border-color: var(--accent); color: var(--accent); }
-  .btn-sm { padding: 7px 14px; font-size: 12px; }
+  /* Tablolar */
+  .twrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{background:var(--surface2);padding:12px 14px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap}
+  td{padding:10px 14px;border-bottom:1px solid rgba(42,48,64,.5);border-right:1px solid rgba(42,48,64,.3);vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  td:last-child{border-right:none}
+  tbody tr:hover td{background:rgba(28,32,48,.6)}
+  .td-b{font-family:var(--mono);font-size:12px;font-weight:500;background:var(--surface)!important;min-width:130px}
+  .tc{text-align:center}
+  .today-bg{background:rgba(59,130,246,.05)!important}
+  .today-th{color:var(--accent)!important}
 
-  .toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
-  .nav { display: flex; align-items: center; gap: 8px; }
-  .btn-nav { background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; transition: all 0.2s; }
-  .btn-nav:hover { border-color: var(--accent); color: var(--accent); }
-  .wlabel { font-family: var(--mono); font-size: 13px; color: var(--text); min-width: 230px; text-align: center; }
+  .pill{display:inline-block;font-family:var(--mono);font-size:11px;padding:3px 10px;border-radius:20px;white-space:nowrap}
+  .izin{font-size:11px;color:var(--text3);font-family:var(--mono)}
 
-  .twrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { background: var(--surface2); padding: 12px 14px; font-family: var(--mono); font-size: 11px; color: var(--text2); border-bottom: 1px solid var(--border); white-space: nowrap; }
-  td { padding: 10px 14px; border-bottom: 1px solid rgba(42,48,64,0.5); border-right: 1px solid rgba(42,48,64,0.3); vertical-align: middle; }
-  tr:last-child td { border-bottom: none; }
-  td:last-child { border-right: none; }
-  tbody tr:hover td { background: rgba(28,32,48,0.6); }
-  .td-b { font-family: var(--mono); font-size: 12px; font-weight: 500; background: var(--surface) !important; min-width: 130px; }
-  .tc { text-align: center; }
-  .today-bg { background: rgba(59,130,246,0.05) !important; }
-  .today-th { color: var(--accent) !important; }
+  .infobox{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.8}
+  .infobox strong{color:var(--accent2)}
 
-  .pill { display: inline-block; font-family: var(--mono); font-size: 11px; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
-  .izin { font-size: 11px; color: var(--text3); font-family: var(--mono); }
-
-  .infobox { background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.2); border-radius: 8px; padding: 12px 16px; font-size: 12px; color: var(--text2); margin-bottom: 16px; line-height: 1.7; }
-  .infobox strong { color: var(--accent2); }
-
-  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--success); color: white; padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 500; z-index: 1000; transform: translateY(80px); opacity: 0; transition: all 0.3s; pointer-events: none; }
-  .toast.show { transform: translateY(0); opacity: 1; }
-
-  ::-webkit-scrollbar { width: 5px; height: 5px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  .toast{position:fixed;bottom:24px;right:24px;background:var(--success);color:white;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;z-index:1000;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none}
+  .toast.show{transform:translateY(0);opacity:1}
+  ::-webkit-scrollbar{width:5px;height:5px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 </style>
 </head>
 <body>
@@ -118,7 +111,7 @@
   <div class="logo">🛡</div>
   <div>
     <h1>NÖBET ÇİZELGESİ SİSTEMİ</h1>
-    <p>Günlük 8 kişi nöbette · Haftalık bölge rotasyonu · Sırayla nöbet</p>
+    <p>Haftada 1 gün nöbet · Her hafta farklı bölge</p>
   </div>
   <div class="hbadge" id="hbadge">— kurulum bekleniyor —</div>
 </header>
@@ -132,14 +125,14 @@
 <!-- KURULUM -->
 <div id="panel-setup" class="panel active">
   <div class="setup-grid">
-    <div style="display:flex;flex-direction:column;gap:16px">
 
+    <div style="display:flex;flex-direction:column;gap:16px">
       <div class="card">
         <div class="ctitle">Genel Ayarlar</div>
         <label>Başlangıç Tarihi (İlk Pazartesi)</label>
         <input type="date" id="startDate" />
         <div class="row2" style="margin-top:0">
-          <div><label>Bölge Sayısı</label><input type="number" id="bolgeCount" value="8" min="1" max="20" onchange="updateBolgeList()" /></div>
+          <div><label>Bölge Sayısı</label><input type="number" id="bolgeCount" value="8" min="1" max="20" onchange="updateBolgeList()"/></div>
           <div><label>Çalışma Günleri</label>
             <select id="workDays">
               <option value="5">Pzt–Cum (5 gün)</option>
@@ -150,11 +143,10 @@
         </div>
         <div class="infobox" style="margin-top:16px">
           <strong>Sistem Mantığı:</strong><br>
-          • Her gün <strong>8 kişi</strong> nöbette (1 kişi/bölge)<br>
-          • 40 kişi <strong>sırayla</strong> nöbete giriyor<br>
-          &nbsp;&nbsp;→ Pzt: 1-8. kişi &nbsp;|&nbsp; Sal: 9-16. kişi &nbsp;|&nbsp; ...<br>
-          • Her <strong>hafta başında</strong> bölgeler 1 ileri kayar<br>
-          &nbsp;&nbsp;→ Bu hafta B1'deysen, haftaya B2'desin
+          • Her kişi <strong>haftada sadece 1 gün</strong> nöbet tutar<br>
+          • O gün <strong>8 farklı kişi</strong> nöbete girer (1 kişi/bölge)<br>
+          • Her hafta bölgeler <strong>1 ileri kayar</strong><br>
+          &nbsp;&nbsp;→ Bu hafta Zemin → Haftaya A1 → Sonraki A2...
         </div>
         <button class="btn btn-p" onclick="applySetup()">✓ Kurulumu Uygula</button>
       </div>
@@ -166,16 +158,19 @@
       </div>
     </div>
 
+    <!-- Sağ: Gün bazlı nöbetçi ataması -->
     <div class="card">
-      <div class="ctitle">Nöbetçiler &nbsp;<span style="font-weight:400;color:var(--text3);font-size:11px" id="nbcnt">(0 kişi)</span></div>
-      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-        <button class="btn btn-o btn-sm" onclick="autoFill()">🔀 Örnek İsim</button>
-        <button class="btn btn-o btn-sm" onclick="addNb()">+ Ekle</button>
-        <button class="btn btn-o btn-sm" onclick="removeLastNb()">− Son Kaldır</button>
+      <div class="ctitle">Nöbetçiler — Gün Bazlı Atama</div>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:14px">
+        Her gün için <strong style="color:var(--accent2)">bölge sayısı kadar</strong> kişi atayın. 
+        Bu kişiler o gün nöbet tutacak, bölgeleri her hafta otomatik değişecek.
+      </p>
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+        <button class="btn btn-o btn-sm" onclick="autoFill()">🔀 Örnek İsim Doldur</button>
       </div>
-      <p style="font-size:11px;color:var(--text3);margin-bottom:10px">Sıra önemli! 1. kişi → Pzt 1. nöbet dilimi, 9. kişi → Sal 1. nöbet dilimi...</p>
-      <div class="nb-list" id="nbList"></div>
+      <div class="gun-groups" id="gunGroups"></div>
     </div>
+
   </div>
 </div>
 
@@ -207,7 +202,8 @@
       <button class="btn-nav" onclick="nextWK()">→</button>
     </div>
     <button class="btn btn-o btn-sm" onclick="goTodayK()">Bugün</button>
-    <input type="text" id="kSearch" placeholder="İsim ara..." style="width:200px;padding:7px 12px;font-size:12px;margin-left:8px" oninput="renderKisi()" />
+    <input type="text" id="kSearch" placeholder="İsim ara..." style="width:200px;padding:7px 12px;font-size:12px;margin-left:8px" oninput="renderKisi()"/>
+    <span style="font-size:12px;color:var(--text3);margin-left:4px">— haftada 1 gün nöbet, bölge değişiyor</span>
   </div>
   <div class="twrap">
     <table><thead id="kThead"></thead><tbody id="kTbody"></tbody></table>
@@ -218,14 +214,19 @@
 <div class="toast" id="toast"></div>
 
 <script>
+// ============================================================
+// STATE
+// ============================================================
 const S = {
   startDate: null,
   bolgeCount: 8,
   workDays: 5,
   bolgeNames: [],
-  nobetciler: [],
-  wo: 0,   // bölge çizelgesi hafta offset
-  wok: 0,  // kişi çizelgesi hafta offset
+  // gunNobetcileri[d] = [kişi adı, kişi adı, ...] (d: 0=Pzt, 1=Sal, ...)
+  // Her gün bolgeCount kadar kişi
+  gunNobetcileri: {},
+  wo: 0,
+  wok: 0,
 };
 
 const DAY = ['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'];
@@ -240,61 +241,43 @@ const C = [
   {bg:'rgba(248,113,113,.15)',t:'#f87171',b:'rgba(248,113,113,.3)'},
 ];
 
-// CORE: Bir günün nöbet listesi
-// dayIndex = başlangıçtan itibaren iş günü sırası (0, 1, 2, ...)
-// Her günde bolgeCount kadar slot var
-// slot i → nobetciler[(dayIndex * bolgeCount + i) % n]
-// O nöbetçinin bölgesi: haftalık rotasyon
-//   weekNum = floor(dayIndex / workDays)
-//   kişinin başlangıç bölgesi = nbIndex % bolgeCount
-//   bu haftaki bölge = (başlangıç + weekNum) % bolgeCount
+// ============================================================
+// CORE LOGIC
+// ============================================================
+// gunNobetcileri[d][i] = i. slot için kişi adı
+// Bu kişinin d. gündeki bölgesi:
+//   initBolge = i  (0. kişi → 0. bölge, 1. kişi → 1. bölge, ...)
+//   weekNum = wo (hafta offset)
+//   bolge = (initBolge + weekNum) % bolgeCount
 
-function getNobetDay(wo, d) {
-  // wo: hafta offset, d: gün (0=Pzt)
-  const dayIndex = wo * S.workDays + d;
-  const n = S.nobetciler.length;
-  const b = S.bolgeCount;
-  if (n === 0) return [];
-  const weekNum = wo; // hafta offset = weekNum (başlangıçtan)
-  const res = [];
-  for (let slot = 0; slot < b; slot++) {
-    const nbIdx = (dayIndex * b + slot) % n;
-    const nb = S.nobetciler[nbIdx];
-    const initBolge = nbIdx % b;
-    const bolge = (initBolge + weekNum) % b;
-    res.push({ nb, bolge, nbIdx });
-  }
-  return res;
+function getBolgeForSlot(slotIndex, weekOffset) {
+  return (slotIndex + weekOffset) % S.bolgeCount;
 }
 
-// Kişi bazlı: belirli kişi, belirli gün → nerede?
-function getKisiDay(nbIdx, wo, d) {
-  const dayIndex = wo * S.workDays + d;
-  const n = S.nobetciler.length;
-  const b = S.bolgeCount;
-  const weekNum = wo;
-  for (let slot = 0; slot < b; slot++) {
-    const idx = (dayIndex * b + slot) % n;
-    if (idx === nbIdx) {
-      const initBolge = nbIdx % b;
-      const bolge = (initBolge + weekNum) % b;
-      return bolge;
-    }
-  }
-  return null; // izinli
+// Belirli bir günün nöbet listesi: [{name, bolgeIndex}]
+function getDaySchedule(dayIndex, weekOffset) {
+  const list = S.gunNobetcileri[dayIndex] || [];
+  return list.map((name, i) => ({
+    name,
+    bolgeIndex: getBolgeForSlot(i, weekOffset),
+  }));
 }
 
+// ============================================================
 // INIT
+// ============================================================
 window.onload = () => {
   const t = new Date();
   const diff = t.getDay() === 0 ? -6 : 1 - t.getDay();
   const m = new Date(t); m.setDate(t.getDate() + diff);
   document.getElementById('startDate').value = iso(m);
   updateBolgeList();
-  genNbList(40);
+  renderGunGroups();
 };
 
+// ============================================================
 // TABS
+// ============================================================
 function showTab(n, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -304,7 +287,9 @@ function showTab(n, btn) {
   if (n === 'kisi') renderKisi();
 }
 
+// ============================================================
 // KURULUM
+// ============================================================
 function updateBolgeList() {
   const count = parseInt(document.getElementById('bolgeCount').value) || 8;
   const list = document.getElementById('bolgeList');
@@ -316,10 +301,11 @@ function updateBolgeList() {
     list.insertAdjacentHTML('beforeend', `
       <div class="bolge-item">
         <span class="bno" style="color:${c.t};background:${c.bg}">B${i+1}</span>
-        <input type="text" value="${v}" id="blg_${i}" placeholder="Bölge adı" />
+        <input type="text" value="${v}" id="blg_${i}" placeholder="Bölge adı"/>
         <button class="bx" onclick="rmBolge(${i})">×</button>
       </div>`);
   }
+  renderGunGroups();
 }
 
 function addBolge() {
@@ -336,47 +322,62 @@ function rmBolge(i) {
   vals.forEach((v, idx) => { const e = document.getElementById('blg_'+idx); if(e) e.value = v; });
 }
 
-function genNbList(count) {
-  const list = document.getElementById('nbList');
-  list.innerHTML = '';
-  for (let i = 0; i < count; i++) {
-    list.insertAdjacentHTML('beforeend', `
-      <div class="nb-item">
-        <span class="nbno">${i+1}.</span>
-        <input type="text" id="nb_${i}" placeholder="Ad Soyad" oninput="updNbCnt()" />
+function renderGunGroups() {
+  const wd = parseInt(document.getElementById('workDays').value) || 5;
+  const bc = parseInt(document.getElementById('bolgeCount').value) || 8;
+  const container = document.getElementById('gunGroups');
+  
+  // Mevcut değerleri kaydet
+  const savedVals = {};
+  container.querySelectorAll('[data-nb]').forEach(inp => {
+    savedVals[inp.dataset.nb] = inp.value;
+  });
+
+  container.innerHTML = '';
+  for (let d = 0; d < wd; d++) {
+    const c = C[d % C.length];
+    let nbRows = '';
+    for (let i = 0; i < bc; i++) {
+      const key = `${d}_${i}`;
+      const saved = savedVals[key] || (S.gunNobetcileri[d] && S.gunNobetcileri[d][i]) || '';
+      nbRows += `
+        <div class="nb-item">
+          <span class="nbno" style="color:${C[i%C.length].t}">${i+1}.</span>
+          <input type="text" data-nb="${key}" data-day="${d}" data-slot="${i}"
+            value="${saved}" placeholder="${S.bolgeNames[i] || 'Bölge '+(i+1)} nöbetçisi"
+            oninput="liveUpdate(this)"/>
+        </div>`;
+    }
+    container.insertAdjacentHTML('beforeend', `
+      <div class="gun-group">
+        <div class="gun-header">
+          <span class="gun-label" style="color:${c.t}">● ${DAY[d]}</span>
+          <span class="gun-count">${bc} nöbetçi · 1 kişi/bölge</span>
+        </div>
+        <div class="gun-nb-list">${nbRows}</div>
       </div>`);
   }
-  updNbCnt();
 }
 
-function addNb() {
-  const n = document.getElementById('nbList').querySelectorAll('.nb-item').length;
-  document.getElementById('nbList').insertAdjacentHTML('beforeend', `
-    <div class="nb-item">
-      <span class="nbno">${n+1}.</span>
-      <input type="text" id="nb_${n}" placeholder="Ad Soyad" oninput="updNbCnt()" />
-    </div>`);
-  updNbCnt();
-}
-
-function removeLastNb() {
-  const items = document.getElementById('nbList').querySelectorAll('.nb-item');
-  if (items.length > 1) items[items.length-1].remove();
-  updNbCnt();
-}
-
-function updNbCnt() {
-  const n = [...document.querySelectorAll('[id^=nb_]')].filter(i=>i.value.trim()).length;
-  document.getElementById('nbcnt').textContent = `(${n} kişi)`;
+function liveUpdate(inp) {
+  const d = parseInt(inp.dataset.day);
+  const slot = parseInt(inp.dataset.slot);
+  if (!S.gunNobetcileri[d]) S.gunNobetcileri[d] = [];
+  S.gunNobetcileri[d][slot] = inp.value.trim();
 }
 
 function autoFill() {
-  const fn = ['Ali','Veli','Ahmet','Mehmet','Mustafa','Hüseyin','İbrahim','Osman','Yusuf','Hasan','Ayşe','Fatma','Emine','Hatice','Zeynep','Elif','Merve','Selin','Derya','Canan','Kemal','Cemal','Barış','Emre','Serkan','Tolga','Onur','Murat','Erkan','Deniz','Seda','Burcu','Pınar','Gül','Nalan','Leyla','Sevda','Aslı','Tuğçe','Şule'];
+  const fn = ['Ali','Veli','Ahmet','Mehmet','Mustafa','Hüseyin','İbrahim','Osman','Yusuf','Hasan',
+    'Ayşe','Fatma','Emine','Hatice','Zeynep','Elif','Merve','Selin','Derya','Canan',
+    'Kemal','Cemal','Barış','Emre','Serkan','Tolga','Onur','Murat','Erkan','Deniz',
+    'Seda','Burcu','Pınar','Gül','Nalan','Leyla','Sevda','Aslı','Tuğçe','Şule'];
   const ln = ['Yılmaz','Kaya','Demir','Çelik','Şahin','Yıldız','Arslan','Öztürk','Aydın','Özdemir'];
-  document.querySelectorAll('[id^=nb_]').forEach((inp, i) => {
-    if (!inp.value.trim()) inp.value = fn[i % fn.length] + ' ' + ln[Math.floor(i/10) % ln.length];
+  document.querySelectorAll('[data-nb]').forEach((inp, idx) => {
+    if (!inp.value.trim()) {
+      inp.value = fn[idx % fn.length] + ' ' + ln[Math.floor(idx / fn.length) % ln.length];
+      liveUpdate(inp);
+    }
   });
-  updNbCnt();
 }
 
 function applySetup() {
@@ -385,22 +386,35 @@ function applySetup() {
   S.startDate = new Date(sv + 'T00:00:00');
   S.bolgeCount = parseInt(document.getElementById('bolgeCount').value);
   S.workDays = parseInt(document.getElementById('workDays').value);
+
   S.bolgeNames = [];
   for (let i = 0; i < S.bolgeCount; i++) {
     const e = document.getElementById('blg_'+i);
     S.bolgeNames.push(e ? e.value.trim() || `Bölge ${i+1}` : `Bölge ${i+1}`);
   }
-  S.nobetciler = [];
-  document.querySelectorAll('[id^=nb_]').forEach((inp, i) => {
-    const nm = inp.value.trim();
-    if (nm) S.nobetciler.push({ id: i, name: nm });
+
+  // Tüm inputları oku
+  S.gunNobetcileri = {};
+  document.querySelectorAll('[data-nb]').forEach(inp => {
+    const d = parseInt(inp.dataset.day);
+    const slot = parseInt(inp.dataset.slot);
+    if (!S.gunNobetcileri[d]) S.gunNobetcileri[d] = [];
+    S.gunNobetcileri[d][slot] = inp.value.trim();
   });
-  if (!S.nobetciler.length) { toast('En az 1 nöbetçi ekleyin!', 1); return; }
-  document.getElementById('hbadge').textContent = `${S.nobetciler.length} nöbetçi · ${S.bolgeCount} bölge · ${S.workDays} gün/hafta`;
-  toast(`✓ Kurulum tamam: ${S.nobetciler.length} nöbetçi, ${S.bolgeCount} bölge`);
+
+  // Toplam kişi sayısı
+  let total = 0;
+  Object.values(S.gunNobetcileri).forEach(arr => { total += arr.filter(x=>x).length; });
+  if (total === 0) { toast('En az 1 nöbetçi girin!', 1); return; }
+
+  document.getElementById('hbadge').textContent =
+    `${total} nöbetçi · ${S.bolgeCount} bölge · ${S.workDays} gün/hafta`;
+  toast(`✓ Kurulum tamam`);
 }
 
-// BÖLGE ÇİZELGESİ
+// ============================================================
+// BÖLGE ÇİZELGESİ  — satır=bölge, sütun=gün
+// ============================================================
 function renderCizelge() {
   if (!S.startDate) return;
   const wo = S.wo;
@@ -408,6 +422,7 @@ function renderCizelge() {
   document.getElementById('wlabel').textContent = fmtRange(ws);
   const today = new Date(); today.setHours(0,0,0,0);
 
+  // Thead
   let th = '<tr><th style="text-align:left;min-width:130px;color:var(--accent2)">BÖLGE</th>';
   for (let d = 0; d < S.workDays; d++) {
     const day = addDays(ws, d);
@@ -417,18 +432,22 @@ function renderCizelge() {
   th += '</tr>';
   document.getElementById('cThead').innerHTML = th;
 
+  // Tbody — satır=bölge
   let tb = '';
   for (let b = 0; b < S.bolgeCount; b++) {
     const c = C[b % C.length];
-    tb += `<tr><td class="td-b" style="color:${c.t}"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${c.t};margin-right:8px"></span>${S.bolgeNames[b]}</td>`;
+    tb += `<tr><td class="td-b" style="color:${c.t}">
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${c.t};margin-right:8px"></span>
+      ${S.bolgeNames[b]}
+    </td>`;
     for (let d = 0; d < S.workDays; d++) {
       const day = addDays(ws, d);
       const isTd = day.getTime() === today.getTime();
-      const nobet = getNobetDay(wo, d);
-      const a = nobet.find(x => x.bolge === b);
+      const schedule = getDaySchedule(d, wo);
+      const person = schedule.find(x => x.bolgeIndex === b);
       const bg = isTd ? ' today-bg' : '';
-      if (a) {
-        tb += `<td class="tc${bg}"><span class="pill" style="background:${c.bg};color:${c.t};border:1px solid ${c.b}">${a.nb.name}</span></td>`;
+      if (person && person.name) {
+        tb += `<td class="tc${bg}"><span class="pill" style="background:${c.bg};color:${c.t};border:1px solid ${c.b}">${person.name}</span></td>`;
       } else {
         tb += `<td class="tc${bg}"><span class="izin">—</span></td>`;
       }
@@ -447,7 +466,10 @@ function goToday() {
   renderCizelge();
 }
 
-// KİŞİ BAZLI
+// ============================================================
+// KİŞİ BAZLI — satır=kişi, sütun=hafta
+// Her kişi haftada 1 gün nöbet → o günü ve bölgeyi göster
+// ============================================================
 function renderKisi() {
   if (!S.startDate) return;
   const wo = S.wok;
@@ -456,35 +478,60 @@ function renderKisi() {
   const today = new Date(); today.setHours(0,0,0,0);
   const search = (document.getElementById('kSearch').value || '').toLowerCase();
 
-  let th = '<tr><th style="text-align:left;min-width:170px">#&nbsp;&nbsp;NÖBETÇİ</th>';
+  // Tüm kişileri topla: {name, day, slot}
+  const allPersons = [];
   for (let d = 0; d < S.workDays; d++) {
-    const day = addDays(ws, d);
-    const isTd = day.getTime() === today.getTime();
-    th += `<th class="tc${isTd?' today-th':''}">${DAY[d]}<br><span style="font-weight:400;color:var(--text3)">${fmt(day)}</span></th>`;
+    const list = S.gunNobetcileri[d] || [];
+    list.forEach((name, slot) => {
+      if (name && (!search || name.toLowerCase().includes(search))) {
+        allPersons.push({ name, day: d, slot });
+      }
+    });
+  }
+
+  // Thead: Kişi | Nöbet Günü | Bu Hafta Bölgesi | Sonraki 4 Hafta
+  let th = '<tr>';
+  th += '<th style="text-align:left;min-width:160px">NÖBETÇİ</th>';
+  th += '<th style="text-align:center">Nöbet Günü</th>';
+  // 5 hafta göster (mevcut + sonraki 4)
+  for (let w = 0; w < 5; w++) {
+    const wws = addDays(ws, w * 7);
+    const wwe = addDays(wws, S.workDays - 1);
+    const isCurrent = w === 0;
+    th += `<th class="tc${isCurrent?' today-th':''}" style="min-width:110px">
+      ${w === 0 ? 'Bu Hafta' : w + '. Hafta Sonra'}<br>
+      <span style="font-weight:400;color:var(--text3);font-size:10px">${fmt(wws)}–${fmt(wwe)}</span>
+    </th>`;
   }
   th += '</tr>';
 
   let tb = '';
-  S.nobetciler.filter(nb => nb.name.toLowerCase().includes(search)).forEach(nb => {
-    const nbIdx = S.nobetciler.indexOf(nb);
-    tb += `<tr><td style="font-weight:500;white-space:nowrap"><span style="color:var(--text3);font-family:var(--mono);font-size:11px;margin-right:6px">${nbIdx+1}.</span>${nb.name}</td>`;
-    for (let d = 0; d < S.workDays; d++) {
-      const day = addDays(ws, d);
-      const isTd = day.getTime() === today.getTime();
-      const bolge = getKisiDay(nbIdx, wo, d);
-      const bg = isTd ? 'background:rgba(59,130,246,0.05);' : '';
-      if (bolge !== null) {
-        const c = C[bolge % C.length];
-        tb += `<td class="tc" style="${bg}"><span class="pill" style="background:${c.bg};color:${c.t};border:1px solid ${c.b}">${S.bolgeNames[bolge]}</span></td>`;
-      } else {
-        tb += `<td class="tc" style="${bg}"><span class="izin">izin</span></td>`;
-      }
+  allPersons.forEach(person => {
+    const dayC = C[person.day % C.length];
+    tb += '<tr>';
+    tb += `<td style="font-weight:500;white-space:nowrap">${person.name}</td>`;
+    tb += `<td class="tc"><span class="pill" style="background:${dayC.bg};color:${dayC.t};border:1px solid ${dayC.b}">${DAY[person.day]}</span></td>`;
+
+    for (let w = 0; w < 5; w++) {
+      const weekOffset = wo + w;
+      const bolgeIdx = getBolgeForSlot(person.slot, weekOffset);
+      const c = C[bolgeIdx % C.length];
+      const bolgeAd = S.bolgeNames[bolgeIdx] || `Bölge ${bolgeIdx+1}`;
+      const isCurrent = w === 0;
+      // O haftanın nöbet günü
+      const nobetGunu = addDays(addDays(S.startDate, weekOffset * 7), person.day);
+      const isToday = nobetGunu.getTime() === today.getTime();
+      const bgStyle = isToday ? 'background:rgba(59,130,246,0.08);' : '';
+      tb += `<td class="tc" style="${bgStyle}${isCurrent?'font-weight:600':''}">
+        <span class="pill" style="background:${c.bg};color:${c.t};border:1px solid ${c.b}">${bolgeAd}</span>
+        <div style="font-size:10px;color:var(--text3);margin-top:3px;font-family:var(--mono)">${fmt(nobetGunu)}</div>
+      </td>`;
     }
     tb += '</tr>';
   });
 
   document.getElementById('kThead').innerHTML = th;
-  document.getElementById('kTbody').innerHTML = tb;
+  document.getElementById('kTbody').innerHTML = tb || '<tr><td colspan="10" style="text-align:center;color:var(--text3);padding:30px">Kişi bulunamadı</td></tr>';
 }
 
 function prevWK() { S.wok--; renderKisi(); }
@@ -496,36 +543,41 @@ function goTodayK() {
   renderKisi();
 }
 
-// EXPORT
+// ============================================================
+// EXPORT CSV
+// ============================================================
 function exportCSV() {
   if (!S.startDate) return;
   const wo = S.wo;
   const ws = addDays(S.startDate, wo * 7);
   let csv = 'Bölge';
-  for (let d = 0; d < S.workDays; d++) csv += `,${DAY[d]} ${fmt(addDays(ws, d))}`;
+  for (let d = 0; d < S.workDays; d++) csv += `,${DAY[d]} ${fmt(addDays(ws,d))}`;
   csv += '\n';
   for (let b = 0; b < S.bolgeCount; b++) {
     csv += `"${S.bolgeNames[b]}"`;
     for (let d = 0; d < S.workDays; d++) {
-      const a = getNobetDay(wo, d).find(x => x.bolge === b);
-      csv += a ? `,"${a.nb.name}"` : ',—';
+      const schedule = getDaySchedule(d, wo);
+      const person = schedule.find(x => x.bolgeIndex === b);
+      csv += person && person.name ? `,"${person.name}"` : ',—';
     }
     csv += '\n';
   }
-  const bl = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(bl); a.download = `nobet_${iso(ws)}.csv`; a.click();
+  const bl = new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a'); a.href=URL.createObjectURL(bl); a.download=`nobet_${iso(ws)}.csv`; a.click();
 }
 
+// ============================================================
 // UTILS
-function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate()+n); return r; }
-function iso(d) { return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`; }
-function fmt(d) { return `${p(d.getDate())}.${p(d.getMonth()+1)}.${d.getFullYear()}`; }
-function fmtRange(ws) { return `${fmt(ws)} – ${fmt(addDays(ws, S.workDays-1))}`; }
-function p(n) { return String(n).padStart(2,'0'); }
-function toast(msg, err) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.style.background = err ? 'var(--danger)' : 'var(--success)';
-  t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000);
+// ============================================================
+function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r}
+function iso(d){return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`}
+function fmt(d){return `${p(d.getDate())}.${p(d.getMonth()+1)}.${d.getFullYear()}`}
+function fmtRange(ws){return `${fmt(ws)} – ${fmt(addDays(ws,S.workDays-1))}`}
+function p(n){return String(n).padStart(2,'0')}
+function toast(msg,err){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.background=err?'var(--danger)':'var(--success)';
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)
 }
 </script>
 </body>
