@@ -1,252 +1,75 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nöbet Sistemi - Yönetim Paneli</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg:#0d0f14;--surface:#151820;--surface2:#1c2030;--border:#2a3040;
-    --accent:#3b82f6;--accent2:#22d3ee;--success:#10b981;--danger:#ef4444;--warn:#f59e0b;
-    --text:#e2e8f0;--text2:#94a3b8;--text3:#475569;
-    --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}
-  .app{max-width:1600px;margin:0 auto;padding:20px}
-  
-  header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border)}
-  .logo{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
-  .hbadge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent2);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);padding:4px 10px;border-radius:20px}
-
-  /* Admin Control */
-  .admin-only { display: none !important; }
-  body.is-admin .admin-only { display: inline-flex !important; }
-  body.is-admin .hbadge { border-color: var(--danger); color: var(--danger); background: rgba(239,68,68,0.1); }
-
-  .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
-  .btn{padding:8px 16px;border-radius:8px;border:none;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:0.2s}
-  .btn-o{background:transparent;border:1px solid var(--border);color:var(--text2)}
-  .btn-o:hover{border-color:var(--accent);color:var(--accent)}
-  .btn-danger{border-color:var(--danger);color:var(--danger);background:transparent;border:1px solid}
-  
-  .twrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border);background:var(--surface)}
-  .mtable{border-collapse:collapse;font-size:11px;width:100%}
-  .mtable th, .mtable td{padding:10px 5px;border-bottom:1px solid var(--border);border-right:1px solid rgba(42,48,64,0.3);text-align:center}
-  .td-left{text-align:left!important;font-family:var(--mono);padding-left:15px!important;background:var(--surface2)!important;position:sticky;left:0;z-index:2}
-  .pill{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;border:1px solid rgba(255,255,255,0.1)}
-
-  /* Modal Editör */
-  #editModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:100;padding:20px;overflow-y:auto}
-  .modal-content{background:var(--surface);max-width:900px;margin:0 auto;padding:25px;border-radius:15px;border:1px solid var(--border)}
-  .edit-group{background:var(--bg);padding:15px;border-radius:10px;margin-bottom:15px;border:1px solid var(--border)}
-  .edit-input{background:var(--surface2);border:1px solid var(--border);color:white;padding:8px;border-radius:6px;margin:4px;width:calc(33% - 10px)}
-  #jsonOutput{width:100%;height:150px;background:#000;color:var(--success);font-family:var(--mono);font-size:11px;margin-top:15px;padding:15px;border:1px solid var(--success)}
-</style>
-</head>
-<body>
-
-<div class="app">
-<header>
-  <div class="logo">🛡</div>
-  <div>
-    <h1>NÖBET ÇİZELGESİ</h1>
-    <p id="headerSub">Veriler yükleniyor...</p>
-  </div>
-  <div style="margin-left: auto; display: flex; gap: 8px;">
-    <button class="btn btn-o" id="adminBtn" onclick="toggleAdmin()">🔑 Admin Girişi</button>
-    <div class="hbadge" id="hbadge">Giriş Yapılmadı</div>
-  </div>
-</header>
-
-<div class="toolbar">
-    <button class="btn-nav" onclick="changeMonth(-1)" style="background:none; border:1px solid var(--border); color:white; width:35px; border-radius:5px;"><</button>
-    <div id="monthLabel" style="font-family:var(--mono); min-width:120px; text-align:center">---</div>
-    <button class="btn-nav" onclick="changeMonth(1)" style="background:none; border:1px solid var(--border); color:white; width:35px; border-radius:5px;">></button>
-    
-    <div style="margin-left:auto; display:flex; gap:10px">
-        <button class="btn btn-danger admin-only" onclick="openEditor()">⚙️ Sistemi Düzenle (Yeni Nöbetçi/Bölge)</button>
-        <button class="btn btn-o" onclick="window.print()">🖨 Yazdır</button>
-    </div>
-</div>
-
-<div id="legend" style="display:flex;gap:10px;margin-bottom:10px;font-size:10px;flex-wrap:wrap"></div>
-
-<div class="twrap">
-  <table class="mtable"><thead id="mThead"></thead><tbody id="mTbody"></tbody></table>
-</div>
-</div>
-
-<div id="editModal">
-  <div class="modal-content">
-    <h2>Sistem Yapılandırması</h2>
-    <p style="color:var(--text2); margin-bottom:20px; font-size:13px;">Bölgeleri yönetin veya her güne yeni nöbetçi slotları ekleyin.</p>
-    
-    <div id="editorContainer">
-        <div class="edit-group">
-            <h3 style="color:var(--accent2); margin-bottom:10px">1. Bölgeleri Düzenle</h3>
-            <div id="bolgeInputs"></div>
-            <button class="btn btn-o" style="margin-top:10px" onclick="addBolgeField()">+ Yeni Bölge Ekle</button>
-        </div>
-
-        <div class="edit-group">
-            <h3 style="color:var(--accent); margin-bottom:10px">2. Günlük Nöbetçiler (Slotlar)</h3>
-            <div id="gunlukInputs"></div>
-        </div>
-    </div>
-
-    <button class="btn btn-danger" style="width:100%; height:45px" onclick="saveAndGenerate()">DEĞİŞİKLİKLERİ KAYDET VE JSON ÜRET</button>
-    <textarea id="jsonOutput" readonly placeholder="GitHub'a yapıştırılacak kod burada belirecek..."></textarea>
-    
-    <div style="display:flex; gap:10px; margin-top:15px">
-        <button class="btn btn-o" style="flex:1" onclick="document.getElementById('editModal').style.display='none'">İptal</button>
-        <button class="btn btn-o" style="flex:1; border-color:var(--success); color:var(--success)" onclick="copyJSON()">Kodu Kopyala</button>
-    </div>
-  </div>
-</div>
-
-<script>
-const ADMIN_HASH = "240be518ebb0c4c3912a7092121d5922355443f66f5f012001479836796451a9"; // admin123
-let D = null; let monthOffset = 0;
-const MONTH_TR = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
-const DAY_TR = ['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'];
-const COLORS = [{t:'#60a5fa',bg:'rgba(96,165,250,0.15)'},{t:'#34d399',bg:'rgba(52,211,153,0.15)'},{t:'#a78bfa',bg:'rgba(167,139,250,0.15)'},{t:'#fb923c',bg:'rgba(251,146,60,0.15)'},{t:'#f472b6',bg:'rgba(244,114,182,0.15)'},{t:'#22d3ee',bg:'rgba(34,211,238,0.15)'}];
-
-async function hash(s) {
-    const utf8 = new TextEncoder().encode(s);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
-    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-async function toggleAdmin() {
-    if(localStorage.getItem('is_admin') === 'true') { localStorage.removeItem('is_admin'); location.reload(); return; }
-    const p = prompt("Yönetici Şifresi:");
-    if(await hash(p) === ADMIN_HASH) { localStorage.setItem('is_admin', 'true'); location.reload(); }
-    else alert("Hatalı Şifre!");
-}
-
-window.onload = async () => {
-    if(localStorage.getItem('is_admin') === 'true') document.body.classList.add('is-admin');
-    const res = await fetch('nobet_data.json?v=' + Date.now());
-    D = await res.json();
-    D.startDate = new Date(D.baslamaTarihi + 'T00:00:00');
-    const now = new Date();
-    monthOffset = (now.getFullYear()-D.startDate.getFullYear())*12+(now.getMonth()-D.startDate.getMonth());
-    document.getElementById('headerSub').textContent = "Haftalık Rotasyon Sistemi";
-    document.getElementById('hbadge').textContent = document.body.classList.contains('is-admin') ? "ADMİN YETKİSİ" : "İzleyici";
-    if(document.body.classList.contains('is-admin')) document.getElementById('adminBtn').textContent = "Çıkış Yap";
-    renderMonthly();
-};
-
-function getSchedule(date) {
-    const d = new Date(date); const dow = d.getDay() === 0 ? 6 : d.getDay() - 1;
-    if(dow >= D.workDays) return [];
-    const diff = Math.floor((d - D.startDate) / (7 * 86400000));
-    let tWeeks = (D.tatiller || []).filter(t => new Date(t.pazartesi) < d).reduce((a,b) => a + b.haftaSayisi, 0);
-    const rw = diff - tWeeks;
-    for(let t of (D.tatiller || [])) {
-        let tStart = new Date(t.pazartesi + 'T00:00:00');
-        let tEnd = new Date(tStart.getTime() + t.haftaSayisi * 7 * 86400000);
-        if(d >= tStart && d < tEnd) return null;
+{
+  "baslamaTarihi": "2026-03-02",
+  "bolgeCount": 8,
+  "workDays": 5,
+  "bolgeNames": [
+    "Ön Bahçe",
+    "Kantin / Arka Bahçe",
+    "Zemin",
+    "A Blok 1.Kat",
+    "B Blok 1.Kat",
+    "A Blok 2.Kat",
+    "B Blok 2.Kat",
+    "B Blok 3.Kat"
+  ],
+  "gunNobetcileri": {
+    "0": [
+      "Sevim Özyılmaz",
+      "Kemal Akın",
+      "Osman Şevik",
+      "Müzeyyen Üçel",
+      "İsmail Aslan",
+      "Yunus Emre Kalaycı",
+      "Emre Çalışkan",
+      "Hasan Çöklü"
+    ],
+    "1": [
+      "Zeliha Sarıkaya Öztürk",
+      "Zekeriya Karahan",
+      "Nesibe Gümüş",
+      "Hasan Fehmi Sevimli",
+      "M.Esat Arslan",
+      "Murat Karakuş",
+      "Mehmet Elçin",
+      "Fatih Öğünç"
+    ],
+    "2": [
+      "Cihan Hamza",
+      "Ahsen Ece Kuş",
+      "Tuğba Şentürk",
+      "Yaren İm",
+      "Fatih Altuntepe",
+      "Bartu Selek",
+      "Hilal Zehra Güven",
+      "Meral Yılmaz"
+    ],
+    "3": [
+      "Fatih Şahan",
+      "İsmail Karayürek",
+      "Özlem Gökçe",
+      "Hadice Nur Sarıkaya",
+      "Gülizar Öztürk",
+      "Elif Tosun",
+      "Mine Baş",
+      "Mustafa Alp"
+    ],
+    "4": [
+      "Hakan Bektaş",
+      "Osman Nuri Dural",
+      "M.Raşit Yılmaz",
+      "Lütfi Gürsoy",
+      "Sinan Güzeler",
+      "M.Said Çil",
+      "Fatih İmre",
+      "Özlem Bayoğlu Özkaya"
+    ]
+  },
+  "tatiller": [
+    {
+      "id": 1,
+      "ad": "Tatil Haftası",
+      "pazartesi": "2026-03-16",
+      "haftaSayisi": 1
     }
-    return (D.gunNobetcileri[dow] || []).map((name, i) => ({
-        name, bIdx: ((i + rw) % D.bolgeCount + D.bolgeCount) % D.bolgeCount, slot: i
-    })).filter(x => x.name);
+  ]
 }
-
-function renderMonthly() {
-    const view = new Date(D.startDate.getFullYear(), D.startDate.getMonth() + monthOffset, 1);
-    document.getElementById('monthLabel').textContent = `${MONTH_TR[view.getMonth()]} ${view.getFullYear()}`;
-    const dim = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
-    
-    let th = `<tr><th class="td-left">BÖLGELER</th>`;
-    for(let i=1; i<=dim; i++) {
-        let day = new Date(view.getFullYear(), view.getMonth(), i);
-        let dow = day.getDay() === 0 ? 6 : day.getDay() - 1;
-        th += `<th style="${dow>=5?'opacity:0.3':''}">${i}<br><small>${DAY_TR[dow].substring(0,3)}</small></th>`;
-    }
-    document.getElementById('mThead').innerHTML = th + '</tr>';
-
-    let tb = '';
-    for(let b=0; b<D.bolgeCount; b++) {
-        const c = COLORS[b % COLORS.length];
-        tb += `<tr><td class="td-left" style="color:${c.t}">${D.bolgeNames[b]}</td>`;
-        for(let i=1; i<=dim; i++) {
-            const sch = getSchedule(new Date(view.getFullYear(), view.getMonth(), i));
-            if(sch === null) tb += `<td style="color:var(--warn);font-size:9px">TATİL</td>`;
-            else {
-                const p = sch.find(x => x.bIdx === b);
-                tb += `<td>${p ? `<span class="pill" style="background:${c.bg};color:${c.t}">${p.name.split(' ')[0]}</span>` : '·'}</td>`;
-            }
-        }
-        tb += '</tr>';
-    }
-    document.getElementById('mTbody').innerHTML = tb;
-}
-
-// EDITOR FONKSİYONLARI
-function openEditor() {
-    document.getElementById('editModal').style.display = 'block';
-    
-    // Bölgeleri doldur
-    let bHtml = '';
-    D.bolgeNames.forEach((name, i) => {
-        bHtml += `<input class="edit-input b-name" value="${name}" placeholder="Bölge ${i+1}">`;
-    });
-    document.getElementById('bolgeInputs').innerHTML = bHtml;
-
-    // Günleri doldur
-    let gHtml = '';
-    for(let d=0; d<D.workDays; d++) {
-        gHtml += `<div style="margin-bottom:15px; border-bottom:1px solid var(--border); padding-bottom:10px">
-                    <h4 style="margin-bottom:5px">${DAY_TR[d]}</h4>
-                    <div id="day-slots-${d}">`;
-        D.gunNobetcileri[d].forEach((name, i) => {
-            gHtml += `<input class="edit-input slot-input" data-day="${d}" data-idx="${i}" value="${name || ''}">`;
-        });
-        gHtml += `</div><button class="btn btn-o" style="font-size:10px; padding:4px 8px" onclick="addSlotField(${d})">+ Bu Güne Nöbetçi Ekle</button></div>`;
-    }
-    document.getElementById('gunlukInputs').innerHTML = gHtml;
-}
-
-function addBolgeField() {
-    const div = document.getElementById('bolgeInputs');
-    div.insertAdjacentHTML('beforeend', `<input class="edit-input b-name" value="" placeholder="Yeni Bölge İsmi">`);
-}
-
-function addSlotField(day) {
-    const div = document.getElementById(`day-slots-${day}`);
-    const nextIdx = div.querySelectorAll('input').length;
-    div.insertAdjacentHTML('beforeend', `<input class="edit-input slot-input" data-day="${day}" data-idx="${nextIdx}" value="" placeholder="Yeni Personel">`);
-}
-
-function saveAndGenerate() {
-    // Bölgeleri güncelle
-    const bNames = Array.from(document.querySelectorAll('.b-name')).map(i => i.value).filter(v => v);
-    D.bolgeNames = bNames;
-    D.bolgeCount = bNames.length;
-
-    // Slotları güncelle
-    for(let d=0; d<D.workDays; d++) {
-        const slots = Array.from(document.querySelectorAll(`.slot-input[data-day="${d}"]`)).map(i => i.value);
-        D.gunNobetcileri[d] = slots;
-    }
-
-    const output = JSON.parse(JSON.stringify(D));
-    delete output.startDate;
-    document.getElementById('jsonOutput').value = JSON.stringify(output, null, 2);
-    alert("Sistem güncellendi! Siyah kutudaki kodu kopyalayıp GitHub'daki nobet_data.json dosyasına yapıştırın.");
-}
-
-function copyJSON() {
-    const textarea = document.getElementById('jsonOutput');
-    textarea.select();
-    document.execCommand('copy');
-    alert("Kod panoya kopyalandı!");
-}
-
-function changeMonth(s) { monthOffset += s; renderMonthly(); }
-</script>
-</body>
-</html>
