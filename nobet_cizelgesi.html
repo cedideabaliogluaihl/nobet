@@ -7,16 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:#0d0f14; --surface:#151820; --surface2:#1c2030; --border:#2a3040;
-    --accent:#3b82f6; --accent2:#22d3ee; --success:#10b981; --danger:#ef4444;
-    --text:#e2e8f0; --text2:#94a3b8; --text3:#475569;
-    --mono:'IBM Plex Mono',monospace; --sans:'IBM Plex Sans',sans-serif;
+    --bg:#0d0f14;--surface:#151820;--surface2:#1c2030;--border:#2a3040;
+    --accent:#3b82f6;--accent2:#22d3ee;--success:#10b981;--danger:#ef4444;--warn:#f59e0b;
+    --text:#e2e8f0;--text2:#94a3b8;--text3:#475569;
+    --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}
   body::before{content:'';position:fixed;inset:0;
-    background-image:linear-gradient(rgba(59,130,246,.03) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(59,130,246,.03) 1px,transparent 1px);
+    background-image:linear-gradient(rgba(59,130,246,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.03) 1px,transparent 1px);
     background-size:40px 40px;pointer-events:none;z-index:0}
   .app{position:relative;z-index:1;max-width:1600px;margin:0 auto;padding:24px}
 
@@ -32,18 +31,18 @@
   .tab:hover:not(.active){background:var(--surface2);color:var(--text)}
   .panel{display:none}.panel.active{display:block}
 
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px}
-  .ctitle{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent2);letter-spacing:1px;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px}
+  .ctitle{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent2);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
   .ctitle::before{content:'';width:3px;height:14px;background:var(--accent2);border-radius:2px}
 
-  label{display:block;font-size:12px;color:var(--text2);font-weight:500;margin-bottom:6px;margin-top:14px}
+  label{display:block;font-size:12px;color:var(--text2);font-weight:500;margin-bottom:5px;margin-top:13px}
   input[type=text],input[type=date],input[type=number],select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;transition:border-color .2s}
   input:focus,select:focus{border-color:var(--accent)}
   select option{background:var(--bg)}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .setup-grid{display:grid;grid-template-columns:340px 1fr;gap:20px}
 
-  .bolge-list{display:flex;flex-direction:column;gap:5px;max-height:280px;overflow-y:auto}
+  .bolge-list{display:flex;flex-direction:column;gap:5px;max-height:240px;overflow-y:auto}
   .bolge-item{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 11px}
   .bno{font-family:var(--mono);font-size:11px;border-radius:4px;padding:2px 6px;flex-shrink:0;min-width:34px;text-align:center}
   .bolge-item input{border:none;background:transparent;padding:0;font-size:13px;flex:1}
@@ -57,74 +56,64 @@
   .gun-group{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px}
   .gun-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
   .gun-label{font-family:var(--mono);font-size:12px;font-weight:600}
-  .gun-nb-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:5px;max-height:200px;overflow-y:auto}
+  .gun-nb-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:5px;max-height:180px;overflow-y:auto}
   .nb-item{display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:6px 10px}
   .nbno{font-family:var(--mono);font-size:10px;color:var(--text3);min-width:20px}
   .nb-item input{border:none;background:transparent;padding:0;font-size:12px;flex:1;min-width:0}
   .nb-item input:focus{outline:none}
 
+  /* TATİL YÖNETİMİ */
+  .tatil-section{margin-top:20px}
+  .tatil-list{display:flex;flex-direction:column;gap:8px;margin-top:10px;max-height:220px;overflow-y:auto}
+  .tatil-item{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:9px 12px}
+  .tatil-icon{font-size:14px;flex-shrink:0}
+  .tatil-info{flex:1}
+  .tatil-name{font-size:13px;font-weight:500;color:var(--warn)}
+  .tatil-date{font-size:11px;color:var(--text3);font-family:var(--mono);margin-top:2px}
+  .tatil-del{background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;transition:color .2s}
+  .tatil-del:hover{color:var(--danger)}
+  .tatil-add-form{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end;margin-top:10px}
+  .tatil-add-form input,.tatil-add-form select{margin-top:0}
+  .tatil-empty{font-size:12px;color:var(--text3);padding:12px;text-align:center;border:1px dashed var(--border);border-radius:8px}
+
   .btn{padding:9px 18px;border-radius:8px;border:none;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px}
   .btn-p{background:var(--accent);color:white}.btn-p:hover{background:#2563eb}
   .btn-o{background:transparent;border:1px solid var(--border);color:var(--text2)}.btn-o:hover{border-color:var(--accent);color:var(--accent)}
+  .btn-w{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:var(--warn)}.btn-w:hover{background:rgba(245,158,11,.25)}
   .btn-sm{padding:6px 13px;font-size:12px}
 
   /* AYLIK ÇİZELGE */
-  .monthly-toolbar{display:flex;gap:12px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
+  .monthly-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
   .nav{display:flex;align-items:center;gap:8px}
   .btn-nav{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:all .2s}
   .btn-nav:hover{border-color:var(--accent);color:var(--accent)}
-  .month-label{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--text);min-width:180px;text-align:center}
+  .month-label{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--text);min-width:170px;text-align:center}
 
-  /* AYLIK TABLO */
   .monthly-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
-  .monthly-table{border-collapse:collapse;font-size:12px;min-width:900px;width:100%}
-
-  /* Sütun başlıkları: Bölge | 1. | 2. | 3. | ... (her gün) */
-  .monthly-table thead th{
-    background:var(--surface2);padding:10px 8px;
-    font-family:var(--mono);font-size:10px;color:var(--text2);
-    border-bottom:1px solid var(--border);white-space:nowrap;text-align:center
-  }
-  .monthly-table thead th.th-bolge{text-align:left;min-width:110px;color:var(--accent2)}
-  .monthly-table thead th.th-weekend{color:var(--text3)!important;opacity:.5}
+  .monthly-table{border-collapse:collapse;font-size:11px;width:100%}
+  .monthly-table thead th{background:var(--surface2);padding:8px 4px;font-family:var(--mono);font-size:10px;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;text-align:center}
+  .monthly-table thead th.th-bolge{text-align:left;min-width:100px;color:var(--accent2);padding-left:12px}
+  .monthly-table thead th.th-weekend{opacity:.4}
   .monthly-table thead th.th-today{color:var(--accent)!important}
-
-  .monthly-table tbody td{
-    padding:7px 6px;border-bottom:1px solid rgba(42,48,64,.4);
-    border-right:1px solid rgba(42,48,64,.25);text-align:center;vertical-align:middle
-  }
+  .monthly-table thead th.th-tatil{color:var(--warn)!important;opacity:.7}
+  .monthly-table tbody td{padding:5px 3px;border-bottom:1px solid rgba(42,48,64,.4);border-right:1px solid rgba(42,48,64,.25);text-align:center;vertical-align:middle}
   .monthly-table tbody tr:last-child td{border-bottom:none}
   .monthly-table tbody td:last-child{border-right:none}
   .monthly-table tbody tr:hover td{background:rgba(28,32,48,.5)}
-  .td-bolge-name{
-    text-align:left!important;font-family:var(--mono);font-size:11px;font-weight:600;
-    background:var(--surface)!important;padding-left:14px!important;white-space:nowrap
-  }
-  .td-weekend{background:rgba(255,255,255,.015)!important;color:var(--text3)}
+  .td-bolge-name{text-align:left!important;font-family:var(--mono);font-size:11px;font-weight:600;background:var(--surface)!important;padding-left:12px!important;white-space:nowrap}
+  .td-weekend{background:rgba(255,255,255,.01)!important}
+  .td-tatil{background:rgba(245,158,11,.06)!important}
   .td-today{background:rgba(59,130,246,.07)!important}
-  .td-empty{color:var(--text3);font-size:10px}
+  .name-cell{display:inline-block;font-size:10px;padding:2px 6px;border-radius:10px;white-space:nowrap;max-width:80px;overflow:hidden;text-overflow:ellipsis;cursor:default;line-height:1.4}
+  .tatil-cell{font-size:9px;color:var(--warn);font-family:var(--mono)}
 
-  .name-cell{
-    display:inline-block;font-size:11px;padding:2px 8px;border-radius:12px;
-    white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis;
-    cursor:default
-  }
-
-  /* Tooltip */
-  .name-cell:hover::after{
-    content:attr(title);position:fixed;background:#1e293b;color:var(--text);
-    padding:5px 10px;border-radius:6px;font-size:11px;font-family:var(--mono);
-    border:1px solid var(--border);z-index:100;pointer-events:none;
-    white-space:nowrap;transform:translate(10px,-50%)
-  }
-
-  /* Legend */
-  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
   .leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)}
   .leg-dot{width:8px;height:8px;border-radius:50%}
 
-  .infobox{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:11px 15px;font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.8}
+  .infobox{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.8}
   .infobox strong{color:var(--accent2)}
+  .warnbox{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--warn);margin-bottom:12px;line-height:1.7}
 
   .toast{position:fixed;bottom:24px;right:24px;background:var(--success);color:white;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;z-index:1000;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none}
   .toast.show{transform:translateY(0);opacity:1}
@@ -132,12 +121,76 @@
   ::-webkit-scrollbar-track{background:transparent}
   ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 
-  @media print{
-    body{background:white;color:black}
-    .tabs,.monthly-toolbar,.hbadge{display:none}
-    .monthly-table thead th{background:#f1f5f9;color:#334155}
-    .td-bolge-name{background:#f8fafc!important}
-    .name-cell{border:1px solid #e2e8f0!important;background:#f0f9ff!important;color:#1e40af!important}
+  /* ===== YAZICI / A4 LANDSCAPE ===== */
+  @media print {
+    @page { size: A4 landscape; margin: 8mm; }
+
+    body { background: white !important; color: black !important; font-size: 9px; }
+    body::before { display: none; }
+    .app { padding: 0; max-width: 100%; }
+
+    header { border-bottom: 1px solid #ccc; margin-bottom: 8px; padding-bottom: 6px; }
+    header h1 { font-size: 13px; color: black; }
+    header p, .hbadge { color: #555; }
+
+    .tabs, .monthly-toolbar, .legend, .warnbox { display: none !important; }
+
+    .panel { display: block !important; }
+    #panel-setup, #panel-kisi { display: none !important; }
+    #panel-aylik { display: block !important; }
+
+    .monthly-wrap { border: 1px solid #ccc; border-radius: 0; overflow: visible; }
+    .monthly-table { font-size: 7.5px; width: 100%; }
+
+    .monthly-table thead th {
+      background: #f1f5f9 !important;
+      color: #334155 !important;
+      padding: 4px 2px;
+      border-bottom: 1px solid #cbd5e1;
+      font-size: 7px;
+    }
+    .monthly-table thead th.th-bolge { color: #1e40af !important; }
+    .monthly-table thead th.th-tatil { color: #b45309 !important; }
+
+    .monthly-table tbody td {
+      padding: 3px 2px;
+      border-color: #e2e8f0;
+    }
+    .td-bolge-name {
+      background: #f8fafc !important;
+      color: #1e40af !important;
+      font-size: 7.5px;
+      padding-left: 6px !important;
+    }
+    .td-tatil { background: #fffbeb !important; }
+    .td-today { background: #eff6ff !important; }
+    .td-weekend { background: #fafafa !important; }
+
+    .name-cell {
+      font-size: 7px !important;
+      padding: 1px 4px !important;
+      border-radius: 4px !important;
+      max-width: 68px !important;
+      background: #dbeafe !important;
+      color: #1e40af !important;
+      border: 1px solid #bfdbfe !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .tatil-cell { font-size: 7px; color: #b45309; }
+    .td-empty-dot { color: #cbd5e1; }
+
+    /* Renkli bölgeler için */
+    .name-cell[data-b="0"]{background:#dbeafe!important;color:#1d4ed8!important;border-color:#93c5fd!important}
+    .name-cell[data-b="1"]{background:#d1fae5!important;color:#065f46!important;border-color:#6ee7b7!important}
+    .name-cell[data-b="2"]{background:#ede9fe!important;color:#5b21b6!important;border-color:#c4b5fd!important}
+    .name-cell[data-b="3"]{background:#fce7f3!important;color:#9d174d!important;border-color:#f9a8d4!important}
+    .name-cell[data-b="4"]{background:#ffedd5!important;color:#9a3412!important;border-color:#fdba74!important}
+    .name-cell[data-b="5"]{background:#fef9c3!important;color:#713f12!important;border-color:#fde047!important}
+    .name-cell[data-b="6"]{background:#cffafe!important;color:#155e75!important;border-color:#67e8f9!important}
+    .name-cell[data-b="7"]{background:#fee2e2!important;color:#991b1b!important;border-color:#fca5a5!important}
+    .name-cell[data-b="8"]{background:#e0e7ff!important;color:#3730a3!important;border-color:#a5b4fc!important}
+    .name-cell[data-b="9"]{background:#ccfbf1!important;color:#134e4a!important;border-color:#5eead4!important}
   }
 </style>
 </head>
@@ -148,13 +201,14 @@
   <div class="logo">🛡</div>
   <div>
     <h1>NÖBET ÇİZELGESİ SİSTEMİ</h1>
-    <p>Haftada 1 gün nöbet · Haftalık bölge rotasyonu · Aylık görünüm</p>
+    <p>Haftada 1 gün nöbet · Haftalık rotasyon · Tatil bloklama · A4 baskı</p>
   </div>
   <div class="hbadge" id="hbadge">— kurulum bekleniyor —</div>
 </header>
 
 <div class="tabs">
   <button class="tab active" onclick="showTab('setup',this)">⚙ Kurulum</button>
+  <button class="tab" onclick="showTab('tatil',this)">🏖 Tatil Haftaları</button>
   <button class="tab" onclick="showTab('aylik',this)">📅 Aylık Çizelge</button>
   <button class="tab" onclick="showTab('kisi',this)">👤 Kişi Bazlı</button>
 </div>
@@ -163,7 +217,6 @@
 <div id="panel-setup" class="panel active">
   <div class="setup-grid">
     <div style="display:flex;flex-direction:column;gap:14px">
-
       <div class="card">
         <div class="ctitle">Genel Ayarlar</div>
         <label>Başlangıç Tarihi (İlk Pazartesi)</label>
@@ -174,15 +227,15 @@
             <select id="workDays" onchange="renderGunGroups()">
               <option value="5">Pzt–Cum (5 gün)</option>
               <option value="6">Pzt–Cmt (6 gün)</option>
-              <option value="7">Her Gün (7 gün)</option>
+              <option value="7">Her Gün</option>
             </select>
           </div>
         </div>
         <div class="infobox" style="margin-top:14px">
           <strong>Mantık:</strong><br>
           • Her kişi <strong>haftada 1 gün</strong> nöbet tutar<br>
-          • O gün <strong>bölge sayısı kadar kişi</strong> nöbette<br>
-          • Her hafta bölgeler <strong>1 ileri</strong> kayar
+          • Her hafta bölgeler <strong>1 ileri</strong> kayar<br>
+          • Tatil haftaları <strong>rotasyona sayılmaz</strong>
         </div>
         <button class="btn btn-p" onclick="applySetup()">✓ Kurulumu Uygula</button>
       </div>
@@ -205,9 +258,47 @@
   </div>
 </div>
 
+<!-- ===== TATİL YÖNETİMİ ===== -->
+<div id="panel-tatil" class="panel">
+  <div style="display:grid;grid-template-columns:400px 1fr;gap:20px">
+
+    <div class="card">
+      <div class="ctitle">Tatil Haftası Ekle</div>
+      <div class="warnbox">
+        Tatil olarak işaretlenen haftalar <strong>rotasyona dahil edilmez</strong>.<br>
+        Örneğin: 2. hafta tatilse, 3. hafta bölge numarası 2'de kalır (3'e geçmez).
+      </div>
+
+      <label>Tatil Adı</label>
+      <input type="text" id="tatilAd" placeholder="Örn: Ramazan Bayramı, Yılbaşı..."/>
+
+      <label>Tatil Haftasının Pazartesisi</label>
+      <input type="date" id="tatilTarih"/>
+
+      <label>Kaç Hafta Sürecek?</label>
+      <select id="tatilSure">
+        <option value="1">1 Hafta</option>
+        <option value="2">2 Hafta</option>
+        <option value="3">3 Hafta</option>
+        <option value="4">4 Hafta</option>
+      </select>
+
+      <div style="margin-top:16px">
+        <button class="btn btn-w" onclick="addTatil()">+ Tatil Haftası Ekle</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle">Tanımlı Tatil Haftaları</div>
+      <div class="tatil-list" id="tatilList">
+        <div class="tatil-empty">Henüz tatil haftası eklenmedi</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ===== AYLIK ÇİZELGE ===== -->
 <div id="panel-aylik" class="panel">
-
   <div class="monthly-toolbar">
     <div class="nav">
       <button class="btn-nav" onclick="prevMonth()">←</button>
@@ -217,25 +308,21 @@
     <button class="btn btn-o btn-sm" onclick="goThisMonth()">Bu Ay</button>
     <div style="margin-left:auto;display:flex;gap:8px">
       <button class="btn btn-o btn-sm" onclick="exportCSV()">↓ CSV</button>
-      <button class="btn btn-o btn-sm" onclick="window.print()">🖨 Yazdır</button>
+      <button class="btn btn-o btn-sm" onclick="window.print()">🖨 A4 Yazdır</button>
     </div>
   </div>
-
-  <!-- Renk legend -->
   <div class="legend" id="legend"></div>
-
   <div class="monthly-wrap">
     <table class="monthly-table">
       <thead id="mThead"></thead>
       <tbody id="mTbody"></tbody>
     </table>
   </div>
-
 </div>
 
 <!-- ===== KİŞİ BAZLI ===== -->
 <div id="panel-kisi" class="panel">
-  <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+  <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
     <div class="nav">
       <button class="btn-nav" onclick="prevMonthK()">←</button>
       <div class="month-label" id="monthLabelK">—</div>
@@ -256,22 +343,23 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ============================================================
+// ================================================================
 // STATE
-// ============================================================
+// ================================================================
 const S = {
   startDate: null,
   bolgeCount: 8,
   workDays: 5,
   bolgeNames: [],
-  gunNobetcileri: {}, // {dayOfWeek: [name0, name1, ...]}
+  gunNobetcileri: {},   // {dayOfWeek(0=Pzt): [name, name, ...]}
+  tatiller: [],          // [{id, ad, pazartesi:Date, haftaSayisi:int}]
   monthOffset: 0,
   monthOffsetK: 0,
 };
 
-const DAY_SHORT = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
-const DAY_FULL  = ['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'];
-const MONTH_TR  = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+const DAY_SHORT  = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+const DAY_FULL   = ['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'];
+const MONTH_TR   = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
 
 const C = [
   {bg:'rgba(96,165,250,.18)',t:'#60a5fa',b:'rgba(96,165,250,.35)'},
@@ -286,61 +374,86 @@ const C = [
   {bg:'rgba(45,212,191,.18)',t:'#2dd4bf',b:'rgba(45,212,191,.35)'},
 ];
 
-// ============================================================
-// CORE LOGIC
-// ============================================================
-// Her gün nöbet tutacak kişiler: S.gunNobetcileri[dayOfWeek][slotIndex]
-// slot 0 → başlangıç bölgesi = 0, slot 1 → başlangıç = 1, ...
-// weekNum: başlangıç tarihinden kaçıncı hafta
-// O haftaki bölge: (slotIndex + weekNum) % bolgeCount
+// ================================================================
+// CORE: Tatil-farkındalıklı rotasyon
+// ================================================================
 
-function getWeekNum(date) {
-  // Başlangıç tarihinden itibaren kaçıncı hafta (0-based)
+// Verilen tarihin hangi takvim haftasında olduğunu döndür (başlangıçtan itibaren 0-based)
+function calWeekNum(date) {
   const start = new Date(S.startDate); start.setHours(0,0,0,0);
   const d = new Date(date); d.setHours(0,0,0,0);
   return Math.floor((d - start) / (7 * 86400000));
 }
 
-function getBolge(slotIndex, weekNum) {
-  return ((slotIndex + weekNum) % S.bolgeCount + S.bolgeCount) % S.bolgeCount;
+// Bir takvim haftasının tatil olup olmadığını kontrol et
+function isTatilWeek(calWeek) {
+  const weekStart = addDays(S.startDate, calWeek * 7);
+  weekStart.setHours(0,0,0,0);
+  for (const t of S.tatiller) {
+    const ts = new Date(t.pazartesi); ts.setHours(0,0,0,0);
+    const te = addDays(ts, t.haftaSayisi * 7 - 1);
+    if (weekStart >= ts && weekStart <= te) return true;
+  }
+  return false;
 }
 
-// Verilen tarih için nöbet listesi: [{name, bolgeIndex, slotIndex}]
+// Verilen takvim haftasına kadar kaç tatil haftası geçmiş?
+function tatilCountBefore(calWeek) {
+  let count = 0;
+  for (let w = 0; w < calWeek; w++) {
+    if (isTatilWeek(w)) count++;
+  }
+  return count;
+}
+
+// Rotasyon hafta numarası = takvim haftası - önceki tatil haftaları
+function rotasyonWeekNum(date) {
+  const cw = calWeekNum(date);
+  return cw - tatilCountBefore(cw);
+}
+
+function getBolge(slotIndex, rotWeek) {
+  return ((slotIndex + rotWeek) % S.bolgeCount + S.bolgeCount) % S.bolgeCount;
+}
+
+// Belirli tarih için nöbet listesi
 function getScheduleForDate(date) {
   if (!S.startDate) return [];
   const d = new Date(date); d.setHours(0,0,0,0);
   const start = new Date(S.startDate); start.setHours(0,0,0,0);
-  const diffDays = Math.round((d - start) / 86400000);
-  if (diffDays < 0) return [];
+  if (d < start) return [];
 
-  // Haftanın günü (Pazartesi=0)
-  const jsDay = d.getDay(); // 0=Pazar, 1=Pzt...
-  const dayOfWeek = jsDay === 0 ? 6 : jsDay - 1; // Pzt=0, ..., Paz=6
+  const jsDay = d.getDay();
+  const dow = jsDay === 0 ? 6 : jsDay - 1; // 0=Pzt
+  if (dow >= S.workDays) return [];
 
-  if (dayOfWeek >= S.workDays) return []; // çalışma günü değil
+  const cw = calWeekNum(d);
+  if (isTatilWeek(cw)) return null; // null = tatil
 
-  const weekNum = getWeekNum(d);
-  const list = S.gunNobetcileri[dayOfWeek] || [];
+  const rw = rotasyonWeekNum(d);
+  const list = S.gunNobetcileri[dow] || [];
   return list
-    .map((name, i) => ({ name, bolgeIndex: getBolge(i, weekNum), slotIndex: i }))
+    .map((name, i) => ({ name, bolgeIndex: getBolge(i, rw), slotIndex: i }))
     .filter(x => x.name);
 }
 
-// ============================================================
+// ================================================================
 // INIT
-// ============================================================
+// ================================================================
 window.onload = () => {
   const t = new Date();
   const diff = t.getDay() === 0 ? -6 : 1 - t.getDay();
   const m = new Date(t); m.setDate(t.getDate() + diff);
   document.getElementById('startDate').value = iso(m);
+  // Tatil tarih inputu için de bugünü default al
+  document.getElementById('tatilTarih').value = iso(m);
   updateBolgeList();
   renderGunGroups();
 };
 
-// ============================================================
+// ================================================================
 // TABS
-// ============================================================
+// ================================================================
 function showTab(n, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -348,11 +461,12 @@ function showTab(n, btn) {
   btn.classList.add('active');
   if (n === 'aylik') renderMonthly();
   if (n === 'kisi') renderKisi();
+  if (n === 'tatil') renderTatilList();
 }
 
-// ============================================================
+// ================================================================
 // KURULUM
-// ============================================================
+// ================================================================
 function updateBolgeList() {
   const count = parseInt(document.getElementById('bolgeCount').value) || 8;
   const list = document.getElementById('bolgeList');
@@ -417,21 +531,20 @@ function renderGunGroups() {
 }
 
 function liveUpdate(inp) {
-  const d = parseInt(inp.dataset.day);
-  const s = parseInt(inp.dataset.slot);
+  const d = parseInt(inp.dataset.day), s = parseInt(inp.dataset.slot);
   if (!S.gunNobetcileri[d]) S.gunNobetcileri[d] = [];
   S.gunNobetcileri[d][s] = inp.value.trim();
 }
 
 function autoFill() {
-  const fn = ['Ali','Veli','Ahmet','Mehmet','Mustafa','Hüseyin','İbrahim','Osman','Yusuf','Hasan',
+  const fn=['Ali','Veli','Ahmet','Mehmet','Mustafa','Hüseyin','İbrahim','Osman','Yusuf','Hasan',
     'Ayşe','Fatma','Emine','Hatice','Zeynep','Elif','Merve','Selin','Derya','Canan',
     'Kemal','Cemal','Barış','Emre','Serkan','Tolga','Onur','Murat','Erkan','Deniz',
     'Seda','Burcu','Pınar','Gül','Nalan','Leyla','Sevda','Aslı','Tuğçe','Şule'];
-  const ln = ['Yılmaz','Kaya','Demir','Çelik','Şahin','Yıldız','Arslan','Öztürk','Aydın','Özdemir'];
-  document.querySelectorAll('[data-nb]').forEach((inp, idx) => {
-    if (!inp.value.trim()) {
-      inp.value = fn[idx % fn.length] + ' ' + ln[Math.floor(idx / fn.length) % ln.length];
+  const ln=['Yılmaz','Kaya','Demir','Çelik','Şahin','Yıldız','Arslan','Öztürk','Aydın','Özdemir'];
+  document.querySelectorAll('[data-nb]').forEach((inp,idx)=>{
+    if(!inp.value.trim()){
+      inp.value=fn[idx%fn.length]+' '+ln[Math.floor(idx/fn.length)%ln.length];
       liveUpdate(inp);
     }
   });
@@ -439,275 +552,308 @@ function autoFill() {
 
 function applySetup() {
   const sv = document.getElementById('startDate').value;
-  if (!sv) { toast('Başlangıç tarihi seçin!', 1); return; }
-  S.startDate = new Date(sv + 'T00:00:00');
+  if (!sv) { toast('Başlangıç tarihi seçin!',1); return; }
+  S.startDate = new Date(sv+'T00:00:00');
   S.bolgeCount = parseInt(document.getElementById('bolgeCount').value);
   S.workDays = parseInt(document.getElementById('workDays').value);
   S.bolgeNames = [];
-  for (let i = 0; i < S.bolgeCount; i++) {
-    const e = document.getElementById('blg_'+i);
-    S.bolgeNames.push(e ? e.value.trim() || `Bölge ${i+1}` : `Bölge ${i+1}`);
+  for (let i=0;i<S.bolgeCount;i++){
+    const e=document.getElementById('blg_'+i);
+    S.bolgeNames.push(e?e.value.trim()||`Bölge ${i+1}`:`Bölge ${i+1}`);
   }
-  S.gunNobetcileri = {};
-  document.querySelectorAll('[data-nb]').forEach(inp => {
-    const d = parseInt(inp.dataset.day), s = parseInt(inp.dataset.slot);
-    if (!S.gunNobetcileri[d]) S.gunNobetcileri[d] = [];
-    S.gunNobetcileri[d][s] = inp.value.trim();
+  S.gunNobetcileri={};
+  document.querySelectorAll('[data-nb]').forEach(inp=>{
+    const d=parseInt(inp.dataset.day),s=parseInt(inp.dataset.slot);
+    if(!S.gunNobetcileri[d]) S.gunNobetcileri[d]=[];
+    S.gunNobetcileri[d][s]=inp.value.trim();
   });
-  let total = 0;
-  Object.values(S.gunNobetcileri).forEach(a => { total += a.filter(x=>x).length; });
-  if (!total) { toast('En az 1 nöbetçi girin!', 1); return; }
-  document.getElementById('hbadge').textContent = `${total} nöbetçi · ${S.bolgeCount} bölge · ${S.workDays} gün/hafta`;
-
-  // Başlangıç ayına git
-  const sd = S.startDate;
-  S.monthOffset = 0;
-  S.monthOffsetK = 0;
-
+  let total=0;
+  Object.values(S.gunNobetcileri).forEach(a=>{total+=a.filter(x=>x).length;});
+  if(!total){toast('En az 1 nöbetçi girin!',1);return;}
+  document.getElementById('hbadge').textContent=`${total} nöbetçi · ${S.bolgeCount} bölge · ${S.workDays} gün/hafta · ${S.tatiller.length} tatil`;
   toast('✓ Kurulum tamam!');
 }
 
-// ============================================================
+// ================================================================
+// TATİL YÖNETİMİ
+// ================================================================
+function addTatil() {
+  const ad = document.getElementById('tatilAd').value.trim();
+  const tarih = document.getElementById('tatilTarih').value;
+  const sure = parseInt(document.getElementById('tatilSure').value);
+  if (!ad) { toast('Tatil adı girin!',1); return; }
+  if (!tarih) { toast('Tarih seçin!',1); return; }
+  const pzt = new Date(tarih+'T00:00:00');
+  // Pazartesi kontrolü
+  const dow = pzt.getDay();
+  if (dow !== 1) { toast('Lütfen o haftanın Pazartesisini seçin!',1); return; }
+  S.tatiller.push({ id: Date.now(), ad, pazartesi: pzt, haftaSayisi: sure });
+  S.tatiller.sort((a,b) => a.pazartesi - b.pazartesi);
+  document.getElementById('tatilAd').value = '';
+  renderTatilList();
+  toast(`✓ "${ad}" tatil haftası eklendi`);
+}
+
+function renderTatilList() {
+  const list = document.getElementById('tatilList');
+  if (!S.tatiller.length) {
+    list.innerHTML = '<div class="tatil-empty">Henüz tatil haftası eklenmedi</div>';
+    return;
+  }
+  list.innerHTML = S.tatiller.map(t => {
+    const bitis = addDays(t.pazartesi, t.haftaSayisi * 7 - 1);
+    return `<div class="tatil-item">
+      <span class="tatil-icon">🏖</span>
+      <div class="tatil-info">
+        <div class="tatil-name">${t.ad} ${t.haftaSayisi > 1 ? `(${t.haftaSayisi} hafta)` : ''}</div>
+        <div class="tatil-date">${fmt(t.pazartesi)} – ${fmt(bitis)}</div>
+      </div>
+      <button class="tatil-del" onclick="rmTatil(${t.id})">×</button>
+    </div>`;
+  }).join('');
+}
+
+function rmTatil(id) {
+  S.tatiller = S.tatiller.filter(t => t.id !== id);
+  renderTatilList();
+  toast('Tatil silindi');
+}
+
+// ================================================================
 // AYLIK ÇİZELGE
-// Satır = Bölge, Sütun = Ayın Her Günü
-// ============================================================
-function getMonthDates(offset) {
+// ================================================================
+function getMonthInfo(offset) {
   if (!S.startDate) {
     const now = new Date();
-    const base = new Date(now.getFullYear(), now.getMonth() + offset, 1);
-    return { year: base.getFullYear(), month: base.getMonth() };
+    return { year: new Date(now.getFullYear(), now.getMonth()+offset, 1).getFullYear(),
+             month: new Date(now.getFullYear(), now.getMonth()+offset, 1).getMonth() };
   }
-  const base = new Date(S.startDate.getFullYear(), S.startDate.getMonth() + offset, 1);
+  const base = new Date(S.startDate.getFullYear(), S.startDate.getMonth()+offset, 1);
   return { year: base.getFullYear(), month: base.getMonth() };
 }
 
 function renderMonthly() {
   if (!S.startDate) {
-    document.getElementById('mThead').innerHTML = '';
-    document.getElementById('mTbody').innerHTML =
-      '<tr><td colspan="35" style="text-align:center;color:var(--text3);padding:40px">Önce Kurulum sekmesinden ayarları yapın ve "Kurulumu Uygula" butonuna basın.</td></tr>';
+    document.getElementById('mThead').innerHTML='';
+    document.getElementById('mTbody').innerHTML=
+      '<tr><td colspan="35" style="text-align:center;color:var(--text3);padding:40px">Önce Kurulum sekmesinden ayarları yapın.</td></tr>';
     return;
   }
-
-  const { year, month } = getMonthDates(S.monthOffset);
+  const {year,month} = getMonthInfo(S.monthOffset);
   document.getElementById('monthLabel').textContent = `${MONTH_TR[month]} ${year}`;
-
   const today = new Date(); today.setHours(0,0,0,0);
+  const daysInMonth = new Date(year,month+1,0).getDate();
+  const days=[];
+  for(let d=1;d<=daysInMonth;d++) days.push(new Date(year,month,d));
 
-  // Ayın tüm günlerini üret
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const days = [];
-  for (let d = 1; d <= daysInMonth; d++) {
-    days.push(new Date(year, month, d));
+  // Legend
+  let leg='';
+  for(let b=0;b<S.bolgeCount;b++){
+    const c=C[b%C.length];
+    leg+=`<div class="leg-item"><span class="leg-dot" style="background:${c.t}"></span>${S.bolgeNames[b]}</div>`;
   }
+  leg+=`<div class="leg-item"><span class="leg-dot" style="background:var(--warn)"></span>Tatil</div>`;
+  document.getElementById('legend').innerHTML=leg;
 
-  // Thead: Bölge | 1(Pzt) | 2(Sal) | ...
-  let th = '<tr><th class="th-bolge">BÖLGE</th>';
-  days.forEach(day => {
-    const jsDay = day.getDay(); // 0=Pazar
-    const dow = jsDay === 0 ? 6 : jsDay - 1; // 0=Pzt
-    const isWeekend = dow >= S.workDays;
-    const isToday = day.getTime() === today.getTime();
-    const cls = isToday ? ' th-today' : isWeekend ? ' th-weekend' : '';
-    th += `<th class="${cls}" style="min-width:38px">
-      <div style="font-size:12px;font-weight:600">${day.getDate()}</div>
+  // Thead
+  let th='<tr><th class="th-bolge">BÖLGE</th>';
+  days.forEach(day=>{
+    const dow = day.getDay()===0?6:day.getDay()-1;
+    const isWeekend = dow>=S.workDays;
+    const isToday = day.getTime()===today.getTime();
+    const cw = S.startDate ? calWeekNum(day) : -1;
+    const isTatil = S.startDate && cw>=0 && isTatilWeek(cw) && !isWeekend;
+    let cls = isToday?'th-today':isTatil?'th-tatil':isWeekend?'th-weekend':'';
+    th+=`<th class="${cls}" style="min-width:34px">
+      <div style="font-size:11px;font-weight:600">${day.getDate()}</div>
       <div style="font-size:9px;opacity:.7">${DAY_SHORT[dow]}</div>
     </th>`;
   });
-  th += '</tr>';
-  document.getElementById('mThead').innerHTML = th;
+  th+='</tr>';
+  document.getElementById('mThead').innerHTML=th;
 
-  // Legend
-  let leg = '';
-  for (let b = 0; b < S.bolgeCount; b++) {
-    const c = C[b % C.length];
-    leg += `<div class="leg-item"><span class="leg-dot" style="background:${c.t}"></span>${S.bolgeNames[b]}</div>`;
-  }
-  document.getElementById('legend').innerHTML = leg;
+  // Tbody
+  let tb='';
+  for(let b=0;b<S.bolgeCount;b++){
+    const bc=C[b%C.length];
+    tb+=`<tr><td class="td-bolge-name" style="color:${bc.t}">
+      <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${bc.t};margin-right:6px"></span>
+      ${S.bolgeNames[b]}
+    </td>`;
+    days.forEach(day=>{
+      const dow = day.getDay()===0?6:day.getDay()-1;
+      const isWeekend = dow>=S.workDays;
+      const isToday = day.getTime()===today.getTime();
+      const todayCls = isToday?' td-today':'';
 
-  // Tbody: her satır bir bölge
-  let tb = '';
-  for (let b = 0; b < S.bolgeCount; b++) {
-    const bc = C[b % C.length];
-    tb += `<tr>
-      <td class="td-bolge-name" style="color:${bc.t}">
-        <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${bc.t};margin-right:7px"></span>
-        ${S.bolgeNames[b]}
-      </td>`;
-
-    days.forEach(day => {
-      const jsDay = day.getDay();
-      const dow = jsDay === 0 ? 6 : jsDay - 1;
-      const isWeekend = dow >= S.workDays;
-      const isToday = day.getTime() === today.getTime();
-
-      if (isWeekend) {
-        tb += `<td class="td-weekend"><span style="font-size:9px;color:var(--text3)">—</span></td>`;
+      if(isWeekend){
+        tb+=`<td class="td-weekend${todayCls}"><span style="color:var(--text3);font-size:9px">–</span></td>`;
         return;
       }
 
-      const schedule = getScheduleForDate(day);
-      const person = schedule.find(x => x.bolgeIndex === b);
-      const todayCls = isToday ? ' td-today' : '';
+      const sch = getScheduleForDate(day);
 
-      if (person) {
-        const firstName = person.name.split(' ')[0]; // İlk ad (kısalt)
-        tb += `<td class="${todayCls}">
-          <span class="name-cell" title="${person.name}"
+      if(sch===null){
+        // Tatil haftası
+        tb+=`<td class="td-tatil${todayCls}"><span class="tatil-cell">TAT</span></td>`;
+        return;
+      }
+
+      const person = sch.find(x=>x.bolgeIndex===b);
+      if(person){
+        const firstName = person.name.split(' ')[0];
+        tb+=`<td class="${todayCls}">
+          <span class="name-cell" data-b="${b}" title="${person.name}"
             style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b}">
             ${firstName}
           </span>
         </td>`;
       } else {
-        tb += `<td class="${todayCls}"><span class="td-empty">·</span></td>`;
+        tb+=`<td class="${todayCls}"><span class="td-empty-dot" style="color:var(--text3);font-size:9px">·</span></td>`;
       }
     });
-
-    tb += '</tr>';
+    tb+='</tr>';
   }
-  document.getElementById('mTbody').innerHTML = tb;
+  document.getElementById('mTbody').innerHTML=tb;
 }
 
-function prevMonth() { S.monthOffset--; renderMonthly(); }
-function nextMonth() { S.monthOffset++; renderMonthly(); }
-function goThisMonth() {
-  if (!S.startDate) return;
-  const now = new Date();
-  S.monthOffset = (now.getFullYear() - S.startDate.getFullYear()) * 12 + (now.getMonth() - S.startDate.getMonth());
+function prevMonth(){S.monthOffset--;renderMonthly()}
+function nextMonth(){S.monthOffset++;renderMonthly()}
+function goThisMonth(){
+  if(!S.startDate)return;
+  const now=new Date();
+  S.monthOffset=(now.getFullYear()-S.startDate.getFullYear())*12+(now.getMonth()-S.startDate.getMonth());
   renderMonthly();
 }
 
-// ============================================================
-// KİŞİ BAZLI AYLIK
-// Satır = Kişi, Sütun = Ayın Her İş Günü
-// ============================================================
-function renderKisi() {
-  if (!S.startDate) return;
-  const { year, month } = getMonthDates(S.monthOffsetK);
-  document.getElementById('monthLabelK').textContent = `${MONTH_TR[month]} ${year}`;
-  const today = new Date(); today.setHours(0,0,0,0);
-  const search = (document.getElementById('kSearch').value || '').toLowerCase();
-
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const workDays = [];
-  for (let d = 1; d <= daysInMonth; d++) {
-    const day = new Date(year, month, d);
-    const jsDay = day.getDay();
-    const dow = jsDay === 0 ? 6 : jsDay - 1;
-    if (dow < S.workDays) workDays.push({ day, dow });
+// ================================================================
+// KİŞİ BAZLI
+// ================================================================
+function renderKisi(){
+  if(!S.startDate)return;
+  const {year,month}=getMonthInfo(S.monthOffsetK);
+  document.getElementById('monthLabelK').textContent=`${MONTH_TR[month]} ${year}`;
+  const today=new Date();today.setHours(0,0,0,0);
+  const search=(document.getElementById('kSearch').value||'').toLowerCase();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const workDaysList=[];
+  for(let d=1;d<=daysInMonth;d++){
+    const day=new Date(year,month,d);
+    const dow=day.getDay()===0?6:day.getDay()-1;
+    if(dow<S.workDays) workDaysList.push({day,dow});
   }
 
-  // Thead
-  let th = '<tr><th style="text-align:left;min-width:150px">NÖBETÇİ</th><th style="text-align:center;min-width:70px">Nöbet Günü</th>';
-  workDays.forEach(({ day, dow }) => {
-    const isToday = day.getTime() === today.getTime();
-    th += `<th class="tc${isToday?' th-today':''}" style="min-width:42px">
-      <div style="font-size:12px;font-weight:600">${day.getDate()}</div>
+  let th='<tr><th style="text-align:left;min-width:140px">NÖBETÇİ</th><th style="text-align:center;min-width:55px">Gün</th>';
+  workDaysList.forEach(({day,dow})=>{
+    const isToday=day.getTime()===today.getTime();
+    const cw=calWeekNum(day);
+    const isTatil=cw>=0&&isTatilWeek(cw);
+    let cls=isToday?'th-today':isTatil?'th-tatil':'';
+    th+=`<th class="${cls}" style="min-width:36px">
+      <div style="font-size:11px;font-weight:600">${day.getDate()}</div>
       <div style="font-size:9px;opacity:.7">${DAY_SHORT[dow]}</div>
     </th>`;
   });
-  th += '</tr>';
+  th+='</tr>';
 
-  // Tüm kişiler
-  const allPersons = [];
-  for (let d = 0; d < S.workDays; d++) {
-    const list = S.gunNobetcileri[d] || [];
-    list.forEach((name, slot) => {
-      if (name && (!search || name.toLowerCase().includes(search))) {
-        allPersons.push({ name, dow: d, slot });
-      }
+  const allPersons=[];
+  for(let d=0;d<S.workDays;d++){
+    const list=S.gunNobetcileri[d]||[];
+    list.forEach((name,slot)=>{
+      if(name&&(!search||name.toLowerCase().includes(search)))
+        allPersons.push({name,dow:d,slot});
     });
   }
 
-  let tb = '';
-  allPersons.forEach(person => {
-    const dc = C[person.dow % C.length];
-    tb += `<tr>
+  let tb='';
+  allPersons.forEach(person=>{
+    const dc=C[person.dow%C.length];
+    tb+=`<tr>
       <td style="font-weight:500;white-space:nowrap;font-size:12px">${person.name}</td>
       <td style="text-align:center">
-        <span style="font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:12px;background:${dc.bg};color:${dc.t};border:1px solid ${dc.b}">
+        <span style="font-family:var(--mono);font-size:10px;padding:2px 6px;border-radius:10px;background:${dc.bg};color:${dc.t};border:1px solid ${dc.b}">
           ${DAY_SHORT[person.dow]}
         </span>
       </td>`;
-
-    workDays.forEach(({ day, dow }) => {
-      const isToday = day.getTime() === today.getTime();
-
-      if (dow !== person.dow) {
-        // Bu gün kişinin nöbet günü değil
-        tb += `<td style="${isToday?'background:rgba(59,130,246,.05)':''}"><span class="td-empty" style="font-size:9px">·</span></td>`;
+    workDaysList.forEach(({day,dow})=>{
+      const isToday=day.getTime()===today.getTime();
+      const bg=isToday?'background:rgba(59,130,246,.05);':'';
+      if(dow!==person.dow){
+        tb+=`<td style="${bg}"><span style="color:var(--text3);font-size:9px">·</span></td>`;
         return;
       }
-
-      // Nöbet günü — hangi bölge?
-      const weekNum = getWeekNum(day);
-      const bolgeIdx = getBolge(person.slot, weekNum);
-      const bc = C[bolgeIdx % C.length];
-      const bname = S.bolgeNames[bolgeIdx] || `B${bolgeIdx+1}`;
-
-      tb += `<td style="text-align:center;${isToday?'background:rgba(59,130,246,.08)':''}">
-        <span class="name-cell" title="${bname}"
-          style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b};font-size:10px">
-          ${bname}
-        </span>
-      </td>`;
+      const sch=getScheduleForDate(day);
+      if(sch===null){
+        tb+=`<td style="${bg}"><span class="tatil-cell">TAT</span></td>`;
+        return;
+      }
+      const entry=sch.find(x=>x.slotIndex===person.slot);
+      if(entry){
+        const bc=C[entry.bolgeIndex%C.length];
+        const bname=S.bolgeNames[entry.bolgeIndex]||`B${entry.bolgeIndex+1}`;
+        tb+=`<td style="text-align:center;${bg}">
+          <span class="name-cell" data-b="${entry.bolgeIndex}" title="${bname}"
+            style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b};font-size:10px">
+            ${bname}
+          </span>
+        </td>`;
+      } else {
+        tb+=`<td style="${bg}"><span style="color:var(--text3);font-size:9px">·</span></td>`;
+      }
     });
-
-    tb += '</tr>';
+    tb+='</tr>';
   });
 
-  document.getElementById('kThead').innerHTML = th;
-  document.getElementById('kTbody').innerHTML = tb || `<tr><td colspan="40" style="text-align:center;color:var(--text3);padding:30px">Kişi bulunamadı</td></tr>`;
+  document.getElementById('kThead').innerHTML=th;
+  document.getElementById('kTbody').innerHTML=tb||`<tr><td colspan="40" style="text-align:center;color:var(--text3);padding:30px">Kişi bulunamadı</td></tr>`;
 }
 
-function prevMonthK() { S.monthOffsetK--; renderKisi(); }
-function nextMonthK() { S.monthOffsetK++; renderKisi(); }
-function goThisMonthK() {
-  if (!S.startDate) return;
-  const now = new Date();
-  S.monthOffsetK = (now.getFullYear() - S.startDate.getFullYear()) * 12 + (now.getMonth() - S.startDate.getMonth());
+function prevMonthK(){S.monthOffsetK--;renderKisi()}
+function nextMonthK(){S.monthOffsetK++;renderKisi()}
+function goThisMonthK(){
+  if(!S.startDate)return;
+  const now=new Date();
+  S.monthOffsetK=(now.getFullYear()-S.startDate.getFullYear())*12+(now.getMonth()-S.startDate.getMonth());
   renderKisi();
 }
 
-// ============================================================
+// ================================================================
 // EXPORT CSV
-// ============================================================
-function exportCSV() {
-  if (!S.startDate) return;
-  const { year, month } = getMonthDates(S.monthOffset);
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const days = [];
-  for (let d = 1; d <= daysInMonth; d++) days.push(new Date(year, month, d));
-
-  let csv = 'Bölge';
-  days.forEach(day => {
-    const dow = day.getDay() === 0 ? 6 : day.getDay() - 1;
-    if (dow < S.workDays) csv += `,${day.getDate()} ${DAY_SHORT[dow]}`;
+// ================================================================
+function exportCSV(){
+  if(!S.startDate)return;
+  const {year,month}=getMonthInfo(S.monthOffset);
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const days=[];
+  for(let d=1;d<=daysInMonth;d++) days.push(new Date(year,month,d));
+  let csv='Bölge';
+  days.forEach(day=>{
+    const dow=day.getDay()===0?6:day.getDay()-1;
+    if(dow<S.workDays) csv+=`,${day.getDate()} ${DAY_SHORT[dow]}`;
   });
-  csv += '\n';
-
-  for (let b = 0; b < S.bolgeCount; b++) {
-    csv += `"${S.bolgeNames[b]}"`;
-    days.forEach(day => {
-      const dow = day.getDay() === 0 ? 6 : day.getDay() - 1;
-      if (dow >= S.workDays) return;
-      const sch = getScheduleForDate(day);
-      const p = sch.find(x => x.bolgeIndex === b);
-      csv += p ? `,"${p.name}"` : ',—';
+  csv+='\n';
+  for(let b=0;b<S.bolgeCount;b++){
+    csv+=`"${S.bolgeNames[b]}"`;
+    days.forEach(day=>{
+      const dow=day.getDay()===0?6:day.getDay()-1;
+      if(dow>=S.workDays)return;
+      const sch=getScheduleForDate(day);
+      if(sch===null){csv+=',"TATİL"';return;}
+      const p=sch.find(x=>x.bolgeIndex===b);
+      csv+=p?`,"${p.name}"`:',—';
     });
-    csv += '\n';
+    csv+='\n';
   }
-
-  const bl = new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(bl);
-  a.download = `nobet_${MONTH_TR[month]}_${year}.csv`;
+  const bl=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(bl);
+  a.download=`nobet_${MONTH_TR[month]}_${year}.csv`;
   a.click();
 }
 
-// ============================================================
+// ================================================================
 // UTILS
-// ============================================================
+// ================================================================
 function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r}
 function iso(d){return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`}
 function fmt(d){return `${p(d.getDate())}.${p(d.getMonth()+1)}.${d.getFullYear()}`}
@@ -715,7 +861,7 @@ function p(n){return String(n).padStart(2,'0')}
 function toast(msg,err){
   const t=document.getElementById('toast');
   t.textContent=msg;t.style.background=err?'var(--danger)':'var(--success)';
-  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);
 }
 </script>
 </body>
