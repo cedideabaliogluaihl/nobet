@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nöbet Çizelgesi</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d0f14;--surface:#151820;--surface2:#1c2030;--border:#2a3040;
+    --accent:#3b82f6;--accent2:#22d3ee;--success:#10b981;--danger:#ef4444;--warn:#f59e0b;
+    --text:#e2e8f0;--text2:#94a3b8;--text3:#475569;
+    --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}
+  body::before{content:'';position:fixed;inset:0;
+    background-image:linear-gradient(rgba(59,130,246,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.03) 1px,transparent 1px);
+    background-size:40px 40px;pointer-events:none;z-index:0}
+  .app{position:relative;z-index:1;max-width:1600px;margin:0 auto;padding:20px}
+
+  header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+  .logo{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  header h1{font-family:var(--mono);font-size:18px;font-weight:600}
+  header p{font-size:12px;color:var(--text2);margin-top:2px}
+  .hbadge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent2);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);padding:4px 10px;border-radius:20px;white-space:nowrap}
+
+  .tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content;flex-wrap:wrap}
+  .tab{padding:8px 20px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+  .tab.active{background:var(--accent);color:white}
+  .tab:hover:not(.active){background:var(--surface2);color:var(--text)}
+  .tab.admin-tab{border:1px solid rgba(245,158,11,.3);color:var(--warn)}
+  .tab.admin-tab.active{background:var(--warn);color:white;border-color:var(--warn)}
+  .panel{display:none}.panel.active{display:block}
+
+  .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+  .nav{display:flex;align-items:center;gap:8px}
+  .btn-nav{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s}
+  .btn-nav:hover{border-color:var(--accent);color:var(--accent)}
+  .month-label{font-family:var(--mono);font-size:14px;font-weight:600;min-width:160px;text-align:center}
+  .btn{padding:8px 16px;border-radius:8px;border:none;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+  .btn-p{background:var(--accent);color:white}.btn-p:hover{background:#2563eb}
+  .btn-o{background:transparent;border:1px solid var(--border);color:var(--text2)}.btn-o:hover{border-color:var(--accent);color:var(--accent)}
+  .btn-w{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:var(--warn)}.btn-w:hover{background:rgba(245,158,11,.22)}
+  .btn-s{background:var(--success);color:white}.btn-s:hover{background:#059669}
+  .btn-sm{padding:6px 13px;font-size:12px}
+
+  .search-box{padding:8px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;transition:border-color .2s;width:220px}
+  .search-box:focus{border-color:var(--accent)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)}
+  .leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+  .twrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
+  .mtable{border-collapse:collapse;font-size:11px;width:100%}
+  .mtable thead th{background:var(--surface2);padding:9px 4px;font-family:var(--mono);font-size:10px;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;text-align:center}
+  .mtable thead th.th-left{text-align:left;min-width:105px;color:var(--accent2);padding-left:12px}
+  .mtable thead th.th-we{opacity:.35}
+  .mtable thead th.th-today{color:var(--accent)!important}
+  .mtable thead th.th-tatil{color:var(--warn)!important}
+  .mtable tbody td{padding:6px 3px;border-bottom:1px solid rgba(42,48,64,.4);border-right:1px solid rgba(42,48,64,.2);text-align:center;vertical-align:middle}
+  .mtable tbody tr:last-child td{border-bottom:none}
+  .mtable tbody td:last-child{border-right:none}
+  .mtable tbody tr:hover td{background:rgba(28,32,48,.5)}
+  .td-left{text-align:left!important;font-family:var(--mono);font-size:11px;font-weight:600;background:var(--surface)!important;padding-left:12px!important;white-space:nowrap}
+  .td-we{background:rgba(255,255,255,.01)!important}
+  .td-tatil{background:rgba(245,158,11,.07)!important}
+  .td-today{background:rgba(59,130,246,.08)!important}
+  .pill{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;white-space:nowrap;max-width:82px;overflow:hidden;text-overflow:ellipsis;cursor:default;line-height:1.5}
+  .tatil-lbl{font-size:9px;color:var(--warn);font-family:var(--mono)}
+  .empty-dot{color:var(--text3);font-size:8px}
+
+  /* ADMİN */
+  .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:900px){.admin-grid{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px}
+  .card-warn{border-color:rgba(245,158,11,.3)}
+  .ctitle{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent2);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .ctitle::before{content:'';width:3px;height:14px;background:var(--accent2);border-radius:2px;flex-shrink:0}
+  .ctitle-warn{color:var(--warn)}.ctitle-warn::before{background:var(--warn)}
+
+  label{display:block;font-size:12px;color:var(--text2);font-weight:500;margin-bottom:5px;margin-top:12px}
+  input[type=text],input[type=date],input[type=number],input[type=password],select{
+    width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;
+    padding:9px 12px;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;transition:border-color .2s}
+  input:focus,select:focus{border-color:var(--accent)}
+  select option{background:var(--bg)}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+  .bolge-list{display:flex;flex-direction:column;gap:5px;max-height:220px;overflow-y:auto}
+  .bolge-item{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+  .bno{font-family:var(--mono);font-size:11px;border-radius:4px;padding:2px 6px;flex-shrink:0;min-width:32px;text-align:center}
+  .bolge-item input{border:none;background:transparent;padding:0;font-size:13px;flex:1}
+  .bolge-item input:focus{outline:none}
+  .bx{background:none;border:none;color:var(--text3);cursor:pointer;font-size:17px;transition:color .2s}
+  .bx:hover{color:var(--danger)}
+  .btn-add{background:none;border:1px dashed var(--border);border-radius:8px;color:var(--text2);font-size:13px;padding:7px;cursor:pointer;transition:all .2s;width:100%;font-family:var(--sans)}
+  .btn-add:hover{border-color:var(--accent);color:var(--accent)}
+
+  .gun-groups{display:flex;flex-direction:column;gap:8px}
+  .gun-group{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px}
+  .gun-header{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+  .gun-label{font-family:var(--mono);font-size:12px;font-weight:600}
+  .gun-nb-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:4px;max-height:160px;overflow-y:auto}
+  .nb-item{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:5px 9px}
+  .nbno{font-family:var(--mono);font-size:10px;color:var(--text3);min-width:18px}
+  .nb-item input{border:none;background:transparent;padding:0;font-size:12px;flex:1;min-width:0}
+  .nb-item input:focus{outline:none}
+
+  .tatil-list{display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto}
+  .tatil-row{display:flex;align-items:center;gap:10px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:8px 12px}
+  .tatil-name{font-size:13px;font-weight:500;color:var(--warn);flex:1}
+  .tatil-date{font-size:11px;color:var(--text3);font-family:var(--mono)}
+  .tatil-del{background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;transition:color .2s}
+  .tatil-del:hover{color:var(--danger)}
+  .tatil-empty{font-size:12px;color:var(--text3);text-align:center;padding:14px;border:1px dashed var(--border);border-radius:8px}
+
+  /* ADIM KUTUSU */
+  .steps{background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);border-radius:12px;padding:20px;margin-bottom:20px}
+  .steps h3{font-family:var(--mono);font-size:13px;color:var(--success);margin-bottom:14px}
+  .step{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start}
+  .step:last-child{margin-bottom:0}
+  .step-no{width:26px;height:26px;border-radius:50%;background:var(--success);color:white;font-family:var(--mono);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .step-text{font-size:13px;color:var(--text2);line-height:1.6;padding-top:3px}
+  .step-text strong{color:var(--text)}
+
+  /* LOGIN */
+  .login-overlay{position:fixed;inset:0;background:rgba(13,15,20,.95);display:flex;align-items:center;justify-content:center;z-index:100}
+  .login-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:36px;width:360px;text-align:center}
+  .login-box h2{font-family:var(--mono);font-size:16px;margin-bottom:6px}
+  .login-box p{font-size:12px;color:var(--text2);margin-bottom:24px}
+  .login-box input{text-align:center;letter-spacing:2px;margin-bottom:14px}
+  .login-error{color:var(--danger);font-size:12px;margin-top:8px;min-height:18px}
+
+  .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:16px}
+  .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading p{color:var(--text2);font-size:14px}
+  .error-box{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:12px;padding:24px;text-align:center;color:var(--danger)}
+  .error-box h3{font-size:16px;margin-bottom:8px}
+  .error-box p{font-size:13px;color:var(--text2);line-height:1.7}
+  .error-box code{background:var(--surface2);padding:2px 8px;border-radius:4px;font-family:var(--mono);font-size:12px;color:var(--accent2)}
+
+  @media(max-width:600px){
+    header h1{font-size:15px}
+    .month-label{min-width:130px;font-size:13px}
+    .search-box{width:100%}
+    .admin-grid{grid-template-columns:1fr}
+  }
+
+  @media print{
+    @page{size:A4 landscape;margin:7mm}
+    body{background:white!important;color:black!important}
+    body::before{display:none}
+    .app{padding:0;max-width:100%}
+    header{border-bottom:1px solid #ccc;margin-bottom:5px;padding-bottom:4px}
+    header h1{font-size:12px;color:black}
+    header p,.hbadge{color:#555;font-size:9px}
+    .tabs,.toolbar,.legend,.login-overlay{display:none!important}
+    .panel{display:block!important}
+    #panel-kisi,#panel-admin{display:none!important}
+    #panel-aylik{display:block!important}
+    .twrap{border:1px solid #ccc;border-radius:0;overflow:visible}
+    .mtable{font-size:7px;width:100%}
+    .mtable thead th{background:#f1f5f9!important;color:#334155!important;padding:4px 2px;font-size:6.5px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .mtable thead th.th-left{color:#1e40af!important}
+    .mtable tbody td{padding:3px 2px;border-color:#e2e8f0}
+    .td-left{background:#f8fafc!important;color:#1e40af!important;font-size:7px;padding-left:4px!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .td-tatil{background:#fffbeb!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .td-today{background:#eff6ff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .pill{font-size:6.5px!important;padding:1px 4px!important;max-width:62px!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .pill[data-b="0"]{background:#dbeafe!important;color:#1d4ed8!important;border:1px solid #93c5fd!important}
+    .pill[data-b="1"]{background:#d1fae5!important;color:#065f46!important;border:1px solid #6ee7b7!important}
+    .pill[data-b="2"]{background:#ede9fe!important;color:#5b21b6!important;border:1px solid #c4b5fd!important}
+    .pill[data-b="3"]{background:#fce7f3!important;color:#9d174d!important;border:1px solid #f9a8d4!important}
+    .pill[data-b="4"]{background:#ffedd5!important;color:#9a3412!important;border:1px solid #fdba74!important}
+    .pill[data-b="5"]{background:#fef9c3!important;color:#713f12!important;border:1px solid #fde047!important}
+    .pill[data-b="6"]{background:#cffafe!important;color:#155e75!important;border:1px solid #67e8f9!important}
+    .pill[data-b="7"]{background:#fee2e2!important;color:#991b1b!important;border:1px solid #fca5a5!important}
+    .pill[data-b="8"]{background:#e0e7ff!important;color:#3730a3!important;border:1px solid #a5b4fc!important}
+    .pill[data-b="9"]{background:#ccfbf1!important;color:#134e4a!important;border:1px solid #5eead4!important}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+<header>
+  <div class="logo">🛡</div>
+  <div>
+    <h1>NÖBET ÇİZELGESİ</h1>
+    <p id="headerSub">Yükleniyor...</p>
+  </div>
+  <div class="hbadge" id="hbadge">⏳ yükleniyor</div>
+</header>
+
+<div class="tabs" id="tabBar" style="display:none">
+  <button class="tab active" onclick="showTab('aylik',this)">📅 Aylık Çizelge</button>
+  <button class="tab" onclick="showTab('kisi',this)">👤 Kişi Bazlı</button>
+  <button class="tab admin-tab" onclick="adminGiris(this)">🔐 Admin</button>
+</div>
+
+<div id="loadingDiv" class="loading">
+  <div class="spinner"></div>
+  <p>Nöbet verileri yükleniyor...</p>
+</div>
+
+<div id="errorDiv" style="display:none" class="error-box">
+  <h3>⚠ Veri Dosyası Bulunamadı</h3>
+  <p><code>nobet_data.json</code> dosyası GitHub deposuna yüklenmeli.<br>
+  <code>nobet_cizelgesi.html</code> ile aynı klasörde olmalı.</p>
+</div>
+
+<!-- AYLIK -->
+<div id="panel-aylik" class="panel" style="display:none">
+  <div class="toolbar">
+    <div class="nav">
+      <button class="btn-nav" onclick="prevMonth()">←</button>
+      <div class="month-label" id="monthLabel">—</div>
+      <button class="btn-nav" onclick="nextMonth()">→</button>
+    </div>
+    <button class="btn btn-o btn-sm" onclick="goThisMonth()">Bu Ay</button>
+    <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-o btn-sm" onclick="exportCSV()">↓ CSV</button>
+      <button class="btn btn-o btn-sm" onclick="window.print()">🖨 Yazdır</button>
+    </div>
+  </div>
+  <div class="legend" id="legend"></div>
+  <div class="twrap">
+    <table class="mtable"><thead id="mThead"></thead><tbody id="mTbody"></tbody></table>
+  </div>
+</div>
+
+<!-- KİŞİ BAZLI -->
+<div id="panel-kisi" class="panel" style="display:none">
+  <div class="toolbar">
+    <div class="nav">
+      <button class="btn-nav" onclick="prevMonthK()">←</button>
+      <div class="month-label" id="monthLabelK">—</div>
+      <button class="btn-nav" onclick="nextMonthK()">→</button>
+    </div>
+    <button class="btn btn-o btn-sm" onclick="goThisMonthK()">Bu Ay</button>
+    <input class="search-box" id="kSearch" placeholder="🔍 İsminizi arayın..." oninput="renderKisi()"/>
+  </div>
+  <div class="twrap">
+    <table class="mtable"><thead id="kThead"></thead><tbody id="kTbody"></tbody></table>
+  </div>
+</div>
+
+<!-- ADMİN -->
+<div id="panel-admin" class="panel" style="display:none">
+
+  <!-- ADIMLAR -->
+  <div class="steps">
+    <h3>📋 Güncelleme Adımları</h3>
+    <div class="step">
+      <div class="step-no">1</div>
+      <div class="step-text">Aşağıdan değişiklikleri yapın (isimler, bölgeler, tatiller)</div>
+    </div>
+    <div class="step">
+      <div class="step-no">2</div>
+      <div class="step-text"><strong>"💾 JSON Dosyasını İndir"</strong> butonuna basın → <code style="background:var(--surface2);padding:1px 6px;border-radius:4px;font-family:var(--mono);font-size:11px">nobet_data.json</code> inecek</div>
+    </div>
+    <div class="step">
+      <div class="step-no">3</div>
+      <div class="step-text">GitHub deposuna gidin → <strong>Add file → Upload files</strong> → indirilen JSON'u yükleyin → <strong>Commit changes</strong></div>
+    </div>
+    <div class="step">
+      <div class="step-no">4</div>
+      <div class="step-text">Birkaç saniye sonra herkes yeni çizelgeyi görür 🎉</div>
+    </div>
+  </div>
+
+  <div class="admin-grid">
+    <!-- SOL -->
+    <div>
+      <div class="card">
+        <div class="ctitle">Genel Ayarlar</div>
+        <label>Başlangıç Tarihi (İlk Pazartesi)</label>
+        <input type="date" id="a_startDate"/>
+        <div class="row2" style="margin-top:0">
+          <div><label>Bölge Sayısı</label>
+            <input type="number" id="a_bolgeCount" value="8" min="1" max="20" onchange="rebuildBolgeList()"/>
+          </div>
+          <div><label>Çalışma Günleri</label>
+            <select id="a_workDays" onchange="rebuildGunGroups()">
+              <option value="5">Pzt–Cum (5 gün)</option>
+              <option value="6">Pzt–Cmt (6 gün)</option>
+              <option value="7">Her Gün</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ctitle">Bölgeler</div>
+        <div class="bolge-list" id="a_bolgeList"></div>
+        <button class="btn-add" style="margin-top:7px" onclick="addBolge()">+ Bölge Ekle</button>
+      </div>
+
+      <div class="card card-warn">
+        <div class="ctitle ctitle-warn">🏖 Tatil Haftaları</div>
+        <p style="font-size:11px;color:var(--text3);margin-bottom:10px;line-height:1.6">
+          Tatil haftaları rotasyona sayılmaz, çizelgede <strong style="color:var(--warn)">TAT</strong> görünür.
+        </p>
+        <input type="text" id="a_tatilAd" placeholder="Tatil adı (ör: Ramazan Bayramı)"/>
+        <div class="row2" style="margin-top:8px">
+          <div><label style="margin-top:0">Pazartesi Tarihi</label>
+            <input type="date" id="a_tatilTarih"/>
+          </div>
+          <div><label style="margin-top:0">Süre</label>
+            <select id="a_tatilSure">
+              <option value="1">1 Hafta</option>
+              <option value="2">2 Hafta</option>
+              <option value="3">3 Hafta</option>
+              <option value="4">4 Hafta</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-w btn-sm" style="margin-top:8px" onclick="addTatil()">+ Tatil Ekle</button>
+        <div class="tatil-list" id="a_tatilList" style="margin-top:10px">
+          <div class="tatil-empty">Tatil eklenmedi</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAĞ -->
+    <div>
+      <div class="card">
+        <div class="ctitle">Nöbetçiler — Gün Bazlı</div>
+        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+          <button class="btn btn-o btn-sm" onclick="autoFill()">🔀 Örnek İsim</button>
+          <span style="font-size:11px;color:var(--text3);align-self:center">Her gün için bölge sayısı kadar kişi</span>
+        </div>
+        <div class="gun-groups" id="a_gunGroups"></div>
+      </div>
+
+      <!-- İNDİR BUTONU -->
+      <button class="btn btn-s" style="width:100%;justify-content:center;font-size:15px;padding:14px" onclick="jsonIndir()">
+        💾 JSON Dosyasını İndir → GitHub'a Yükle
+      </button>
+      <p style="font-size:11px;color:var(--text3);text-align:center;margin-top:8px">
+        İndirilen <code style="background:var(--surface2);padding:1px 5px;border-radius:3px;font-family:var(--mono)">nobet_data.json</code> dosyasını GitHub deposuna yükleyin
+      </p>
+
+      <button class="btn btn-o btn-sm" style="margin-top:12px" onclick="adminCikis()">← Çıkış</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- LOGIN -->
+<div id="loginOverlay" class="login-overlay" style="display:none">
+  <div class="login-box">
+    <div style="font-size:32px;margin-bottom:12px">🔐</div>
+    <h2>Admin Girişi</h2>
+    <p>Admin şifresini girin</p>
+    <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')loginCheck()"/>
+    <button class="btn btn-p" style="width:100%;justify-content:center;margin-top:4px" onclick="loginCheck()">Giriş Yap</button>
+    <div class="login-error" id="loginError"></div>
+    <button class="btn btn-o btn-sm" style="margin-top:12px" onclick="closeLogin()">İptal</button>
+  </div>
+</div>
+
+<script>
+// ── ADMIN ŞİFRESİ ─────────────────────────────────────────────
+// Bu şifreyi istediğin gibi değiştir
+const ADMIN_SIFRE = 'nobet2026';
+// ─────────────────────────────────────────────────────────────
+
+let D = null;
+let monthOffset = 0;
+let monthOffsetK = 0;
+let adminAcik = false;
+
+const DAY_SHORT = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+const DAY_FULL  = ['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'];
+const MONTH_TR  = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+const C=[
+  {bg:'rgba(96,165,250,.18)',t:'#60a5fa',b:'rgba(96,165,250,.35)'},
+  {bg:'rgba(52,211,153,.18)',t:'#34d399',b:'rgba(52,211,153,.35)'},
+  {bg:'rgba(167,139,250,.18)',t:'#a78bfa',b:'rgba(167,139,250,.35)'},
+  {bg:'rgba(244,114,182,.18)',t:'#f472b6',b:'rgba(244,114,182,.35)'},
+  {bg:'rgba(251,146,60,.18)',t:'#fb923c',b:'rgba(251,146,60,.35)'},
+  {bg:'rgba(250,204,21,.18)',t:'#facc15',b:'rgba(250,204,21,.35)'},
+  {bg:'rgba(34,211,238,.18)',t:'#22d3ee',b:'rgba(34,211,238,.35)'},
+  {bg:'rgba(248,113,113,.18)',t:'#f87171',b:'rgba(248,113,113,.35)'},
+  {bg:'rgba(129,140,248,.18)',t:'#818cf8',b:'rgba(129,140,248,.35)'},
+  {bg:'rgba(45,212,191,.18)',t:'#2dd4bf',b:'rgba(45,212,191,.35)'},
+];
+
+// ── YÜKLE ─────────────────────────────────────────────────────
+window.onload = async () => {
+  try {
+    const res = await fetch('nobet_data.json?v='+Date.now());
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    D = await res.json();
+    D.startDate = new Date(D.baslamaTarihi+'T00:00:00');
+    (D.tatiller||[]).forEach(t=>{ t.pazartesiDate=new Date(t.pazartesi+'T00:00:00'); });
+
+    const now = new Date();
+    monthOffset  = (now.getFullYear()-D.startDate.getFullYear())*12+(now.getMonth()-D.startDate.getMonth());
+    monthOffsetK = monthOffset;
+
+    document.getElementById('loadingDiv').style.display='none';
+    document.getElementById('tabBar').style.display='';
+    showPanel('aylik');
+
+    const total=Object.values(D.gunNobetcileri).reduce((s,a)=>s+a.filter(x=>x).length,0);
+    document.getElementById('headerSub').textContent='Haftada 1 gün nöbet · Haftalık bölge rotasyonu';
+    document.getElementById('hbadge').textContent=`${total} nöbetçi · ${D.bolgeCount} bölge`;
+    renderMonthly();
+  } catch(e) {
+    document.getElementById('loadingDiv').style.display='none';
+    document.getElementById('errorDiv').style.display='block';
+  }
+};
+
+// ── TABS ──────────────────────────────────────────────────────
+function showTab(n, btn) {
+  showPanel(n);
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  if(n==='aylik') renderMonthly();
+  if(n==='kisi')  renderKisi();
+}
+
+function showPanel(n) {
+  ['aylik','kisi','admin'].forEach(id=>{
+    const el=document.getElementById('panel-'+id);
+    el.style.display='none'; el.classList.remove('active');
+  });
+  const el=document.getElementById('panel-'+n);
+  el.style.display='block'; el.classList.add('active');
+}
+
+// ── ADMİN GİRİŞ ───────────────────────────────────────────────
+function adminGiris(btn) {
+  if(adminAcik) {
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+    showPanel('admin');
+    return;
+  }
+  document.getElementById('loginPass').value='';
+  document.getElementById('loginError').textContent='';
+  document.getElementById('loginOverlay').style.display='flex';
+  setTimeout(()=>document.getElementById('loginPass').focus(),100);
+}
+
+function loginCheck() {
+  if(document.getElementById('loginPass').value === ADMIN_SIFRE) {
+    document.getElementById('loginOverlay').style.display='none';
+    adminAcik = true;
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab.admin-tab')[0].classList.add('active');
+    showPanel('admin');
+    loadAdminForm();
+  } else {
+    document.getElementById('loginError').textContent='Şifre yanlış!';
+    document.getElementById('loginPass').value='';
+    document.getElementById('loginPass').focus();
+  }
+}
+
+function closeLogin() { document.getElementById('loginOverlay').style.display='none'; }
+
+function adminCikis() {
+  adminAcik = false;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector('.tab').classList.add('active');
+  showPanel('aylik'); renderMonthly();
+}
+
+// ── ADMİN FORM ────────────────────────────────────────────────
+function loadAdminForm() {
+  if(!D) return;
+  document.getElementById('a_startDate').value = D.baslamaTarihi;
+  document.getElementById('a_bolgeCount').value = D.bolgeCount;
+  document.getElementById('a_workDays').value = D.workDays;
+  const now=new Date();
+  const diff=now.getDay()===0?-6:1-now.getDay();
+  const mon=new Date(now);mon.setDate(now.getDate()+diff);
+  document.getElementById('a_tatilTarih').value=iso(mon);
+  rebuildBolgeList();
+  rebuildGunGroups();
+  renderAdminTatilList();
+}
+
+function rebuildBolgeList() {
+  const count=parseInt(document.getElementById('a_bolgeCount').value)||8;
+  const list=document.getElementById('a_bolgeList');
+  const existing=[...list.querySelectorAll('input')].map(i=>i.value);
+  list.innerHTML='';
+  for(let i=0;i<count;i++){
+    const v=existing[i]||(D&&D.bolgeNames[i])||`Bölge ${i+1}`;
+    const c=C[i%C.length];
+    list.insertAdjacentHTML('beforeend',`
+      <div class="bolge-item">
+        <span class="bno" style="color:${c.t};background:${c.bg}">B${i+1}</span>
+        <input type="text" value="${v}" id="ab_${i}" placeholder="Bölge adı"/>
+        <button class="bx" onclick="rmBolge(${i})">×</button>
+      </div>`);
+  }
+  rebuildGunGroups();
+}
+
+function addBolge(){
+  document.getElementById('a_bolgeCount').value=+document.getElementById('a_bolgeCount').value+1;
+  rebuildBolgeList();
+}
+
+function rmBolge(i){
+  const inputs=[...document.getElementById('a_bolgeList').querySelectorAll('input')];
+  if(inputs.length<=1)return;
+  const vals=inputs.map(x=>x.value); vals.splice(i,1);
+  document.getElementById('a_bolgeCount').value=vals.length;
+  rebuildBolgeList();
+  vals.forEach((v,idx)=>{const e=document.getElementById('ab_'+idx);if(e)e.value=v;});
+}
+
+function rebuildGunGroups(){
+  const wd=parseInt(document.getElementById('a_workDays').value)||5;
+  const bc=parseInt(document.getElementById('a_bolgeCount').value)||8;
+  const container=document.getElementById('a_gunGroups');
+  const saved={};
+  container.querySelectorAll('[data-nb]').forEach(inp=>{saved[inp.dataset.nb]=inp.value;});
+  container.innerHTML='';
+  for(let d=0;d<wd;d++){
+    const dc=C[d%C.length];
+    let rows='';
+    for(let i=0;i<bc;i++){
+      const key=`${d}_${i}`;
+      const sv=saved[key]||(D&&(D.gunNobetcileri[String(d)]||D.gunNobetcileri[d]||[])[i])||'';
+      const bc2=C[i%C.length];
+      rows+=`<div class="nb-item">
+        <span class="nbno" style="color:${bc2.t}">${i+1}.</span>
+        <input type="text" data-nb="${key}" data-day="${d}" data-slot="${i}" value="${sv}" placeholder="Bölge ${i+1}"/>
+      </div>`;
+    }
+    container.insertAdjacentHTML('beforeend',`
+      <div class="gun-group">
+        <div class="gun-header">
+          <span class="gun-label" style="color:${dc.t}">● ${DAY_FULL[d]}</span>
+          <span style="font-size:11px;color:var(--text3)">${bc} kişi</span>
+        </div>
+        <div class="gun-nb-list">${rows}</div>
+      </div>`);
+  }
+}
+
+function autoFill(){
+  const fn=['Ali','Veli','Ahmet','Mehmet','Mustafa','Hüseyin','İbrahim','Osman','Yusuf','Hasan',
+    'Ayşe','Fatma','Emine','Hatice','Zeynep','Elif','Merve','Selin','Derya','Canan',
+    'Kemal','Cemal','Barış','Emre','Serkan','Tolga','Onur','Murat','Erkan','Deniz',
+    'Seda','Burcu','Pınar','Gül','Nalan','Leyla','Sevda','Aslı','Tuğçe','Şule'];
+  const ln=['Yılmaz','Kaya','Demir','Çelik','Şahin','Yıldız','Arslan','Öztürk','Aydın','Özdemir'];
+  document.querySelectorAll('[data-nb]').forEach((inp,idx)=>{
+    if(!inp.value.trim()) inp.value=fn[idx%fn.length]+' '+ln[Math.floor(idx/fn.length)%ln.length];
+  });
+}
+
+// ── TATİL ─────────────────────────────────────────────────────
+function addTatil(){
+  const ad=document.getElementById('a_tatilAd').value.trim();
+  const tarih=document.getElementById('a_tatilTarih').value;
+  const sure=parseInt(document.getElementById('a_tatilSure').value);
+  if(!ad){alert('Tatil adı girin!');return;}
+  if(!tarih){alert('Tarih seçin!');return;}
+  const pzt=new Date(tarih+'T00:00:00');
+  if(pzt.getDay()!==1){alert('Lütfen o haftanın PAZARTESİSİNİ seçin!');return;}
+  if(!D.tatiller)D.tatiller=[];
+  D.tatiller.push({id:Date.now(),ad,pazartesi:tarih,haftaSayisi:sure,pazartesiDate:pzt});
+  D.tatiller.sort((a,b)=>new Date(a.pazartesi)-new Date(b.pazartesi));
+  document.getElementById('a_tatilAd').value='';
+  renderAdminTatilList();
+}
+
+function renderAdminTatilList(){
+  const list=document.getElementById('a_tatilList');
+  if(!D.tatiller||!D.tatiller.length){list.innerHTML='<div class="tatil-empty">Tatil eklenmedi</div>';return;}
+  list.innerHTML=D.tatiller.map(t=>{
+    const bitis=addDays(new Date(t.pazartesi+'T00:00:00'),t.haftaSayisi*7-1);
+    return`<div class="tatil-row">
+      <div style="font-size:14px">🏖</div>
+      <div style="flex:1">
+        <div class="tatil-name">${t.ad}${t.haftaSayisi>1?` (${t.haftaSayisi} hafta)`:''}</div>
+        <div class="tatil-date">${fmt(new Date(t.pazartesi+'T00:00:00'))} – ${fmt(bitis)}</div>
+      </div>
+      <button class="tatil-del" onclick="rmTatil(${t.id})">×</button>
+    </div>`;
+  }).join('');
+}
+
+function rmTatil(id){
+  D.tatiller=D.tatiller.filter(t=>t.id!==id);
+  renderAdminTatilList();
+}
+
+// ── JSON İNDİR ────────────────────────────────────────────────
+function jsonIndir(){
+  const yeniD={
+    baslamaTarihi: document.getElementById('a_startDate').value,
+    bolgeCount: parseInt(document.getElementById('a_bolgeCount').value),
+    workDays: parseInt(document.getElementById('a_workDays').value),
+    bolgeNames: [],
+    gunNobetcileri: {},
+    tatiller: (D.tatiller||[]).map(t=>({id:t.id,ad:t.ad,pazartesi:t.pazartesi,haftaSayisi:t.haftaSayisi}))
+  };
+
+  for(let i=0;i<yeniD.bolgeCount;i++){
+    const e=document.getElementById('ab_'+i);
+    yeniD.bolgeNames.push(e?e.value.trim()||`Bölge ${i+1}`:`Bölge ${i+1}`);
+  }
+
+  document.querySelectorAll('[data-nb]').forEach(inp=>{
+    const d=String(inp.dataset.day), s=parseInt(inp.dataset.slot);
+    if(!yeniD.gunNobetcileri[d])yeniD.gunNobetcileri[d]=[];
+    yeniD.gunNobetcileri[d][s]=inp.value.trim();
+  });
+
+  const json=JSON.stringify(yeniD,null,2);
+  const bl=new Blob([json],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(bl);
+  a.download='nobet_data.json';
+  a.click();
+
+  // Yerel veriyi güncelle
+  yeniD.startDate=new Date(yeniD.baslamaTarihi+'T00:00:00');
+  yeniD.tatiller.forEach(t=>{t.pazartesiDate=new Date(t.pazartesi+'T00:00:00');});
+  D=yeniD;
+
+  alert('✓ nobet_data.json indirildi!\n\nŞimdi GitHub deposuna gidin:\nAdd file → Upload files → bu dosyayı yükleyin → Commit changes');
+}
+
+// ── CORE ──────────────────────────────────────────────────────
+function calWeekNum(date){
+  const s=new Date(D.startDate);s.setHours(0,0,0,0);
+  const d=new Date(date);d.setHours(0,0,0,0);
+  return Math.floor((d-s)/(7*86400000));
+}
+function isTatilWeek(cw){
+  const ws=addDays(D.startDate,cw*7);ws.setHours(0,0,0,0);
+  for(const t of (D.tatiller||[])){
+    const ts=new Date(t.pazartesiDate||t.pazartesi+'T00:00:00');ts.setHours(0,0,0,0);
+    const te=addDays(ts,t.haftaSayisi*7-1);
+    if(ws>=ts&&ws<=te)return true;
+  }
+  return false;
+}
+function tatilCountBefore(cw){let c=0;for(let w=0;w<cw;w++)if(isTatilWeek(w))c++;return c;}
+function rotWeekNum(date){const cw=calWeekNum(date);return cw-tatilCountBefore(cw);}
+function getBolge(slot,rw){return((slot+rw)%D.bolgeCount+D.bolgeCount)%D.bolgeCount;}
+function getSchedule(date){
+  const d=new Date(date);d.setHours(0,0,0,0);
+  const s=new Date(D.startDate);s.setHours(0,0,0,0);
+  if(d<s)return[];
+  const jsDay=d.getDay(); const dow=jsDay===0?6:jsDay-1;
+  if(dow>=D.workDays)return[];
+  const cw=calWeekNum(d);
+  if(isTatilWeek(cw))return null;
+  const rw=rotWeekNum(d);
+  const list=D.gunNobetcileri[String(dow)]||D.gunNobetcileri[dow]||[];
+  return list.map((name,i)=>({name,bolgeIndex:getBolge(i,rw),slotIndex:i})).filter(x=>x.name);
+}
+
+// ── AYLIK ─────────────────────────────────────────────────────
+function getMonthInfo(off){
+  const base=new Date(D.startDate.getFullYear(),D.startDate.getMonth()+off,1);
+  return{year:base.getFullYear(),month:base.getMonth()};
+}
+function renderMonthly(){
+  if(!D)return;
+  const{year,month}=getMonthInfo(monthOffset);
+  document.getElementById('monthLabel').textContent=`${MONTH_TR[month]} ${year}`;
+  const today=new Date();today.setHours(0,0,0,0);
+  const dim=new Date(year,month+1,0).getDate();
+  const days=[];for(let d=1;d<=dim;d++)days.push(new Date(year,month,d));
+  let leg='';
+  for(let b=0;b<D.bolgeCount;b++){const c=C[b%C.length];leg+=`<div class="leg-item"><span class="leg-dot" style="background:${c.t}"></span>${D.bolgeNames[b]}</div>`;}
+  if(D.tatiller&&D.tatiller.length)leg+=`<div class="leg-item"><span class="leg-dot" style="background:var(--warn)"></span>Tatil</div>`;
+  document.getElementById('legend').innerHTML=leg;
+  let th='<tr><th class="th-left">BÖLGE</th>';
+  days.forEach(day=>{
+    const dow=day.getDay()===0?6:day.getDay()-1;
+    const isWe=dow>=D.workDays, isToday=day.getTime()===today.getTime();
+    const cw=calWeekNum(day), isTatil=!isWe&&cw>=0&&isTatilWeek(cw);
+    const cls=isToday?'th-today':isTatil?'th-tatil':isWe?'th-we':'';
+    th+=`<th class="${cls}" style="min-width:30px"><div style="font-size:11px;font-weight:600">${day.getDate()}</div><div style="font-size:9px;opacity:.7">${DAY_SHORT[dow]}</div></th>`;
+  });
+  th+='</tr>';
+  document.getElementById('mThead').innerHTML=th;
+  let tb='';
+  for(let b=0;b<D.bolgeCount;b++){
+    const bc=C[b%C.length];
+    tb+=`<tr><td class="td-left" style="color:${bc.t}"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${bc.t};margin-right:6px"></span>${D.bolgeNames[b]}</td>`;
+    days.forEach(day=>{
+      const dow=day.getDay()===0?6:day.getDay()-1;
+      const isWe=dow>=D.workDays, isToday=day.getTime()===today.getTime();
+      const tCls=isToday?' td-today':'';
+      if(isWe){tb+=`<td class="td-we${tCls}"><span class="empty-dot">–</span></td>`;return;}
+      const sch=getSchedule(day);
+      if(sch===null){tb+=`<td class="td-tatil${tCls}"><span class="tatil-lbl">TAT</span></td>`;return;}
+      const person=sch.find(x=>x.bolgeIndex===b);
+      if(person){
+        const fname=person.name.split(' ')[0];
+        tb+=`<td class="${tCls}"><span class="pill" data-b="${b}" title="${person.name}" style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b}">${fname}</span></td>`;
+      } else {
+        tb+=`<td class="${tCls}"><span class="empty-dot">·</span></td>`;
+      }
+    });
+    tb+='</tr>';
+  }
+  document.getElementById('mTbody').innerHTML=tb;
+}
+function prevMonth(){monthOffset--;renderMonthly();}
+function nextMonth(){monthOffset++;renderMonthly();}
+function goThisMonth(){
+  const n=new Date();
+  monthOffset=(n.getFullYear()-D.startDate.getFullYear())*12+(n.getMonth()-D.startDate.getMonth());
+  renderMonthly();
+}
+
+// ── KİŞİ BAZLI ───────────────────────────────────────────────
+function renderKisi(){
+  if(!D)return;
+  const{year,month}=getMonthInfo(monthOffsetK);
+  document.getElementById('monthLabelK').textContent=`${MONTH_TR[month]} ${year}`;
+  const today=new Date();today.setHours(0,0,0,0);
+  const search=(document.getElementById('kSearch').value||'').toLowerCase().trim();
+  const dim=new Date(year,month+1,0).getDate();
+  const wdList=[];
+  for(let d=1;d<=dim;d++){
+    const day=new Date(year,month,d);
+    const dow=day.getDay()===0?6:day.getDay()-1;
+    if(dow<D.workDays)wdList.push({day,dow});
+  }
+  let th='<tr><th style="text-align:left;min-width:130px;padding-left:12px">NÖBETÇİ</th><th style="text-align:center;min-width:45px">Gün</th>';
+  wdList.forEach(({day,dow})=>{
+    const isToday=day.getTime()===today.getTime();
+    const cw=calWeekNum(day), isTatil=cw>=0&&isTatilWeek(cw);
+    const cls=isToday?'th-today':isTatil?'th-tatil':'';
+    th+=`<th class="${cls}" style="min-width:30px"><div style="font-size:11px;font-weight:600">${day.getDate()}</div><div style="font-size:9px;opacity:.7">${DAY_SHORT[dow]}</div></th>`;
+  });
+  th+='</tr>';
+  const allP=[];
+  for(let d=0;d<D.workDays;d++){
+    const list=D.gunNobetcileri[String(d)]||D.gunNobetcileri[d]||[];
+    list.forEach((name,slot)=>{if(name)allP.push({name,dow:d,slot});});
+  }
+  let tb='';
+  allP.forEach(person=>{
+    const isMatch=!search||person.name.toLowerCase().includes(search);
+    const dc=C[person.dow%C.length];
+    tb+=`<tr style="${isMatch&&search?'background:rgba(59,130,246,.06)':''}">
+      <td style="font-weight:500;white-space:nowrap;font-size:12px;padding-left:12px;${isMatch&&search?'color:var(--accent2)':''}">${person.name}</td>
+      <td style="text-align:center"><span style="font-family:var(--mono);font-size:10px;padding:2px 6px;border-radius:10px;background:${dc.bg};color:${dc.t};border:1px solid ${dc.b}">${DAY_SHORT[person.dow]}</span></td>`;
+    wdList.forEach(({day,dow})=>{
+      const isToday=day.getTime()===today.getTime();
+      const bg=isToday?'background:rgba(59,130,246,.05);':'';
+      if(dow!==person.dow){tb+=`<td style="${bg}"><span class="empty-dot">·</span></td>`;return;}
+      const sch=getSchedule(day);
+      if(sch===null){tb+=`<td style="${bg}"><span class="tatil-lbl">TAT</span></td>`;return;}
+      const entry=sch.find(x=>x.slotIndex===person.slot);
+      if(entry){
+        const bc=C[entry.bolgeIndex%C.length];
+        const bname=D.bolgeNames[entry.bolgeIndex]||`B${entry.bolgeIndex+1}`;
+        tb+=`<td style="text-align:center;${bg}"><span class="pill" data-b="${entry.bolgeIndex}" title="${bname}" style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b};font-size:10px">${bname}</span></td>`;
+      } else {
+        tb+=`<td style="${bg}"><span class="empty-dot">·</span></td>`;
+      }
+    });
+    tb+='</tr>';
+  });
+  document.getElementById('kThead').innerHTML=th;
+  document.getElementById('kTbody').innerHTML=tb||'<tr><td colspan="40" style="text-align:center;color:var(--text3);padding:30px">İsim bulunamadı</td></tr>';
+}
+function prevMonthK(){monthOffsetK--;renderKisi();}
+function nextMonthK(){monthOffsetK++;renderKisi();}
+function goThisMonthK(){
+  const n=new Date();
+  monthOffsetK=(n.getFullYear()-D.startDate.getFullYear())*12+(n.getMonth()-D.startDate.getMonth());
+  renderKisi();
+}
+
+// ── CSV ───────────────────────────────────────────────────────
+function exportCSV(){
+  if(!D)return;
+  const{year,month}=getMonthInfo(monthOffset);
+  const dim=new Date(year,month+1,0).getDate();
+  const days=[];for(let d=1;d<=dim;d++)days.push(new Date(year,month,d));
+  let csv='Bölge';
+  days.forEach(day=>{const dow=day.getDay()===0?6:day.getDay()-1;if(dow<D.workDays)csv+=`,${day.getDate()} ${DAY_SHORT[dow]}`;});
+  csv+='\n';
+  for(let b=0;b<D.bolgeCount;b++){
+    csv+=`"${D.bolgeNames[b]}"`;
+    days.forEach(day=>{
+      const dow=day.getDay()===0?6:day.getDay()-1;if(dow>=D.workDays)return;
+      const sch=getSchedule(day);
+      if(sch===null){csv+=',"TATİL"';return;}
+      const p=sch.find(x=>x.bolgeIndex===b);
+      csv+=p?`,"${p.name}"`:',—';
+    });
+    csv+='\n';
+  }
+  const bl=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download=`nobet_${MONTH_TR[month]}_${year}.csv`;a.click();
+}
+
+// ── UTILS ─────────────────────────────────────────────────────
+function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
+function iso(d){return`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;}
+function fmt(d){return`${p(d.getDate())}.${p(d.getMonth()+1)}.${d.getFullYear()}`;}
+function p(n){return String(n).padStart(2,'0');}
+</script>
+</body>
+</html>
