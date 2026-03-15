@@ -1,0 +1,21 @@
+{
+  "baslamaTarihi": "2026-03-02",
+  "bolgeCount": 8,
+  "workDays": 5,
+  "bolgeNames": ["Zemin", "A1", "A2", "A3", "Kantin", "Ön Bahçe", "B1", "B2"],
+  "gunNobetcileri": {
+    "0": ["Ali Yılmaz", "Veli Kaya", "Ahmet Demir", "Mehmet Çelik", "Mustafa Şahin", "Hüseyin Yıldız", "İbrahim Arslan", "Osman Öztürk"],
+    "1": ["Yusuf Aydın", "Hasan Özdemir", "Ayşe Yılmaz", "Fatma Kaya", "Emine Demir", "Hatice Çelik", "Zeynep Şahin", "Elif Yıldız"],
+    "2": ["Merve Arslan", "Selin Öztürk", "Derya Aydın", "Canan Özdemir", "Kemal Yılmaz", "Cemal Kaya", "Barış Demir", "Emre Çelik"],
+    "3": ["Serkan Şahin", "Tolga Yıldız", "Onur Arslan", "Murat Öztürk", "Erkan Aydın", "Deniz Özdemir", "Seda Yılmaz", "Burcu Kaya"],
+    "4": ["Pınar Demir", "Gül Çelik", "Nalan Şahin", "Leyla Yıldız", "Sevda Arslan", "Aslı Öztürk", "Tuğçe Aydın", "Şule Özdemir"]
+  },
+  "tatiller": [
+    {
+      "id": 1,
+      "ad": "Ramazan Bayramı",
+      "pazartesi": "2026-03-30",
+      "haftaSayisi": 1
+    }
+  ]
+}
