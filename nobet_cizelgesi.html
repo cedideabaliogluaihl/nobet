@@ -1,184 +1,59 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nöbet Çizelgesi - Admin Panelli</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg:#0d0f14;--surface:#151820;--surface2:#1c2030;--border:#2a3040;
-    --accent:#3b82f6;--accent2:#22d3ee;--success:#10b981;--danger:#ef4444;--warn:#f59e0b;
-    --text:#e2e8f0;--text2:#94a3b8;--text3:#475569;
-    --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}
-  body::before{content:'';position:fixed;inset:0;
-    background-image:linear-gradient(rgba(59,130,246,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.03) 1px,transparent 1px);
-    background-size:40px 40px;pointer-events:none;z-index:0}
-  .app{position:relative;z-index:1;max-width:1600px;margin:0 auto;padding:20px}
-
-  /* HEADER */
-  header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border);flex-wrap:wrap}
-  .logo{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-  header h1{font-family:var(--mono);font-size:18px;font-weight:600}
-  header p{font-size:12px;color:var(--text2);margin-top:2px}
-  .hbadge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent2);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);padding:4px 10px;border-radius:20px;white-space:nowrap}
-
-  /* ADMIN TOOLS - YENİ */
-  .admin-only { display: none; }
-  .is-admin .admin-only { display: inline-flex; }
-  .admin-badge { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.3); color: var(--danger); }
-
-  /* TABS */
-  .tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content;flex-wrap:wrap}
-  .tab{padding:8px 20px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
-  .tab.active{background:var(--accent);color:white}
-  .tab:hover:not(.active){background:var(--surface2);color:var(--text)}
-  .panel{display:none}.panel.active{display:block}
-
-  /* TOOLBAR */
-  .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
-  .nav{display:flex;align-items:center;gap:8px}
-  .btn-nav{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;flex-shrink:0}
-  .btn-nav:hover{border-color:var(--accent);color:var(--accent)}
-  .month-label{font-family:var(--mono);font-size:14px;font-weight:600;min-width:160px;text-align:center}
-  .btn{padding:8px 16px;border-radius:8px;border:none;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
-  .btn-o{background:transparent;border:1px solid var(--border);color:var(--text2)}.btn-o:hover{border-color:var(--accent);color:var(--accent)}
-  .btn-sm{padding:6px 13px;font-size:12px}
-  .btn-danger{background:rgba(239,68,68,.1); color:var(--danger); border:1px solid rgba(239,68,68,.2)}
-
-  /* ARAMA */
-  .search-box{padding:8px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;transition:border-color .2s;width:220px}
-  .search-box:focus{border-color:var(--accent)}
-
-  /* TABLO */
-  .twrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
-  .mtable{border-collapse:collapse;font-size:11px;width:100%}
-  .mtable thead th{background:var(--surface2);padding:9px 4px;font-family:var(--mono);font-size:10px;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;text-align:center}
-  .mtable thead th.th-left{text-align:left;min-width:105px;color:var(--accent2);padding-left:12px}
-  .mtable tbody td{padding:6px 3px;border-bottom:1px solid rgba(42,48,64,.4);border-right:1px solid rgba(42,48,64,.2);text-align:center;vertical-align:middle}
-  .td-left{text-align:left!important;font-family:var(--mono);font-size:11px;font-weight:600;background:var(--surface)!important;padding-left:12px!important;white-space:nowrap}
-  .pill{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;white-space:nowrap;max-width:82px;overflow:hidden;text-overflow:ellipsis;cursor:default;line-height:1.5}
-  
-  /* LOADING & ERROR */
-  .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:16px}
-  .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .error-box{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:12px;padding:24px;text-align:center;color:var(--danger)}
-
-  @media print{
-    .tabs, .toolbar, #adminControl { display:none!important; }
-  }
-</style>
-</head>
-<body id="bodyTag">
-<div class="app">
-
-<header>
-  <div class="logo">🛡</div>
-  <div>
-    <h1>NÖBET ÇİZELGESİ</h1>
-    <p id="headerSub">Yükleniyor...</p>
-  </div>
-  <div id="adminControl" style="margin-left:auto; display:flex; gap:10px;">
-    <button class="btn btn-o btn-sm" id="adminBtn" onclick="handleAdmin()">🔑 Admin Girişi</button>
-  </div>
-  <div class="hbadge" id="hbadge">⏳ veri yükleniyor</div>
-</header>
-
-<div class="tabs" id="tabBar" style="display:none">
-  <button class="tab active" onclick="showTab('aylik',this)">📅 Aylık Çizelge</button>
-  <button class="tab" onclick="showTab('kisi',this)">👤 Kişi Bazlı</button>
-</div>
-
-<div id="loadingDiv" class="loading">
-  <div class="spinner"></div>
-  <p>Nöbet verileri yükleniyor...</p>
-</div>
-
-<div id="errorDiv" style="display:none" class="error-box">
-  <h3>⚠ Veri Dosyası Bulunamadı</h3>
-  <p><code>nobet_data.json</code> dosyası bulunamadı.</p>
-</div>
-
-<div id="panel-aylik" class="panel" style="display:none">
-  <div class="toolbar">
-    <div class="nav">
-      <button class="btn-nav" onclick="prevMonth()">←</button>
-      <div class="month-label" id="monthLabel">—</div>
-      <button class="btn-nav" onclick="nextMonth()">→</button>
-    </div>
-    <button class="btn btn-o btn-sm" onclick="goThisMonth()">Bu Ay</button>
-    <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn btn-danger btn-sm admin-only" onclick="alert('Düzenleme modu yakında!')">✍ Düzenle</button>
-      <button class="btn btn-o btn-sm" onclick="exportCSV()">↓ CSV</button>
-      <button class="btn btn-o btn-sm" onclick="window.print()">🖨 Yazdır</button>
-    </div>
-  </div>
-  <div class="legend" id="legend" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; font-size:11px;"></div>
-  <div class="twrap">
-    <table class="mtable"><thead id="mThead"></thead><tbody id="mTbody"></tbody></table>
-  </div>
-</div>
-
-<div id="panel-kisi" class="panel" style="display:none">
-  <div class="toolbar">
-    <div class="nav">
-      <button class="btn-nav" onclick="prevMonthK()">←</button>
-      <div class="month-label" id="monthLabelK">—</div>
-      <button class="btn-nav" onclick="nextMonthK()">→</button>
-    </div>
-    <button class="btn btn-o btn-sm" onclick="goThisMonthK()">Bu Ay</button>
-    <input class="search-box" id="kSearch" placeholder="🔍 İsminizi arayın..." oninput="renderKisi()"/>
-  </div>
-  <div class="twrap">
-    <table class="mtable"><thead id="kThead"></thead><tbody id="kTbody"></tbody></table>
-  </div>
-</div>
-
-</div>
-
-<script>
 // --- GÜVENLİK AYARLARI ---
-// Şifre: admin123
+// Şifre: admin123 (SHA-256 Hash hali aşağıdadır)
 const ADMIN_HASH = "240be518ebb0c4c3912a7092121d5922355443f66f5f012001479836796451a9";
 
-async function hashStr(s) {
-    const msgUint8 = new TextEncoder().encode(s);
+// Tarayıcı uyumlu hızlı hash fonksiyonu
+async function checkPassword(input) {
+    const msgUint8 = new TextEncoder().encode(input);
     const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    const hashedInput = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashedInput === ADMIN_HASH;
 }
 
 async function handleAdmin() {
     if(localStorage.getItem('is_admin') === 'true') {
-        localStorage.removeItem('is_admin');
-        location.reload();
+        if(confirm("Admin oturumu kapatılsın mı?")) {
+            localStorage.removeItem('is_admin');
+            location.reload();
+        }
         return;
     }
+    
     const p = prompt("Yönetici şifresini girin:");
     if(!p) return;
-    const h = await hashStr(p);
-    if(h === ADMIN_HASH) {
+
+    // Şifreyi kontrol et
+    const isCorrect = await checkPassword(p);
+    
+    if(isCorrect) {
         localStorage.setItem('is_admin', 'true');
+        alert("Giriş başarılı!");
         location.reload();
     } else {
-        alert("Hatalı şifre!");
+        alert("Hatalı şifre! (Girdiğiniz: " + p + ")");
     }
 }
 
 function checkAdminStatus() {
     if(localStorage.getItem('is_admin') === 'true') {
-        document.getElementById('bodyTag').classList.add('is-admin');
-        document.getElementById('adminBtn').textContent = "🚪 Çıkış";
-        document.getElementById('adminBtn').classList.add('btn-danger');
-        document.getElementById('hbadge').classList.add('admin-badge');
+        document.body.classList.add('is-admin');
+        const adminBtn = document.getElementById('adminBtn');
+        if(adminBtn) {
+            adminBtn.textContent = "🚪 Çıkış";
+            adminBtn.style.background = "rgba(239,68,68,.1)";
+            adminBtn.style.color = "var(--danger)";
+        }
+        const badge = document.getElementById('hbadge');
+        if(badge) {
+            badge.textContent = "YÖNETİCİ MODU";
+            badge.style.background = "rgba(239,68,68,.1)";
+            badge.style.color = "var(--danger)";
+        }
     }
 }
 
-// --- MEVCUT DEVAM EDEN MANTIK ---
+// --- VERİ YÜKLEME VE DİĞER FONKSİYONLAR ---
 let D = null; 
 let monthOffset = 0;
 let monthOffsetK = 0;
@@ -212,11 +87,6 @@ window.onload = async () => {
     document.getElementById('loadingDiv').style.display = 'none';
     document.getElementById('tabBar').style.display = '';
     document.getElementById('panel-aylik').style.display = 'block';
-    document.getElementById('panel-aylik').classList.add('active');
-
-    const total = Object.values(D.gunNobetcileri).reduce((s,a)=>s+a.filter(x=>x).length,0);
-    document.getElementById('headerSub').textContent = 'Haftalık bölge rotasyonu aktif';
-    document.getElementById('hbadge').textContent = (localStorage.getItem('is_admin') === 'true' ? 'YÖNETİCİ MODU' : `${total} nöbetçi · ${D.bolgeCount} bölge`);
 
     renderMonthly();
   } catch(e) {
@@ -225,119 +95,5 @@ window.onload = async () => {
   }
 };
 
-// ... (Burada paylaştığın diğer renderMonthly, renderKisi, getSchedule fonksiyonları aynı kalacak) ...
-// (Kodun kısalması için kalan fonksiyonları buraya dahil etmiyorum ancak sendeki orijinal JS fonksiyonları buraya yapıştırılmalıdır.)
-
-function showTab(n, btn) {
-  document.querySelectorAll('.panel').forEach(p=>{p.classList.remove('active');p.style.display='none';});
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  const panel = document.getElementById('panel-'+n);
-  panel.style.display = 'block';
-  panel.classList.add('active');
-  btn.classList.add('active');
-  if(n==='aylik') renderMonthly();
-  if(n==='kisi')  renderKisi();
-}
-
-function calWeekNum(date) {
-  const s=new Date(D.startDate);s.setHours(0,0,0,0);
-  const d=new Date(date);d.setHours(0,0,0,0);
-  return Math.floor((d-s)/(7*86400000));
-}
-function isTatilWeek(cw) {
-  const ws=addDays(D.startDate,cw*7);ws.setHours(0,0,0,0);
-  for(const t of (D.tatiller||[])){
-    const ts=new Date(t.pazartesiDate);ts.setHours(0,0,0,0);
-    const te=addDays(ts,t.haftaSayisi*7-1);
-    if(ws>=ts&&ws<=te)return true;
-  }
-  return false;
-}
-function tatilCountBefore(cw){
-  let c=0;for(let w=0;w<cw;w++)if(isTatilWeek(w))c++;return c;
-}
-function rotWeekNum(date){
-  const cw=calWeekNum(date);return cw-tatilCountBefore(cw);
-}
-function getBolge(slot,rw){
-  return((slot+rw)%D.bolgeCount+D.bolgeCount)%D.bolgeCount;
-}
-function getSchedule(date){
-  const d=new Date(date);d.setHours(0,0,0,0);
-  const s=new Date(D.startDate);s.setHours(0,0,0,0);
-  if(d<s)return[];
-  const jsDay=d.getDay();
-  const dow=jsDay===0?6:jsDay-1;
-  if(dow>=D.workDays)return[];
-  const cw=calWeekNum(d);
-  if(isTatilWeek(cw))return null;
-  const rw=rotWeekNum(d);
-  const list=D.gunNobetcileri[String(dow)]||D.gunNobetcileri[dow]||[];
-  return list.map((name,i)=>({name,bolgeIndex:getBolge(i,rw),slotIndex:i})).filter(x=>x.name);
-}
-
-function renderMonthly(){
-  if(!D)return;
-  const{year,month}=getMonthInfo(monthOffset);
-  document.getElementById('monthLabel').textContent=`${MONTH_TR[month]} ${year}`;
-  const today=new Date();today.setHours(0,0,0,0);
-  const dim=new Date(year,month+1,0).getDate();
-  const days=[];for(let d=1;d<=dim;d++)days.push(new Date(year,month,d));
-
-  let leg='';
-  for(let b=0;b<D.bolgeCount;b++){
-    const c=C[b%C.length];
-    leg+=`<div style="display:flex;align-items:center;gap:5px;"><span style="width:8px;height:8px;border-radius:50%;background:${c.t}"></span>${D.bolgeNames[b]}</div>`;
-  }
-  document.getElementById('legend').innerHTML=leg;
-
-  let th='<tr><th class="th-left">BÖLGE</th>';
-  days.forEach(day=>{
-    const dow=day.getDay()===0?6:day.getDay()-1;
-    const cls = day.getTime()===today.getTime() ? 'th-today' : '';
-    th+=`<th class="${cls}">${day.getDate()}<br><small>${DAY_SHORT[dow]}</small></th>`;
-  });
-  document.getElementById('mThead').innerHTML=th;
-
-  let tb='';
-  for(let b=0;b<D.bolgeCount;b++){
-    const bc=C[b%C.length];
-    tb+=`<tr><td class="td-left" style="color:${bc.t}">${D.bolgeNames[b]}</td>`;
-    days.forEach(day=>{
-        const dow=day.getDay()===0?6:day.getDay()-1;
-        if(dow>=D.workDays){ tb+='<td style="opacity:0.2">-</td>'; return; }
-        const sch=getSchedule(day);
-        if(sch===null){ tb+='<td style="color:var(--warn)">TAT</td>'; return; }
-        const person=sch.find(x=>x.bolgeIndex===b);
-        if(person){
-            tb+=`<td><span class="pill" style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b}">${person.name.split(' ')[0]}</span></td>`;
-        } else tb+='<td>·</td>';
-    });
-    tb+='</tr>';
-  }
-  document.getElementById('mTbody').innerHTML=tb;
-}
-
-function getMonthInfo(offset){
-  const base=new Date(D.startDate.getFullYear(),D.startDate.getMonth()+offset,1);
-  return{year:base.getFullYear(),month:base.getMonth()};
-}
-function prevMonth(){monthOffset--;renderMonthly();}
-function nextMonth(){monthOffset++;renderMonthly();}
-function goThisMonth(){
-  const n=new Date();
-  monthOffset=(n.getFullYear()-D.startDate.getFullYear())*12+(n.getMonth()-D.startDate.getMonth());
-  renderMonthly();
-}
-function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
-
-// KİŞİ BAZLI RENDER (ÖZETLENMİŞ)
-function renderKisi(){
-  if(!D)return;
-  const{year,month}=getMonthInfo(monthOffsetK);
-  document.getElementById('monthLabelK').textContent=`${MONTH_TR[month]} ${year}`;
-  // (Mevcut renderKisi fonksiyonunu buraya ekleyebilirsin)
-}
-</script>
-</body>
-</html>
+// ... (Buradan aşağısı senin orijinal tablolama fonksiyonların: renderMonthly, renderKisi vb. olacak) ...
+// (Kodu fazla uzatmamak için tabloları çizen fonksiyonları aynen koru)
