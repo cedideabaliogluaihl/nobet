@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nöbet Çizelgesi</title>
+<title>Nöbet Çizelgesi Pro</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -14,52 +14,43 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}
-  body::before{content:'';position:fixed;inset:0;
-    background-image:linear-gradient(rgba(59,130,246,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.03) 1px,transparent 1px);
-    background-size:40px 40px;pointer-events:none;z-index:0}
   .app{position:relative;z-index:1;max-width:1600px;margin:0 auto;padding:20px}
-
   header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border);flex-wrap:wrap}
-  .logo{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .logo{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
   header h1{font-family:var(--mono);font-size:18px;font-weight:600}
-  header p{font-size:12px;color:var(--text2);margin-top:2px}
-  .hbadge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent2);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);padding:4px 10px;border-radius:20px;white-space:nowrap}
-
-  /* Admin Modu Stilleri */
+  .hbadge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent2);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);padding:4px 10px;border-radius:20px}
+  
+  /* Admin Styles */
   .admin-only { display: none !important; }
   body.is-admin .admin-only { display: inline-flex !important; }
   body.is-admin .hbadge { border-color: var(--danger); color: var(--danger); background: rgba(239,68,68,0.1); }
 
-  .tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content;flex-wrap:wrap}
-  .tab{padding:8px 20px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+  .tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content}
+  .tab{padding:8px 20px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;transition:0.2s}
   .tab.active{background:var(--accent);color:white}
   .panel{display:none}.panel.active{display:block}
 
   .toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
-  .nav{display:flex;align-items:center;gap:8px}
-  .btn-nav{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-  .month-label{font-family:var(--mono);font-size:14px;font-weight:600;min-width:160px;text-align:center}
+  .btn-nav{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;width:36px;height:36px;cursor:pointer}
   .btn{padding:8px 16px;border-radius:8px;border:none;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
   .btn-o{background:transparent;border:1px solid var(--border);color:var(--text2)}
-  .btn-danger{border-color: var(--danger); color: var(--danger); background: transparent; border: 1px solid;}
-  .search-box{padding:8px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;width:220px}
-
-  .twrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
-  .mtable{border-collapse:collapse;font-size:11px;width:100%}
-  .mtable thead th{background:var(--surface2);padding:9px 4px;font-size:10px;color:var(--text2);border-bottom:1px solid var(--border);text-align:center}
-  .mtable thead th.th-left{text-align:left;min-width:105px;color:var(--accent2);padding-left:12px}
-  .mtable tbody td{padding:6px 3px;border-bottom:1px solid rgba(42,48,64,.4);border-right:1px solid rgba(42,48,64,.2);text-align:center}
-  .td-left{text-align:left!important;font-family:var(--mono);font-size:11px;font-weight:600;background:var(--surface)!important;padding-left:12px!important;white-space:nowrap}
-  .pill{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;white-space:nowrap;max-width:82px;overflow:hidden;text-overflow:ellipsis;line-height:1.5}
+  .btn-danger{border-color:var(--danger);color:var(--danger);background:transparent;border:1px solid}
   
-  .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:16px}
-  .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
+  .twrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border);background:var(--surface)}
+  .mtable{border-collapse:collapse;font-size:11px;width:100%}
+  .mtable th, .mtable td{padding:10px 5px;border-bottom:1px solid var(--border);border-right:1px solid rgba(42,48,64,0.3);text-align:center}
+  .td-left{text-align:left!important;font-family:var(--mono);padding-left:15px!important;background:var(--surface2)!important;position:sticky;left:0}
+  .pill{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;border:1px solid rgba(255,255,255,0.1)}
 
-  @media print{ .tabs, .toolbar, #adminBtn {display:none!important;} }
+  /* Modal Edit */
+  #editModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;padding:20px;overflow-y:auto}
+  .modal-content{background:var(--surface);max-width:800px;margin:20px auto;padding:20px;border-radius:15px;border:1px solid var(--border)}
+  .edit-input{background:var(--bg);border:1px solid var(--border);color:white;padding:5px;width:100%;border-radius:4px}
+  #jsonOutput{width:100%;height:150px;background:#000;color:var(--success);font-family:var(--mono);font-size:10px;margin-top:10px;padding:10px;border-radius:8px}
 </style>
 </head>
 <body>
+
 <div class="app">
 <header>
   <div class="logo">🛡</div>
@@ -69,7 +60,7 @@
   </div>
   <div style="margin-left: auto; display: flex; gap: 8px;">
     <button class="btn btn-o" id="adminBtn" onclick="toggleAdmin()">🔑 Admin</button>
-    <div class="hbadge" id="hbadge">⏳ veri yükleniyor</div>
+    <div class="hbadge" id="hbadge">Bağlanıyor...</div>
   </div>
 </header>
 
@@ -78,219 +69,151 @@
   <button class="tab" onclick="showTab('kisi',this)">👤 Kişi Bazlı</button>
 </div>
 
-<div id="loadingDiv" class="loading">
-  <div class="spinner"></div>
-  <p>Nöbet verileri yükleniyor...</p>
-</div>
-
-<div id="panel-aylik" class="panel">
+<div id="panel-aylik" class="panel active">
   <div class="toolbar">
-    <div class="nav">
-      <button class="btn-nav" onclick="prevMonth()">←</button>
-      <div class="month-label" id="monthLabel">—</div>
-      <button class="btn-nav" onclick="nextMonth()">→</button>
-    </div>
-    <button class="btn btn-o btn-sm" onclick="goThisMonth()">Bu Ay</button>
-    <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn btn-danger btn-sm admin-only" onclick="alert('Düzenleme modu yakında!')">✍ Düzenle</button>
-      <button class="btn btn-o btn-sm" onclick="exportCSV()">↓ CSV</button>
-      <button class="btn btn-o btn-sm" onclick="window.print()">🖨 Yazdır</button>
+    <button class="btn-nav" onclick="changeMonth(-1)">←</button>
+    <div id="monthLabel" style="font-family:var(--mono);min-width:140px;text-align:center">---</div>
+    <button class="btn-nav" onclick="changeMonth(1)">→</button>
+    <div style="margin-left:auto;display:flex;gap:8px">
+      <button class="btn btn-danger admin-only" onclick="openEditor()">✍ Düzenle & Güncelle</button>
+      <button class="btn btn-o" onclick="window.print()">🖨 Yazdır</button>
     </div>
   </div>
-  <div class="legend" id="legend" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; font-size:11px;"></div>
+  <div id="legend" style="display:flex;gap:10px;margin-bottom:10px;font-size:10px;flex-wrap:wrap"></div>
   <div class="twrap">
     <table class="mtable"><thead id="mThead"></thead><tbody id="mTbody"></tbody></table>
   </div>
 </div>
 
 <div id="panel-kisi" class="panel">
-  <div class="toolbar">
-    <div class="nav">
-      <button class="btn-nav" onclick="prevMonthK()">←</button>
-      <div class="month-label" id="monthLabelK">—</div>
-      <button class="btn-nav" onclick="nextMonthK()">→</button>
-    </div>
-    <button class="btn btn-o btn-sm" onclick="goThisMonthK()">Bu Ay</button>
-    <input class="search-box" id="kSearch" placeholder="🔍 İsim ara..." oninput="renderKisi()"/>
-  </div>
+  <input class="btn-o" id="kSearch" placeholder="🔍 İsim ara..." oninput="renderKisi()" style="padding:8px;width:250px;margin-bottom:15px;border-radius:8px">
   <div class="twrap">
     <table class="mtable"><thead id="kThead"></thead><tbody id="kTbody"></tbody></table>
   </div>
 </div>
 </div>
 
-<script>
-// --- ADMIN & GÜVENLİK ---
-const ADMIN_HASH = "240be518ebb0c4c3912a7092121d5922355443f66f5f012001479836796451a9"; // admin123
+<div id="editModal">
+  <div class="modal-content">
+    <h2 style="margin-bottom:15px">Veri Düzenleyici</h2>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:10px">İsimleri değiştirin ve alttaki JSON kodunu kopyalayıp GitHub'daki nobet_data.json dosyasına yapıştırın.</p>
+    <div id="editorFields" style="max-height:400px;overflow-y:auto"></div>
+    <button class="btn btn-danger" style="width:100%;margin-top:20px" onclick="generateNewJSON()">JSON KODUNU ÜRET</button>
+    <textarea id="jsonOutput" readonly placeholder="Kod burada görünecek..."></textarea>
+    <button class="btn btn-o" style="width:100%;margin-top:10px" onclick="document.getElementById('editModal').style.display='none'">Kapat</button>
+  </div>
+</div>
 
-async function hashStr(s) {
+<script>
+const ADMIN_HASH = "240be518ebb0c4c3912a7092121d5922355443f66f5f012001479836796451a9"; // admin123
+let D = null; let monthOffset = 0;
+const MONTH_TR = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+const DAY_TR = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+const COLORS = [{t:'#60a5fa',bg:'rgba(96,165,250,0.15)'},{t:'#34d399',bg:'rgba(52,211,153,0.15)'},{t:'#a78bfa',bg:'rgba(167,139,250,0.15)'},{t:'#fb923c',bg:'rgba(251,146,60,0.15)'},{t:'#f472b6',bg:'rgba(244,114,182,0.15)'}];
+
+async function hash(s) {
     const utf8 = new TextEncoder().encode(s);
     const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
     return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 async function toggleAdmin() {
-    if(localStorage.getItem('is_admin') === 'true') {
-        localStorage.removeItem('is_admin');
-        location.reload();
-        return;
-    }
-    const p = prompt("Admin Şifresi:");
-    if(!p) return;
-    if(await hashStr(p) === ADMIN_HASH) {
-        localStorage.setItem('is_admin', 'true');
-        location.reload();
-    } else alert("Hatalı!");
+    if(localStorage.getItem('is_admin') === 'true') { localStorage.removeItem('is_admin'); location.reload(); return; }
+    const p = prompt("Şifre:");
+    if(await hash(p) === ADMIN_HASH) { localStorage.setItem('is_admin', 'true'); location.reload(); }
+    else alert("Hatalı!");
 }
 
-// --- ORİJİNAL MANTIK ---
-let D = null; let monthOffset = 0; let monthOffsetK = 0;
-const DAY_SHORT = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
-const MONTH_TR  = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
-const C = [
-  {bg:'rgba(96,165,250,.18)',t:'#60a5fa',b:'rgba(96,165,250,.35)'},
-  {bg:'rgba(52,211,153,.18)',t:'#34d399',b:'rgba(52,211,153,.35)'},
-  {bg:'rgba(167,139,250,.18)',t:'#a78bfa',b:'rgba(167,139,250,.35)'},
-  {bg:'rgba(244,114,182,.18)',t:'#f472b6',b:'rgba(244,114,182,.35)'},
-  {bg:'rgba(251,146,60,.18)',t:'#fb923c',b:'rgba(251,146,60,.35)'},
-  {bg:'rgba(250,204,21,.18)',t:'#facc15',b:'rgba(250,204,21,.35)'},
-  {bg:'rgba(34,211,238,.18)',t:'#22d3ee',b:'rgba(34,211,238,.35)'},
-  {bg:'rgba(248,113,113,.18)',t:'#f87171',b:'rgba(248,113,113,.35)'}
-];
-
 window.onload = async () => {
-  if(localStorage.getItem('is_admin') === 'true') document.body.classList.add('is-admin');
-  try {
+    if(localStorage.getItem('is_admin') === 'true') document.body.classList.add('is-admin');
     const res = await fetch('nobet_data.json?v=' + Date.now());
     D = await res.json();
     D.startDate = new Date(D.baslamaTarihi + 'T00:00:00');
-    (D.tatiller || []).forEach(t => { t.pazartesiDate = new Date(t.pazartesi + 'T00:00:00'); });
     const now = new Date();
     monthOffset = (now.getFullYear()-D.startDate.getFullYear())*12+(now.getMonth()-D.startDate.getMonth());
-    monthOffsetK = monthOffset;
-    document.getElementById('loadingDiv').style.display = 'none';
     document.getElementById('tabBar').style.display = 'flex';
-    document.getElementById('headerSub').textContent = 'Haftalık bölge rotasyonu aktif';
-    document.getElementById('hbadge').textContent = localStorage.getItem('is_admin') === 'true' ? "YÖNETİCİ" : `${D.bolgeCount} Bölge`;
-    if(localStorage.getItem('is_admin') === 'true') {
-        document.getElementById('adminBtn').textContent = "Çıkış";
-        document.getElementById('adminBtn').classList.add('btn-danger');
-    }
+    document.getElementById('hbadge').textContent = document.body.classList.contains('is-admin') ? "YÖNETİCİ" : "PERSONEL";
+    if(document.body.classList.contains('is-admin')) document.getElementById('adminBtn').textContent = "Çıkış";
     renderMonthly();
-  } catch(e) { console.error(e); }
 };
 
-function calWeekNum(date) {
-  const s=new Date(D.startDate); s.setHours(0,0,0,0);
-  const d=new Date(date); d.setHours(0,0,0,0);
-  return Math.floor((d-s)/(7*86400000));
-}
-function isTatilWeek(cw) {
-  const ws=addDays(D.startDate,cw*7); ws.setHours(0,0,0,0);
-  for(const t of (D.tatiller||[])){
-    const ts=new Date(t.pazartesiDate); ts.setHours(0,0,0,0);
-    const te=addDays(ts,t.haftaSayisi*7-1);
-    if(ws>=ts&&ws<=te)return true;
-  }
-  return false;
-}
-function getSchedule(date){
-  const d=new Date(date); d.setHours(0,0,0,0);
-  const dow=d.getDay()===0?6:d.getDay()-1;
-  if(dow>=D.workDays)return[];
-  const cw=calWeekNum(d);
-  if(isTatilWeek(cw))return null;
-  let tWeeks = (D.tatiller||[]).filter(t => new Date(t.pazartesiDate) < d).reduce((a,b)=>a+b.haftaSayisi,0);
-  const rw = cw - tWeeks;
-  const list=D.gunNobetcileri[String(dow)]||D.gunNobetcileri[dow]||[];
-  return list.map((name,i)=>({name,bolgeIndex:((i+rw)%D.bolgeCount+D.bolgeCount)%D.bolgeCount,slotIndex:i})).filter(x=>x.name);
+function getSchedule(date) {
+    const d = new Date(date); const dow = d.getDay() === 0 ? 6 : d.getDay() - 1;
+    if(dow >= D.workDays) return [];
+    const diff = Math.floor((d - D.startDate) / (7 * 86400000));
+    let tWeeks = (D.tatiller || []).filter(t => new Date(t.pazartesi) < d).reduce((a,b) => a + b.haftaSayisi, 0);
+    const rw = diff - tWeeks;
+    for(let t of (D.tatiller || [])) {
+        let tStart = new Date(t.pazartesi + 'T00:00:00');
+        let tEnd = new Date(tStart.getTime() + t.haftaSayisi * 7 * 86400000);
+        if(d >= tStart && d < tEnd) return null;
+    }
+    return (D.gunNobetcileri[dow] || []).map((name, i) => ({
+        name, bIdx: ((i + rw) % D.bolgeCount + D.bolgeCount) % D.bolgeCount, slot: i
+    })).filter(x => x.name);
 }
 
-function renderMonthly(){
-  const base=new Date(D.startDate.getFullYear(),D.startDate.getMonth()+monthOffset,1);
-  const year=base.getFullYear(); const month=base.getMonth();
-  document.getElementById('monthLabel').textContent=`${MONTH_TR[month]} ${year}`;
-  const dim=new Date(year,month+1,0).getDate();
-  const days=[]; for(let d=1;d<=dim;d++)days.push(new Date(year,month,d));
+function renderMonthly() {
+    const view = new Date(D.startDate.getFullYear(), D.startDate.getMonth() + monthOffset, 1);
+    document.getElementById('monthLabel').textContent = `${MONTH_TR[view.getMonth()]} ${view.getFullYear()}`;
+    const dim = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+    
+    let th = `<tr><th class="td-left">BÖLGELER</th>`;
+    for(let i=1; i<=dim; i++) {
+        let day = new Date(view.getFullYear(), view.getMonth(), i);
+        let dow = day.getDay() === 0 ? 6 : day.getDay() - 1;
+        th += `<th style="${dow>=5?'opacity:0.3':''}">${i}<br><small>${DAY_TR[dow]}</small></th>`;
+    }
+    document.getElementById('mThead').innerHTML = th + '</tr>';
 
-  let leg=''; for(let b=0;b<D.bolgeCount;b++){
-    const c=C[b%C.length]; leg+=`<div class="leg-item"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${c.t};margin-right:4px"></span>${D.bolgeNames[b]}</div>`;
-  }
-  document.getElementById('legend').innerHTML=leg;
+    let tb = '';
+    for(let b=0; b<D.bolgeCount; b++) {
+        const c = COLORS[b % COLORS.length];
+        tb += `<tr><td class="td-left" style="color:${c.t}">${D.bolgeNames[b]}</td>`;
+        for(let i=1; i<=dim; i++) {
+            const sch = getSchedule(new Date(view.getFullYear(), view.getMonth(), i));
+            if(sch === null) tb += `<td style="color:var(--warn);font-size:9px">TATİL</td>`;
+            else {
+                const p = sch.find(x => x.bIdx === b);
+                tb += `<td>${p ? `<span class="pill" style="background:${c.bg};color:${c.t}">${p.name.split(' ')[0]}</span>` : '·'}</td>`;
+            }
+        }
+        tb += '</tr>';
+    }
+    document.getElementById('mTbody').innerHTML = tb;
+}
 
-  let th='<tr><th class="th-left">BÖLGE</th>';
-  days.forEach(day=>{
-    const dow=day.getDay()===0?6:day.getDay()-1;
-    th+=`<th style="${dow>=D.workDays?'opacity:0.3':''}">${day.getDate()}<br><small>${DAY_SHORT[dow]}</small></th>`;
-  });
-  document.getElementById('mThead').innerHTML=th+'</tr>';
+function openEditor() {
+    document.getElementById('editModal').style.display = 'block';
+    let html = '';
+    for(let d=0; d<D.workDays; d++) {
+        html += `<h4 style="margin:10px 0;color:var(--accent)">${DAY_TR[d]} Günü</h4>`;
+        D.gunNobetcileri[d].forEach((name, i) => {
+            html += `<input class="edit-input" data-day="${d}" data-idx="${i}" value="${name || ''}" placeholder="Personel ${i+1}">`;
+        });
+    }
+    document.getElementById('editorFields').innerHTML = html;
+}
 
-  let tb=''; for(let b=0;b<D.bolgeCount;b++){
-    const bc=C[b%C.length]; tb+=`<tr><td class="td-left" style="color:${bc.t}">${D.bolgeNames[b]}</td>`;
-    days.forEach(day=>{
-      const dow=day.getDay()===0?6:day.getDay()-1;
-      if(dow>=D.workDays){tb+='<td>-</td>'; return;}
-      const sch=getSchedule(day);
-      if(sch===null){tb+='<td style="color:var(--warn)">TAT</td>'; return;}
-      const person=sch.find(x=>x.bolgeIndex===b);
-      tb+=`<td>${person?`<span class="pill" style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b}">${person.name.split(' ')[0]}</span>`:'·'}</td>`;
+function generateNewJSON() {
+    const inputs = document.querySelectorAll('.edit-input');
+    inputs.forEach(inp => {
+        const d = inp.dataset.day; const i = inp.dataset.idx;
+        D.gunNobetcileri[d][i] = inp.value;
     });
-    tb+='</tr>';
-  }
-  document.getElementById('mTbody').innerHTML=tb;
+    const cleanJSON = JSON.parse(JSON.stringify(D));
+    delete cleanJSON.startDate; // Geçici alanı sil
+    document.getElementById('jsonOutput').value = JSON.stringify(cleanJSON, null, 2);
+    alert("JSON üretildi! Alttaki siyah kutudan kopyalayıp GitHub'daki dosyanın içine yapıştırın.");
 }
 
-function renderKisi(){
-  const base=new Date(D.startDate.getFullYear(),D.startDate.getMonth()+monthOffsetK,1);
-  document.getElementById('monthLabelK').textContent=`${MONTH_TR[base.getMonth()]} ${base.getFullYear()}`;
-  const search=(document.getElementById('kSearch').value||'').toLowerCase();
-  const dim=new Date(base.getFullYear(),base.getMonth()+1,0).getDate();
-  const wd=[]; for(let d=1;d<=dim;d++){
-    const day=new Date(base.getFullYear(),base.getMonth(),d);
-    if((day.getDay()===0?6:day.getDay()-1)<D.workDays)wd.push(day);
-  }
-  let th='<tr><th class="th-left">NÖBETÇİ</th>';
-  wd.forEach(d=>th+=`<th>${d.getDate()}<br><small>${DAY_SHORT[(d.getDay()===0?6:d.getDay()-1)]}</small></th>`);
-  document.getElementById('kThead').innerHTML=th+'</tr>';
-
-  const allP=[]; Object.keys(D.gunNobetcileri).forEach(dow=>{
-    D.gunNobetcileri[dow].forEach((name,slot)=>{ if(name)allP.push({name,dow:parseInt(dow),slot}); });
-  });
-
-  let tb=''; allP.forEach(p=>{
-    if(search && !p.name.toLowerCase().includes(search)) return;
-    tb+=`<tr><td class="td-left">${p.name}</td>`;
-    wd.forEach(day=>{
-      const dow=day.getDay()===0?6:day.getDay()-1;
-      if(dow!==p.dow){tb+='<td>·</td>'; return;}
-      const sch=getSchedule(day);
-      if(sch===null){tb+='<td style="color:var(--warn)">TAT</td>'; return;}
-      const entry=sch.find(x=>x.slotIndex===p.slot);
-      if(entry){
-        const bc=C[entry.bolgeIndex%C.length];
-        tb+=`<td><span class="pill" style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b}">${D.bolgeNames[entry.bolgeIndex]}</span></td>`;
-      } else tb+='<td>·</td>';
-    });
-    tb+='</tr>';
-  });
-  document.getElementById('kTbody').innerHTML=tb;
+function showTab(t, b) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.getElementById('panel-'+t).classList.add('active');
+    b.classList.add('active');
 }
-
-function showTab(n, btn) {
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('panel-'+n).classList.add('active');
-  btn.classList.add('active');
-  n==='aylik'?renderMonthly():renderKisi();
-}
-function prevMonth(){monthOffset--;renderMonthly();}
-function nextMonth(){monthOffset++;renderMonthly();}
-function goThisMonth(){monthOffset=(new Date().getMonth()-D.startDate.getMonth());renderMonthly();}
-function prevMonthK(){monthOffsetK--;renderKisi();}
-function nextMonthK(){monthOffsetK++;renderKisi();}
-function goThisMonthK(){monthOffsetK=(new Date().getMonth()-D.startDate.getMonth());renderKisi();}
-function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
-function exportCSV(){ alert("CSV özelliği aktif."); }
+function changeMonth(s) { monthOffset += s; renderMonthly(); }
 </script>
 </body>
 </html>
