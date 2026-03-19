@@ -10,7 +10,7 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh}
   body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(59,130,246,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
-  .app{position:relative;z-index:1;max-width:1600px;margin:0 auto;padding:20px}
+  .app{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:20px}
   header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border);flex-wrap:wrap}
   .logo{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
   header h1{font-family:var(--mono);font-size:18px;font-weight:600}
@@ -36,27 +36,69 @@
   .btn-sm{padding:6px 13px;font-size:12px}
   .sbox{padding:8px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;transition:border-color .2s;width:220px}
   .sbox:focus{border-color:var(--accent)}
-  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
-  .li{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)}
-  .ld{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+  /* AYLIK TABLO — satır=tarih, sütun=bölge */
   .twrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
-  .mt{border-collapse:collapse;font-size:11px;width:100%}
-  .mt thead th{background:var(--surface2);padding:9px 4px;font-family:var(--mono);font-size:10px;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;text-align:center}
-  .mt thead th.thl{text-align:left;min-width:120px;color:var(--accent2);padding-left:12px}
-  .mt thead th.thw{opacity:.35}
-  .mt thead th.tht{color:var(--accent)!important}
-  .mt tbody td{padding:5px 2px;border-bottom:1px solid rgba(42,48,64,.4);border-right:1px solid rgba(42,48,64,.2);text-align:center;vertical-align:middle;overflow:hidden}
+  .mt{border-collapse:collapse;font-size:12px;width:100%}
+
+  /* Başlık — bölge adları */
+  .mt thead th{
+    background:var(--surface2);padding:10px 8px;
+    font-family:var(--mono);font-size:11px;color:var(--text2);
+    border-bottom:1px solid var(--border);text-align:center;white-space:nowrap
+  }
+  .mt thead th.th-tarih{
+    text-align:left;min-width:110px;color:var(--accent2);padding-left:14px
+  }
+  .mt thead th.th-gun{
+    min-width:40px;color:var(--text3)
+  }
+
+  /* Satırlar — her gün bir satır */
+  .mt tbody td{
+    padding:8px 6px;border-bottom:1px solid rgba(42,48,64,.4);
+    border-right:1px solid rgba(42,48,64,.2);text-align:center;vertical-align:middle
+  }
   .mt tbody tr:last-child td{border-bottom:none}
   .mt tbody td:last-child{border-right:none}
-  .mt tbody tr:hover td{background:rgba(28,32,48,.5)}
-  .tdl{text-align:left!important;font-family:var(--mono);font-size:11px;font-weight:600;background:var(--surface)!important;padding-left:12px!important;white-space:nowrap}
-  .tdw{background:rgba(255,255,255,.01)!important}
-  .tdtat{background:rgba(245,158,11,.07)!important}
-  .tdt{background:rgba(59,130,246,.08)!important}
-  /* Ekranda isim kutusu */
-  .pill{display:inline-block;font-size:10px;padding:2px 5px;border-radius:8px;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;cursor:default;line-height:1.4}
-  .tlbl{font-size:9px;color:var(--warn);font-family:var(--mono)}
-  .edot{color:var(--text3);font-size:8px}
+  .mt tbody tr:hover td{background:rgba(28,32,48,.4)}
+
+  /* Tarih sütunu */
+  .td-tarih{
+    text-align:left!important;font-family:var(--mono);font-size:12px;font-weight:600;
+    background:var(--surface)!important;padding-left:14px!important;white-space:nowrap;
+    color:var(--text)!important
+  }
+  .td-gun{
+    font-family:var(--mono);font-size:11px;color:var(--text2);
+    background:var(--surface)!important;text-align:center!important
+  }
+
+  /* Tatil satırı */
+  .tr-tatil td{background:rgba(245,158,11,.06)!important}
+  .tr-tatil .td-tarih{color:var(--warn)!important}
+  .tr-tatil .td-gun{color:var(--warn)!important}
+  .tatil-cell{font-size:11px;color:var(--warn);font-family:var(--mono);font-weight:600}
+
+  /* Hafta sonu satırı */
+  .tr-we td{background:rgba(255,255,255,.01)!important;opacity:.5}
+
+  /* Bugün satırı */
+  .tr-today td{background:rgba(59,130,246,.06)!important}
+  .tr-today .td-tarih{color:var(--accent)!important}
+
+  /* Hafta ayırıcı */
+  .tr-hafta-basi td{border-top:2px solid rgba(59,130,246,.3)!important}
+
+  /* İsim kutusu */
+  .pill{
+    display:inline-block;font-size:11px;padding:3px 8px;border-radius:8px;
+    white-space:nowrap;cursor:default;line-height:1.4;
+    max-width:140px;overflow:hidden;text-overflow:ellipsis
+  }
+  .edot{color:var(--text3);font-size:10px}
+
+  /* Admin */
   .agrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px}
   .cardw{border-color:rgba(245,158,11,.3)}
@@ -121,84 +163,78 @@
 
   /* ===== A4 YAZDIR ===== */
   @media print {
-    @page { size: A4 landscape; margin: 6mm 8mm; }
-    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box !important; }
-    html, body { width:100% !important; height:100% !important; margin:0 !important; padding:0 !important; background:white !important; color:black !important; }
+    @page { size: A4 portrait; margin: 8mm 10mm; }
+    * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+    html,body { background:white !important; color:black !important; margin:0; padding:0; }
     body::before { display:none !important; }
-    .app { padding:0 !important; width:100% !important; max-width:100% !important; height:100% !important; display:flex !important; flex-direction:column !important; }
-    .tabs,.toolbar,.legend,.lov { display:none !important; }
+    .app { padding:0 !important; max-width:100% !important; }
+    .tabs,.toolbar,.lov { display:none !important; }
     .panel { display:none !important; }
     #pk,#pa { display:none !important; }
-    #pm { display:flex !important; flex-direction:column !important; flex:1 !important; height:100% !important; }
+    #pm { display:block !important; }
 
-    header { flex-shrink:0 !important; border-bottom:2px solid #1e3a8a !important; margin-bottom:4px !important; padding-bottom:3px !important; display:flex !important; }
+    header { border-bottom:2px solid #1e3a8a !important; margin-bottom:6px !important; padding-bottom:4px !important; }
     header .logo { display:none !important; }
-    header h1 { font-size:10pt !important; color:#1e3a8a !important; font-weight:700 !important; }
+    header h1 { font-size:11pt !important; color:#1e3a8a !important; font-weight:700 !important; }
     header p { display:none !important; }
-    .hbadge { font-size:7.5pt !important; color:#475569 !important; background:none !important; border:none !important; padding:0 !important; }
+    .hbadge { font-size:8pt !important; color:#475569 !important; background:none !important; border:none !important; padding:0 !important; }
 
-    .twrap { flex:1 !important; overflow:visible !important; border:none !important; border-radius:0 !important; display:flex !important; flex-direction:column !important; height:100% !important; }
+    .twrap { overflow:visible !important; border:none !important; border-radius:0 !important; width:100% !important; }
+    .mt { width:100% !important; border-collapse:collapse !important; font-size:8pt !important; }
 
-    .mt { flex:1 !important; width:100% !important; height:100% !important; border-collapse:collapse !important; table-layout:fixed !important; }
-
-    /* BAŞLIK — dikey yazı için yükseklik ver */
-    .mt thead { display:table-header-group !important; }
+    /* Başlık — bölge adları */
     .mt thead th {
-      background:#1e3a8a !important;
-      color:white !important;
-      border:1px solid #1e40af !important;
-      padding:2px 0 !important;
-      font-size:6.5pt !important;
-      font-weight:700 !important;
-      text-align:center !important;
-      /* Başlık hücrelerini dikey yap */
-      height:60px !important;
-      vertical-align:bottom !important;
-      white-space:nowrap !important;
+      background:#1e3a8a !important; color:white !important;
+      border:1px solid #1e40af !important; padding:5px 4px !important;
+      font-size:7.5pt !important; font-weight:700 !important; text-align:center !important;
     }
-    /* Tarih başlıkları — dikey yaz */
-    .mt thead th:not(.thl) .dnum { display:block !important; transform:rotate(-90deg) !important; writing-mode:vertical-rl !important; text-orientation:mixed !important; font-size:7pt !important; font-weight:700 !important; line-height:1 !important; }
-    .mt thead th:not(.thl) .dname { display:block !important; writing-mode:vertical-rl !important; text-orientation:mixed !important; font-size:6pt !important; opacity:.8 !important; }
-    .mt thead th.thl { text-align:left !important; padding-left:4px !important; width:70pt !important; vertical-align:middle !important; writing-mode:horizontal-tb !important; height:60px !important; }
-    .mt thead th.thw { background:#475569 !important; opacity:1 !important; }
-    .mt thead th.tht { background:#2563eb !important; font-weight:900 !important; }
+    .mt thead th.th-tarih { text-align:left !important; padding-left:6px !important; width:55pt !important; }
+    .mt thead th.th-gun { width:22pt !important; }
 
-    /* SATIRLAR */
-    .mt tbody { display:table-row-group !important; }
-    .mt tbody td { border:1px solid #94a3b8 !important; padding:1px !important; text-align:center !important; vertical-align:middle !important; background:white !important; height:1% !important; overflow:hidden !important; }
-    .mt tbody tr:nth-child(odd) td { background:#f8fafc !important; }
-    .mt tbody tr:nth-child(even) td { background:white !important; }
+    /* Satırlar */
+    .mt tbody td {
+      border:1px solid #94a3b8 !important; padding:4px 3px !important;
+      text-align:center !important; vertical-align:middle !important;
+    }
+    .td-tarih {
+      background:#f1f5f9 !important; color:#1e3a8a !important;
+      font-weight:700 !important; font-size:8pt !important;
+      text-align:left !important; padding-left:5px !important; white-space:nowrap !important;
+    }
+    .td-gun {
+      background:#f1f5f9 !important; color:#64748b !important;
+      font-size:7pt !important; text-align:center !important;
+    }
 
-    /* BÖLGE SÜTUNU */
-    .tdl { background:#dbeafe !important; color:#1e3a8a !important; font-weight:700 !important; font-size:7.5pt !important; text-align:left !important; padding-left:3pt !important; white-space:nowrap !important; }
-    .mt tbody tr:nth-child(odd) .tdl { background:#bfdbfe !important; }
-    .tdw { background:#e2e8f0 !important; }
-    .mt tbody tr:nth-child(odd) .tdw { background:#cbd5e1 !important; }
+    /* Tatil satırı */
+    .tr-tatil td { background:#fffbeb !important; }
+    .tr-tatil .td-tarih { color:#92400e !important; }
+    .tr-tatil .td-gun { color:#92400e !important; }
+    .tatil-cell { font-size:7.5pt !important; color:#92400e !important; font-weight:700 !important; }
 
-    /* İSİM — dikey yazı */
+    /* Hafta sonu */
+    .tr-we td { background:#f8fafc !important; opacity:1 !important; }
+    .tr-we .td-tarih { color:#94a3b8 !important; }
+    .tr-we .td-gun { color:#94a3b8 !important; }
+
+    /* Bugün */
+    .tr-today td { background:#dbeafe !important; }
+    .tr-today .td-tarih { color:#1d4ed8 !important; font-weight:900 !important; }
+
+    /* Hafta başı kalın çizgi */
+    .tr-hafta-basi td { border-top:2px solid #1e40af !important; }
+
+    /* İsim */
     .pill {
-      display:block !important;
-      background:none !important;
-      border:none !important;
-      padding:0 !important;
-      border-radius:0 !important;
-      /* DİKEY YAZ */
-      writing-mode: vertical-rl !important;
-      text-orientation: mixed !important;
-      transform: rotate(180deg) !important;
-      font-size: 7.5pt !important;
-      font-weight: 600 !important;
-      color: #0f172a !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      max-height: 100% !important;
-      margin: 0 auto !important;
-      line-height: 1 !important;
+      display:inline !important; background:none !important; border:none !important;
+      padding:0 !important; border-radius:0 !important;
+      font-size:8pt !important; font-weight:600 !important; color:#0f172a !important;
+      white-space:nowrap !important; max-width:none !important; overflow:visible !important;
     }
+    .edot { color:#94a3b8 !important; }
 
-    .tlbl { font-size:7pt !important; font-weight:700 !important; color:#92400e !important; writing-mode:vertical-rl !important; transform:rotate(180deg) !important; }
-    .edot { color:#94a3b8 !important; font-size:7pt !important; }
-    .print-hide { display:none !important; }
+    /* Zebra */
+    .mt tbody tr:nth-child(even) td:not(.td-tarih):not(.td-gun) { background:#f9fafb !important; }
   }
 </style>
 </head>
@@ -222,6 +258,7 @@
   <p><code>nobet_data.json</code> dosyasi GitHub deposuna yuklenmeli.</p>
 </div>
 
+<!-- AYLIK -->
 <div id="pm" class="panel" style="display:none">
   <div class="toolbar">
     <div class="nav">
@@ -232,13 +269,13 @@
     <button class="btn btn-o btn-sm" onclick="goNow()">Bu Ay</button>
     <div style="margin-left:auto;display:flex;gap:8px">
       <button class="btn btn-o btn-sm" onclick="expCSV()">CSV</button>
-      <button class="btn btn-o btn-sm" onclick="window.print()">&#128424; A4 Yazdir</button>
+      <button class="btn btn-o btn-sm" onclick="window.print()">&#128424; Yazdir</button>
     </div>
   </div>
-  <div class="legend" id="leg"></div>
   <div class="twrap"><table class="mt"><thead id="mth"></thead><tbody id="mtb"></tbody></table></div>
 </div>
 
+<!-- KİŞİ BAZLI -->
 <div id="pk" class="panel" style="display:none">
   <div class="toolbar">
     <div class="nav">
@@ -252,6 +289,7 @@
   <div class="twrap"><table class="mt"><thead id="kth"></thead><tbody id="ktb"></tbody></table></div>
 </div>
 
+<!-- ADMIN -->
 <div id="pa" class="panel" style="display:none">
   <div class="steps">
     <h3>Guncelleme Adimlari</h3>
@@ -485,6 +523,7 @@ function jsonIndir(){
   D=yD;
   alert('nobet_data.json indirildi!\nGitHub > Add file > Upload files > Commit changes');
 }
+
 function cwn(date){const s=new Date(D.startDate);s.setHours(0,0,0,0);const d=new Date(date);d.setHours(0,0,0,0);return Math.floor((d-s)/(7*86400000));}
 function isTW(cw){
   const ws=addDays(D.startDate,cw*7);ws.setHours(0,0,0,0);
@@ -507,6 +546,7 @@ function getSch(date){
 }
 function getMI(off){const base=new Date(D.startDate.getFullYear(),D.startDate.getMonth()+off,1);return{year:base.getFullYear(),month:base.getMonth()};}
 
+// AYLIK ÇİZELGE — satır=tarih, sütun=bölge
 function renderM(){
   if(!D)return;
   const{year,month}=getMI(mo);
@@ -514,59 +554,70 @@ function renderM(){
   const today=new Date();today.setHours(0,0,0,0);
   const dim=new Date(year,month+1,0).getDate();
   const days=[];for(let d=1;d<=dim;d++)days.push(new Date(year,month,d));
-  const isTatilGun=(day)=>{const dow=day.getDay()===0?6:day.getDay()-1;if(dow>=D.workDays)return false;return isTW(cwn(day));};
 
-  let leg='';
-  for(let b=0;b<D.bolgeCount;b++){const c=C[b%C.length];leg+=`<div class="li"><span class="ld" style="background:${c.t}"></span>${D.bolgeNames[b]}</div>`;}
-  document.getElementById('leg').innerHTML=leg;
-
-  // THEAD — tarih ve gün adı dikey görünsün diye span'lara sar
-  let th='<tr><th class="thl">BOLGE</th>';
-  days.forEach(day=>{
-    const dow=day.getDay()===0?6:day.getDay()-1;
-    const isWe=dow>=D.workDays;
-    const isT=day.getTime()===today.getTime();
-    const isTat=!isWe&&isTatilGun(day);
-    const cls=isT?'tht':isWe?'thw':'';
-    const phide=isTat?' print-hide':'';
-    th+=`<th class="${cls}${phide}">
-      <span class="dnum">${day.getDate()}</span>
-      <span class="dname">${DS[dow]}</span>
-    </th>`;
-  });
+  // THEAD — Tarih | Gün | Bölge1 | Bölge2 | ...
+  let th='<tr>';
+  th+=`<th class="th-tarih">TARİH</th>`;
+  th+=`<th class="th-gun">GÜN</th>`;
+  for(let b=0;b<D.bolgeCount;b++){
+    const c=C[b%C.length];
+    th+=`<th style="color:${c.t}">${D.bolgeNames[b]}</th>`;
+  }
   th+='</tr>';
   document.getElementById('mth').innerHTML=th;
 
+  // TBODY — her gün bir satır
   let tb='';
-  for(let b=0;b<D.bolgeCount;b++){
-    const bc=C[b%C.length];
-    tb+=`<tr><td class="tdl" style="color:${bc.t}"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${bc.t};margin-right:5px"></span>${D.bolgeNames[b]}</td>`;
-    days.forEach(day=>{
-      const dow=day.getDay()===0?6:day.getDay()-1;
-      const isWe=dow>=D.workDays;
-      const isT=day.getTime()===today.getTime();
-      const isTat=!isWe&&isTatilGun(day);
-      const tc=isT?' tdt':'';
-      const phide=isTat?' print-hide':'';
-      if(isWe){tb+=`<td class="tdw${tc}${phide}"><span class="edot">-</span></td>`;return;}
-      if(isTat){tb+=`<td class="tdtat${tc}${phide}"><span class="tlbl">TAT</span></td>`;return;}
+  days.forEach((day,idx)=>{
+    const dow=day.getDay()===0?6:day.getDay()-1;
+    const isWe=dow>=D.workDays;
+    const isToday=day.getTime()===today.getTime();
+    const cw=cwn(day);
+    const isTat=!isWe&&isTW(cw);
+    // Pazartesi ise hafta başı çizgisi
+    const isHaftaBasi=dow===0&&idx>0;
+
+    let rowCls='';
+    if(isToday) rowCls='tr-today';
+    else if(isTat) rowCls='tr-tatil';
+    else if(isWe) rowCls='tr-we';
+    if(isHaftaBasi) rowCls+=' tr-hafta-basi';
+
+    const tarihStr=`${String(day.getDate()).padStart(2,'0')}.${String(day.getMonth()+1).padStart(2,'0')}.${day.getFullYear()}`;
+
+    tb+=`<tr class="${rowCls}">`;
+    tb+=`<td class="td-tarih">${tarihStr}</td>`;
+    tb+=`<td class="td-gun">${DS[dow]}</td>`;
+
+    if(isWe){
+      // Hafta sonu — tüm bölgeler boş
+      for(let b=0;b<D.bolgeCount;b++) tb+=`<td><span class="edot">-</span></td>`;
+    } else if(isTat){
+      // Tatil haftası
+      tb+=`<td colspan="${D.bolgeCount}" style="text-align:center"><span class="tatil-cell">&#127958; TATİL</span></td>`;
+    } else {
       const sch=getSch(day);
-      const p=sch&&sch.find(x=>x.bolgeIndex===b);
-      if(p){
-        const ki=kisaIsim(p.name);
-        tb+=`<td class="${tc}"><span class="pill" data-b="${b}" title="${p.name}" style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b}">${ki}</span></td>`;
-      }else{
-        tb+=`<td class="${tc}"><span class="edot">&#183;</span></td>`;
+      for(let b=0;b<D.bolgeCount;b++){
+        const c=C[b%C.length];
+        const p=sch&&sch.find(x=>x.bolgeIndex===b);
+        if(p){
+          const ki=kisaIsim(p.name);
+          tb+=`<td><span class="pill" data-b="${b}" title="${p.name}" style="background:${c.bg};color:${c.t};border:1px solid ${c.b}">${ki}</span></td>`;
+        } else {
+          tb+=`<td><span class="edot">&#183;</span></td>`;
+        }
       }
-    });
+    }
     tb+='</tr>';
-  }
+  });
   document.getElementById('mtb').innerHTML=tb;
 }
+
 function prevM(){mo--;renderM();}
 function nextM(){mo++;renderM();}
 function goNow(){const n=new Date();mo=(n.getFullYear()-D.startDate.getFullYear())*12+(n.getMonth()-D.startDate.getMonth());renderM();}
 
+// KİŞİ BAZLI
 function renderK(){
   if(!D)return;
   const{year,month}=getMI(mok);
@@ -578,8 +629,9 @@ function renderK(){
   for(let d=1;d<=dim;d++){const day=new Date(year,month,d);const dow=day.getDay()===0?6:day.getDay()-1;if(dow<D.workDays)wdl.push({day,dow});}
   let th='<tr><th style="text-align:left;min-width:150px;padding-left:12px">NOBETCI</th><th style="text-align:center;min-width:45px">Gun</th>';
   wdl.forEach(({day,dow})=>{
-    const isT=day.getTime()===today.getTime();const cw=cwn(day),isTat=cw>=0&&isTW(cw);
-    const cls=isT?'tht':isTat?'':'';
+    const isT=day.getTime()===today.getTime();
+    const cw=cwn(day),isTat=cw>=0&&isTW(cw);
+    const cls=isT?'tht':isTat?'thtat':'';
     th+=`<th class="${cls}"><div style="font-size:11px;font-weight:600">${day.getDate()}</div><div style="font-size:9px;opacity:.7">${DS[dow]}</div></th>`;
   });
   th+='</tr>';
@@ -594,7 +646,7 @@ function renderK(){
       const isT=day.getTime()===today.getTime();const bg=isT?'background:rgba(59,130,246,.05);':'';
       if(dow!==person.dow){tb+=`<td style="${bg}"><span class="edot">&#183;</span></td>`;return;}
       const sch=getSch(day);
-      if(sch===null){tb+=`<td style="${bg}"><span class="tlbl">TAT</span></td>`;return;}
+      if(sch===null){tb+=`<td style="${bg}"><span class="tatil-cell" style="font-size:9px">TAT</span></td>`;return;}
       const entry=sch&&sch.find(x=>x.slotIndex===person.slot);
       if(entry){const bc=C[entry.bolgeIndex%C.length];const bname=D.bolgeNames[entry.bolgeIndex]||'B'+(entry.bolgeIndex+1);tb+=`<td style="text-align:center;${bg}"><span class="pill" data-b="${entry.bolgeIndex}" title="${bname}" style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b};font-size:10px">${bname}</span></td>`;}
       else tb+=`<td style="${bg}"><span class="edot">&#183;</span></td>`;
@@ -613,20 +665,22 @@ function expCSV(){
   const{year,month}=getMI(mo);
   const dim=new Date(year,month+1,0).getDate();
   const days=[];for(let d=1;d<=dim;d++)days.push(new Date(year,month,d));
-  let csv='Bolge';
-  days.forEach(day=>{const dow=day.getDay()===0?6:day.getDay()-1;if(dow<D.workDays)csv+=','+day.getDate()+' '+DS[dow];});
+  let csv='Tarih,Gun';
+  for(let b=0;b<D.bolgeCount;b++) csv+=',"'+D.bolgeNames[b]+'"';
   csv+='\n';
-  for(let b=0;b<D.bolgeCount;b++){
-    csv+='"'+D.bolgeNames[b]+'"';
-    days.forEach(day=>{
-      const dow=day.getDay()===0?6:day.getDay()-1;if(dow>=D.workDays)return;
-      const sch=getSch(day);
-      if(sch===null){csv+=',"TATIL"';return;}
+  days.forEach(day=>{
+    const dow=day.getDay()===0?6:day.getDay()-1;
+    if(dow>=D.workDays)return;
+    const tarih=`${String(day.getDate()).padStart(2,'0')}.${String(day.getMonth()+1).padStart(2,'0')}.${day.getFullYear()}`;
+    csv+=`"${tarih}","${DS[dow]}"`;
+    const sch=getSch(day);
+    for(let b=0;b<D.bolgeCount;b++){
+      if(sch===null){csv+=',"TATIL"';continue;}
       const p=sch&&sch.find(x=>x.bolgeIndex===b);
       csv+=p?',"'+p.name+'"':',-';
-    });
+    }
     csv+='\n';
-  }
+  });
   const bl=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
   const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download='nobet_'+MT[month]+'_'+year+'.csv';a.click();
 }
