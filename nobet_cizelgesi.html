@@ -54,6 +54,7 @@
   .tdw{background:rgba(255,255,255,.01)!important}
   .tdtat{background:rgba(245,158,11,.07)!important}
   .tdt{background:rgba(59,130,246,.08)!important}
+  /* Ekranda pill görünümü */
   .pill{display:inline-block;font-size:10px;padding:2px 6px;border-radius:10px;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;cursor:default;line-height:1.5}
   .tlbl{font-size:9px;color:var(--warn);font-family:var(--mono)}
   .edot{color:var(--text3);font-size:8px}
@@ -119,142 +120,127 @@
   @media(max-width:900px){.agrid{grid-template-columns:1fr}}
   @media(max-width:600px){header h1{font-size:15px}.mlabel{min-width:130px;font-size:13px}.sbox{width:100%}}
 
-  /* ===== A4 LANDSCAPE TAM SAYFA YAZDIR ===== */
+  /* ===== YAZDIR - CHROME UYUMLU ===== */
   @media print {
-    @page {
-      size: A4 landscape;
-      margin: 6mm 8mm;
-    }
+    @page { size: A4 landscape; margin: 8mm 10mm; }
+
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 
-    body { background: white !important; color: black !important; }
+    body { background: white !important; color: black !important; margin: 0; padding: 0; }
     body::before { display: none !important; }
+    .app { padding: 0 !important; max-width: 100% !important; }
 
-    .app { padding: 0 !important; width: 100% !important; max-width: 100% !important; }
-
-    /* Sadece header ve tabloyu göster */
     .tabs, .toolbar, .legend, .lov { display: none !important; }
     .panel { display: block !important; }
     #pk, #pa { display: none !important; }
     #pm { display: block !important; }
 
-    /* HEADER */
     header {
+      display: flex !important;
       border-bottom: 2px solid #1e3a8a !important;
-      margin-bottom: 6px !important;
-      padding-bottom: 5px !important;
+      margin-bottom: 5px !important;
+      padding-bottom: 4px !important;
     }
     header .logo { display: none !important; }
-    header h1 { font-size: 11pt !important; color: #1e3a8a !important; font-weight: 700 !important; }
-    header p { font-size: 8pt !important; color: #64748b !important; }
-    .hbadge { font-size: 8pt !important; color: #64748b !important; background: none !important; border: none !important; padding: 0 !important; }
+    header h1 { font-size: 10pt !important; color: #1e3a8a !important; font-weight: 700 !important; }
+    header p { display: none !important; }
+    .hbadge { font-size: 8pt !important; color: #475569 !important; background: none !important; border: none !important; }
 
-    /* TABLO KONTEYNER - tam sayfa kaplasın */
     .twrap {
+      overflow: visible !important;
       border: none !important;
       border-radius: 0 !important;
-      overflow: visible !important;
       width: 100% !important;
-      height: calc(100vh - 30mm) !important;
-      display: flex !important;
-      flex-direction: column !important;
     }
 
-    /* TABLO - yüksekliği tüm alanı kaplasın */
     .mt {
       width: 100% !important;
-      height: 100% !important;
-      table-layout: fixed !important;
       border-collapse: collapse !important;
-      font-size: 7.5pt !important;
+      table-layout: fixed !important;
+      font-size: 8pt !important;
     }
 
-    /* BAŞLIK SATIRI */
-    .mt thead { display: table-header-group !important; }
+    /* BAŞLIK */
     .mt thead th {
       background: #1e3a8a !important;
       color: white !important;
-      padding: 4px 2px !important;
-      font-size: 7pt !important;
-      font-weight: 700 !important;
       border: 1px solid #1e40af !important;
-      text-align: center !important;
+      padding: 5px 2px !important;
+      font-size: 7.5pt !important;
+      font-weight: 700 !important;
       white-space: nowrap !important;
+      text-align: center !important;
     }
     .mt thead th.thl {
       text-align: left !important;
       padding-left: 5px !important;
-      min-width: 70px !important;
-      width: 70px !important;
-      font-size: 7pt !important;
+      width: 75pt !important;
     }
-    .mt thead th.thw {
-      background: #64748b !important;
-      color: #e2e8f0 !important;
-      opacity: 1 !important;
-    }
-    .mt thead th.thtat { background: #78350f !important; color: white !important; }
-    .mt thead th.tht { background: #1d4ed8 !important; color: white !important; font-weight: 900 !important; }
+    .mt thead th.thw { background: #64748b !important; opacity: 1 !important; }
+    .mt thead th.thtat { background: #92400e !important; }
+    .mt thead th.tht { background: #1d4ed8 !important; font-weight: 900 !important; }
 
-    /* SATIRLAR - eşit yükseklikte, tüm alanı kapla */
-    .mt tbody { display: table-row-group !important; }
-    .mt tbody tr { height: auto !important; }
+    /* SATIRLAR */
+    .mt tbody tr { page-break-inside: avoid !important; }
     .mt tbody td {
-      border: 1px solid #cbd5e1 !important;
-      padding: 3px 1px !important;
+      border: 1px solid #94a3b8 !important;
+      padding: 4px 2px !important;
       text-align: center !important;
       vertical-align: middle !important;
-      font-size: 7pt !important;
+      /* RENK YOK — sade beyaz arka plan */
+      background: white !important;
     }
 
-    /* BÖLGE İSİM SÜTUNU */
+    /* BÖLGE SÜTUNU */
     .tdl {
-      background: #eff6ff !important;
+      background: #dbeafe !important;
       color: #1e3a8a !important;
-      font-size: 7pt !important;
       font-weight: 700 !important;
-      padding-left: 4px !important;
+      font-size: 8pt !important;
       text-align: left !important;
+      padding-left: 4pt !important;
       white-space: nowrap !important;
-      width: 70px !important;
     }
-    .tdw { background: #f8fafc !important; }
+
+    /* HAFTA SONU */
+    .tdw { background: #f1f5f9 !important; }
+
+    /* TATİL */
     .tdtat { background: #fef3c7 !important; }
+
+    /* BUGÜN */
     .tdt { background: #dbeafe !important; }
 
-    /* ZEBRA ŞERİTLER */
-    .mt tbody tr:nth-child(odd) td { background-color: #ffffff !important; }
+    /* ZEBRA - kolay okuma için */
+    .mt tbody tr:nth-child(odd) td { background: #fafafa !important; }
     .mt tbody tr:nth-child(odd) .tdl { background: #dbeafe !important; }
     .mt tbody tr:nth-child(odd) .tdw { background: #f1f5f9 !important; }
     .mt tbody tr:nth-child(odd) .tdtat { background: #fef3c7 !important; }
-    .mt tbody tr:nth-child(odd) .tdt { background: #bfdbfe !important; }
-    .mt tbody tr:nth-child(even) td { background-color: #f8fafc !important; }
-    .mt tbody tr:nth-child(even) .tdl { background: #dbeafe !important; }
+    .mt tbody tr:nth-child(even) td { background: white !important; }
+    .mt tbody tr:nth-child(even) .tdl { background: #bfdbfe !important; }
     .mt tbody tr:nth-child(even) .tdw { background: #e2e8f0 !important; }
     .mt tbody tr:nth-child(even) .tdtat { background: #fde68a !important; }
-    .mt tbody tr:nth-child(even) .tdt { background: #bfdbfe !important; }
 
-    /* İSİM KUTUCUKLARı */
+    /* İSİM — pill kaldırıldı, direkt metin */
     .pill {
-      display: inline-block !important;
-      font-size: 7pt !important;
-      padding: 1px 3px !important;
-      border-radius: 3px !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      max-width: 100% !important;
+      display: inline !important;
+      background: none !important;
+      border: none !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      font-size: 7.5pt !important;
       font-weight: 600 !important;
+      color: #1e293b !important;
+      white-space: normal !important;
+      overflow: visible !important;
+      max-width: none !important;
     }
-    .pill[data-b="0"]{background:#dbeafe!important;color:#1d4ed8!important;border:1px solid #93c5fd!important}
-    .pill[data-b="1"]{background:#d1fae5!important;color:#065f46!important;border:1px solid #6ee7b7!important}
-    .pill[data-b="2"]{background:#ede9fe!important;color:#5b21b6!important;border:1px solid #c4b5fd!important}
-    .pill[data-b="3"]{background:#fce7f3!important;color:#9d174d!important;border:1px solid #f9a8d4!important}
-    .pill[data-b="4"]{background:#ffedd5!important;color:#9a3412!important;border:1px solid #fdba74!important}
-    .pill[data-b="5"]{background:#fef9c3!important;color:#713f12!important;border:1px solid #fde047!important}
-    .pill[data-b="6"]{background:#cffafe!important;color:#155e75!important;border:1px solid #67e8f9!important}
-    .pill[data-b="7"]{background:#fee2e2!important;color:#991b1b!important;border:1px solid #fca5a5!important}
-    .tlbl { font-size: 7pt !important; color: #92400e !important; font-weight: 700 !important; }
+
+    .tlbl {
+      font-size: 7pt !important;
+      font-weight: 700 !important;
+      color: #92400e !important;
+    }
     .edot { color: #94a3b8 !important; }
   }
 </style>
@@ -282,7 +268,6 @@
   <p><code>nobet_data.json</code> dosyasi GitHub deposuna yuklenmeli.</p>
 </div>
 
-<!-- AYLIK -->
 <div id="pm" class="panel" style="display:none">
   <div class="toolbar">
     <div class="nav">
@@ -293,14 +278,13 @@
     <button class="btn btn-o btn-sm" onclick="goNow()">Bu Ay</button>
     <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn btn-o btn-sm" onclick="expCSV()">CSV</button>
-      <button class="btn btn-o btn-sm" onclick="yazdir()">&#128424; A4 Yazdir</button>
+      <button class="btn btn-o btn-sm" onclick="window.print()">&#128424; A4 Yazdir</button>
     </div>
   </div>
   <div class="legend" id="leg"></div>
   <div class="twrap"><table class="mt"><thead id="mth"></thead><tbody id="mtb"></tbody></table></div>
 </div>
 
-<!-- KISI -->
 <div id="pk" class="panel" style="display:none">
   <div class="toolbar">
     <div class="nav">
@@ -314,20 +298,19 @@
   <div class="twrap"><table class="mt"><thead id="kth"></thead><tbody id="ktb"></tbody></table></div>
 </div>
 
-<!-- ADMIN -->
 <div id="pa" class="panel" style="display:none">
   <div class="steps">
     <h3>Guncelleme Adimlari</h3>
     <div class="step"><div class="sno">1</div><div class="stxt">Asagidan degisiklikleri yapin</div></div>
     <div class="step"><div class="sno">2</div><div class="stxt"><strong>JSON Dosyasini Indir</strong> butonuna basin</div></div>
-    <div class="step"><div class="sno">3</div><div class="stxt">GitHub deposuna gidin, indirilen JSON dosyasini yukleyin</div></div>
+    <div class="step"><div class="sno">3</div><div class="stxt">GitHub deposuna gidin, dosyayi yukleyin</div></div>
     <div class="step"><div class="sno">4</div><div class="stxt">Herkes yeni cizelgeyi gorecek</div></div>
   </div>
   <div class="agrid">
     <div>
       <div class="card">
         <div class="ct">Genel Ayarlar</div>
-        <label>Baslangic Tarihi (Ilk Pazartesi)</label>
+        <label>Baslangic Tarihi</label>
         <input type="date" id="asd"/>
         <div class="row2" style="margin-top:0">
           <div><label>Bolge Sayisi</label><input type="number" id="abc" value="8" min="1" max="20" onchange="rebuildB()"/></div>
@@ -347,10 +330,9 @@
       </div>
       <div class="card cardw">
         <div class="ct ctw">Tatil Haftalari</div>
-        <div class="ibox">Tatil haftalar rotasyona sayilmaz, cizelgede <strong>TAT</strong> gorunur.</div>
         <input type="text" id="ata" placeholder="Tatil adi"/>
         <div class="row2" style="margin-top:8px">
-          <div><label style="margin-top:0">Pazartesi Tarihi</label><input type="date" id="att"/></div>
+          <div><label style="margin-top:0">Pazartesi</label><input type="date" id="att"/></div>
           <div><label style="margin-top:0">Sure</label>
             <select id="ats">
               <option value="1">1 Hafta</option>
@@ -367,24 +349,18 @@
     <div>
       <div class="card">
         <div class="ct">Nobetciler - Gun Bazli</div>
-        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
-          <button class="btn btn-o btn-sm" onclick="autoF()">Ornek Isim Doldur</button>
-        </div>
+        <button class="btn btn-o btn-sm" style="margin-bottom:10px" onclick="autoF()">Ornek Isim Doldur</button>
         <div class="ggs" id="agg"></div>
       </div>
       <button class="btn btn-s" style="width:100%;justify-content:center;font-size:15px;padding:14px" onclick="jsonIndir()">
-        JSON Dosyasini Indir - GitHub'a Yukle
+        JSON Dosyasini Indir
       </button>
-      <p style="font-size:11px;color:var(--text3);text-align:center;margin-top:8px">
-        Indirilen nobet_data.json dosyasini GitHub deposuna yukleyin
-      </p>
       <button class="btn btn-o btn-sm" style="margin-top:12px" onclick="adminCikis()">Cikis</button>
     </div>
   </div>
 </div>
 </div>
 
-<!-- LOGIN -->
 <div id="lov" class="lov" style="display:none">
   <div class="lbox">
     <div style="font-size:32px;margin-bottom:12px">&#128274;</div>
@@ -417,7 +393,6 @@ const C=[
 let D=null,mo=0,mok=0,aok=false;
 
 // "Sevim Özyılmaz" → "S. Özyılmaz"
-// "Yunus Emre Kalaycı" → "Y.E. Kalaycı"
 function kisaIsim(ad){
   if(!ad||!ad.trim())return '';
   const p=ad.trim().split(/\s+/);
@@ -425,12 +400,6 @@ function kisaIsim(ad){
   const soyad=p[p.length-1];
   const kisalt=p.slice(0,p.length-1).map(x=>x.charAt(0).toUpperCase()+'.').join('');
   return kisalt+' '+soyad;
-}
-
-function yazdir(){
-  // Yazdırmadan önce aylık çizelgeyi göster
-  showP('pm');
-  setTimeout(()=>window.print(),100);
 }
 
 window.onload=async()=>{
@@ -445,7 +414,7 @@ window.onload=async()=>{
     mok=mo;
     document.getElementById('loadingDiv').style.display='none';
     document.getElementById('tabBar').style.display='';
-    if(D.okul) document.getElementById('okul-adi').textContent=D.okul+' - NOBET CIZELGESI';
+    if(D.okul)document.getElementById('okul-adi').textContent=D.okul+' - NOBET CIZELGESI';
     showP('pm');
     const tot=Object.values(D.gunNobetcileri).reduce((s,a)=>s+a.filter(x=>x).length,0);
     document.getElementById('hsub').textContent='Haftada 1 gun nobet - Haftalik bolge rotasyonu';
@@ -457,21 +426,11 @@ window.onload=async()=>{
   }
 };
 
-function showTab(n,btn){
-  showP(n);
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  if(n==='pm')renderM();
-  if(n==='pk')renderK();
-}
-function showP(n){
-  ['pm','pk','pa'].forEach(id=>{const el=document.getElementById(id);el.style.display='none';el.classList.remove('active');});
-  const el=document.getElementById(n);el.style.display='block';el.classList.add('active');
-}
+function showTab(n,btn){showP(n);document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');if(n==='pm')renderM();if(n==='pk')renderK();}
+function showP(n){['pm','pk','pa'].forEach(id=>{const el=document.getElementById(id);el.style.display='none';el.classList.remove('active');});const el=document.getElementById(n);el.style.display='block';el.classList.add('active');}
 function adminGiris(btn){
   if(aok){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');showP('pa');return;}
-  document.getElementById('lp').value='';
-  document.getElementById('lerr').textContent='';
+  document.getElementById('lp').value='';document.getElementById('lerr').textContent='';
   document.getElementById('lov').style.display='flex';
   setTimeout(()=>document.getElementById('lp').focus(),100);
 }
@@ -481,11 +440,7 @@ function lcheck(){
     document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
     document.querySelectorAll('.tab.atab')[0].classList.add('active');
     showP('pa');loadAF();
-  }else{
-    document.getElementById('lerr').textContent='Sifre yanlis!';
-    document.getElementById('lp').value='';
-    document.getElementById('lp').focus();
-  }
+  }else{document.getElementById('lerr').textContent='Sifre yanlis!';document.getElementById('lp').value='';document.getElementById('lp').focus();}
 }
 function adminCikis(){aok=false;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelector('.tab').classList.add('active');showP('pm');renderM();}
 function loadAF(){
@@ -506,7 +461,7 @@ function rebuildB(){
   for(let i=0;i<count;i++){
     const v=ex[i]||(D&&D.bolgeNames[i])||'Bolge '+(i+1);
     const c=C[i%C.length];
-    list.insertAdjacentHTML('beforeend',`<div class="bi"><span class="bno" style="color:${c.t};background:${c.bg}">B${i+1}</span><input type="text" value="${v}" id="ab${i}" placeholder="Bolge adi"/><button class="bx" onclick="rmB(${i})">x</button></div>`);
+    list.insertAdjacentHTML('beforeend',`<div class="bi"><span class="bno" style="color:${c.t};background:${c.bg}">B${i+1}</span><input type="text" value="${v}" id="ab${i}"/><button class="bx" onclick="rmB(${i})">x</button></div>`);
   }
   rebuildG();
 }
@@ -547,7 +502,7 @@ function addT(){
   if(!ad){alert('Tatil adi girin!');return;}
   if(!tarih){alert('Tarih secin!');return;}
   const pzt=new Date(tarih+'T00:00:00');
-  if(pzt.getDay()!==1){alert('Lutfen o haftanin PAZARTESISINI secin!');return;}
+  if(pzt.getDay()!==1){alert('Lutfen Pazartesi secin!');return;}
   if(!D.tatiller)D.tatiller=[];
   D.tatiller.push({id:Date.now(),ad,pazartesi:tarih,haftaSayisi:sure,pd:pzt});
   D.tatiller.sort((a,b)=>new Date(a.pazartesi)-new Date(b.pazartesi));
@@ -582,20 +537,12 @@ function jsonIndir(){
   yD.startDate=new Date(yD.baslamaTarihi+'T00:00:00');
   yD.tatiller.forEach(t=>{t.pd=new Date(t.pazartesi+'T00:00:00');});
   D=yD;
-  alert('nobet_data.json indirildi!\n\nGitHub deposuna:\nAdd file > Upload files > yukleyin > Commit changes');
+  alert('nobet_data.json indirildi!\nGitHub > Add file > Upload files > Commit changes');
 }
-function cwn(date){
-  const s=new Date(D.startDate);s.setHours(0,0,0,0);
-  const d=new Date(date);d.setHours(0,0,0,0);
-  return Math.floor((d-s)/(7*86400000));
-}
+function cwn(date){const s=new Date(D.startDate);s.setHours(0,0,0,0);const d=new Date(date);d.setHours(0,0,0,0);return Math.floor((d-s)/(7*86400000));}
 function isTW(cw){
   const ws=addDays(D.startDate,cw*7);ws.setHours(0,0,0,0);
-  for(const t of (D.tatiller||[])){
-    const ts=new Date(t.pd||t.pazartesi+'T00:00:00');ts.setHours(0,0,0,0);
-    const te=addDays(ts,t.haftaSayisi*7-1);
-    if(ws>=ts&&ws<=te)return true;
-  }
+  for(const t of (D.tatiller||[])){const ts=new Date(t.pd||t.pazartesi+'T00:00:00');ts.setHours(0,0,0,0);const te=addDays(ts,t.haftaSayisi*7-1);if(ws>=ts&&ws<=te)return true;}
   return false;
 }
 function tcb(cw){let c=0;for(let w=0;w<cw;w++)if(isTW(w))c++;return c;}
@@ -612,10 +559,7 @@ function getSch(date){
   const list=D.gunNobetcileri[String(dow)]||D.gunNobetcileri[dow]||[];
   return list.map((name,i)=>({name,bolgeIndex:gb(i,rw),slotIndex:i})).filter(x=>x.name);
 }
-function getMI(off){
-  const base=new Date(D.startDate.getFullYear(),D.startDate.getMonth()+off,1);
-  return{year:base.getFullYear(),month:base.getMonth()};
-}
+function getMI(off){const base=new Date(D.startDate.getFullYear(),D.startDate.getMonth()+off,1);return{year:base.getFullYear(),month:base.getMonth()};}
 function renderM(){
   if(!D)return;
   const{year,month}=getMI(mo);
@@ -633,7 +577,7 @@ function renderM(){
     const isWe=dow>=D.workDays,isT=day.getTime()===today.getTime();
     const cw=cwn(day),isTat=!isWe&&cw>=0&&isTW(cw);
     const cls=isT?'tht':isTat?'thtat':isWe?'thw':'';
-    th+=`<th class="${cls}" style="min-width:28px"><div style="font-size:11px;font-weight:600">${day.getDate()}</div><div style="font-size:9px;opacity:.7">${DS[dow]}</div></th>`;
+    th+=`<th class="${cls}"><div style="font-size:11px;font-weight:600">${day.getDate()}</div><div style="font-size:9px;opacity:.7">${DS[dow]}</div></th>`;
   });
   th+='</tr>';
   document.getElementById('mth').innerHTML=th;
@@ -652,7 +596,7 @@ function renderM(){
       if(p){
         const ki=kisaIsim(p.name);
         tb+=`<td class="${tc}"><span class="pill" data-b="${b}" title="${p.name}" style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b}">${ki}</span></td>`;
-      } else tb+=`<td class="${tc}"><span class="edot">&#183;</span></td>`;
+      }else tb+=`<td class="${tc}"><span class="edot">&#183;</span></td>`;
     });
     tb+='</tr>';
   }
@@ -672,25 +616,20 @@ function renderK(){
   for(let d=1;d<=dim;d++){const day=new Date(year,month,d);const dow=day.getDay()===0?6:day.getDay()-1;if(dow<D.workDays)wdl.push({day,dow});}
   let th='<tr><th style="text-align:left;min-width:150px;padding-left:12px">NOBETCI</th><th style="text-align:center;min-width:45px">Gun</th>';
   wdl.forEach(({day,dow})=>{
-    const isT=day.getTime()===today.getTime();
-    const cw=cwn(day),isTat=cw>=0&&isTW(cw);
+    const isT=day.getTime()===today.getTime();const cw=cwn(day),isTat=cw>=0&&isTW(cw);
     const cls=isT?'tht':isTat?'thtat':'';
-    th+=`<th class="${cls}" style="min-width:30px"><div style="font-size:11px;font-weight:600">${day.getDate()}</div><div style="font-size:9px;opacity:.7">${DS[dow]}</div></th>`;
+    th+=`<th class="${cls}"><div style="font-size:11px;font-weight:600">${day.getDate()}</div><div style="font-size:9px;opacity:.7">${DS[dow]}</div></th>`;
   });
   th+='</tr>';
   const allP=[];
-  for(let d=0;d<D.workDays;d++){
-    const list=D.gunNobetcileri[String(d)]||D.gunNobetcileri[d]||[];
-    list.forEach((name,slot)=>{if(name)allP.push({name,dow:d,slot});});
-  }
+  for(let d=0;d<D.workDays;d++){const list=D.gunNobetcileri[String(d)]||D.gunNobetcileri[d]||[];list.forEach((name,slot)=>{if(name)allP.push({name,dow:d,slot});});}
   let tb='';
   allP.forEach(person=>{
     const isM=!search||person.name.toLowerCase().includes(search);
     const dc=C[person.dow%C.length];
     tb+=`<tr style="${isM&&search?'background:rgba(59,130,246,.06)':''}"><td style="font-weight:500;white-space:nowrap;font-size:12px;padding-left:12px;${isM&&search?'color:var(--accent2)':''}">${person.name}</td><td style="text-align:center"><span style="font-family:var(--mono);font-size:10px;padding:2px 6px;border-radius:10px;background:${dc.bg};color:${dc.t};border:1px solid ${dc.b}">${DS[person.dow]}</span></td>`;
     wdl.forEach(({day,dow})=>{
-      const isT=day.getTime()===today.getTime();
-      const bg=isT?'background:rgba(59,130,246,.05);':'';
+      const isT=day.getTime()===today.getTime();const bg=isT?'background:rgba(59,130,246,.05);':'';
       if(dow!==person.dow){tb+=`<td style="${bg}"><span class="edot">&#183;</span></td>`;return;}
       const sch=getSch(day);
       if(sch===null){tb+=`<td style="${bg}"><span class="tlbl">TAT</span></td>`;return;}
