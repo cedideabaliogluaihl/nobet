@@ -45,8 +45,7 @@
   .mt thead th.thl{text-align:left;min-width:120px;color:var(--accent2);padding-left:12px}
   .mt thead th.thw{opacity:.35}
   .mt thead th.tht{color:var(--accent)!important}
-  .mt thead th.thtat{color:var(--warn)!important}
-  .mt tbody td{padding:6px 3px;border-bottom:1px solid rgba(42,48,64,.4);border-right:1px solid rgba(42,48,64,.2);text-align:center;vertical-align:middle}
+  .mt tbody td{padding:5px 2px;border-bottom:1px solid rgba(42,48,64,.4);border-right:1px solid rgba(42,48,64,.2);text-align:center;vertical-align:middle;overflow:hidden}
   .mt tbody tr:last-child td{border-bottom:none}
   .mt tbody td:last-child{border-right:none}
   .mt tbody tr:hover td{background:rgba(28,32,48,.5)}
@@ -54,7 +53,8 @@
   .tdw{background:rgba(255,255,255,.01)!important}
   .tdtat{background:rgba(245,158,11,.07)!important}
   .tdt{background:rgba(59,130,246,.08)!important}
-  .pill{display:inline-block;font-size:10px;padding:2px 6px;border-radius:10px;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;cursor:default;line-height:1.5}
+  /* Ekranda isim kutusu */
+  .pill{display:inline-block;font-size:10px;padding:2px 5px;border-radius:8px;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;cursor:default;line-height:1.4}
   .tlbl{font-size:9px;color:var(--warn);font-family:var(--mono)}
   .edot{color:var(--text3);font-size:8px}
   .agrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -119,153 +119,86 @@
   @media(max-width:900px){.agrid{grid-template-columns:1fr}}
   @media(max-width:600px){header h1{font-size:15px}.mlabel{min-width:130px;font-size:13px}.sbox{width:100%}}
 
-  /* ===== A4 YAZDIR - TAM SAYFA ===== */
+  /* ===== A4 YAZDIR ===== */
   @media print {
-    @page {
-      size: A4 landscape;
-      margin: 6mm 8mm;
-    }
+    @page { size: A4 landscape; margin: 6mm 8mm; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box !important; }
+    html, body { width:100% !important; height:100% !important; margin:0 !important; padding:0 !important; background:white !important; color:black !important; }
+    body::before { display:none !important; }
+    .app { padding:0 !important; width:100% !important; max-width:100% !important; height:100% !important; display:flex !important; flex-direction:column !important; }
+    .tabs,.toolbar,.legend,.lov { display:none !important; }
+    .panel { display:none !important; }
+    #pk,#pa { display:none !important; }
+    #pm { display:flex !important; flex-direction:column !important; flex:1 !important; height:100% !important; }
 
-    html, body {
-      width: 100% !important;
-      height: 100% !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      background: white !important;
-      color: black !important;
-    }
-    body::before { display: none !important; }
+    header { flex-shrink:0 !important; border-bottom:2px solid #1e3a8a !important; margin-bottom:4px !important; padding-bottom:3px !important; display:flex !important; }
+    header .logo { display:none !important; }
+    header h1 { font-size:10pt !important; color:#1e3a8a !important; font-weight:700 !important; }
+    header p { display:none !important; }
+    .hbadge { font-size:7.5pt !important; color:#475569 !important; background:none !important; border:none !important; padding:0 !important; }
 
-    .app {
-      padding: 0 !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      height: 100% !important;
-      display: flex !important;
-      flex-direction: column !important;
-    }
+    .twrap { flex:1 !important; overflow:visible !important; border:none !important; border-radius:0 !important; display:flex !important; flex-direction:column !important; height:100% !important; }
 
-    .tabs, .toolbar, .legend, .lov { display: none !important; }
-    .panel { display: none !important; }
-    #pk, #pa { display: none !important; }
-    #pm {
-      display: flex !important;
-      flex-direction: column !important;
-      flex: 1 !important;
-      height: 100% !important;
-    }
+    .mt { flex:1 !important; width:100% !important; height:100% !important; border-collapse:collapse !important; table-layout:fixed !important; }
 
-    /* BAŞLIK */
-    header {
-      flex-shrink: 0 !important;
-      border-bottom: 2px solid #1e3a8a !important;
-      margin-bottom: 4px !important;
-      padding-bottom: 3px !important;
-      display: flex !important;
-    }
-    header .logo { display: none !important; }
-    header h1 { font-size: 10pt !important; color: #1e3a8a !important; font-weight: 700 !important; letter-spacing: 0.5px !important; }
-    header p { display: none !important; }
-    .hbadge { font-size: 7.5pt !important; color: #475569 !important; background: none !important; border: none !important; padding: 0 !important; }
-
-    /* TABLO KAPLAMA */
-    .twrap {
-      flex: 1 !important;
-      overflow: visible !important;
-      border: none !important;
-      border-radius: 0 !important;
-      display: flex !important;
-      flex-direction: column !important;
-      height: 100% !important;
-    }
-
-    .mt {
-      flex: 1 !important;
-      width: 100% !important;
-      height: 100% !important;
-      border-collapse: collapse !important;
-      table-layout: fixed !important;
-      font-size: 8pt !important;
-    }
-
-    /* THEAD sabit */
-    .mt thead { display: table-header-group !important; }
+    /* BAŞLIK — dikey yazı için yükseklik ver */
+    .mt thead { display:table-header-group !important; }
     .mt thead th {
-      background: #1e3a8a !important;
-      color: white !important;
-      border: 1px solid #1e40af !important;
-      padding: 4px 1px !important;
-      font-size: 7pt !important;
-      font-weight: 700 !important;
-      text-align: center !important;
-      white-space: nowrap !important;
+      background:#1e3a8a !important;
+      color:white !important;
+      border:1px solid #1e40af !important;
+      padding:2px 0 !important;
+      font-size:6.5pt !important;
+      font-weight:700 !important;
+      text-align:center !important;
+      /* Başlık hücrelerini dikey yap */
+      height:60px !important;
+      vertical-align:bottom !important;
+      white-space:nowrap !important;
     }
-    .mt thead th.thl {
-      text-align: left !important;
-      padding-left: 4px !important;
-      width: 72pt !important;
-    }
-    .mt thead th.thw { background: #475569 !important; opacity: 1 !important; }
-    .mt thead th.tht { background: #2563eb !important; font-weight: 900 !important; }
+    /* Tarih başlıkları — dikey yaz */
+    .mt thead th:not(.thl) .dnum { display:block !important; transform:rotate(-90deg) !important; writing-mode:vertical-rl !important; text-orientation:mixed !important; font-size:7pt !important; font-weight:700 !important; line-height:1 !important; }
+    .mt thead th:not(.thl) .dname { display:block !important; writing-mode:vertical-rl !important; text-orientation:mixed !important; font-size:6pt !important; opacity:.8 !important; }
+    .mt thead th.thl { text-align:left !important; padding-left:4px !important; width:70pt !important; vertical-align:middle !important; writing-mode:horizontal-tb !important; height:60px !important; }
+    .mt thead th.thw { background:#475569 !important; opacity:1 !important; }
+    .mt thead th.tht { background:#2563eb !important; font-weight:900 !important; }
 
-    /* TBODY — satırlar eşit yükseklikte tüm alanı kaplar */
-    .mt tbody { display: table-row-group !important; }
-    .mt tbody tr {
-      height: auto !important;
-    }
-    .mt tbody td {
-      border: 1px solid #94a3b8 !important;
-      padding: 0 2px !important;
-      text-align: center !important;
-      vertical-align: middle !important;
-      background: white !important;
-      height: 1% !important; /* trick: tarayıcı eşit böler */
-    }
-
-    /* ZEBRA */
-    .mt tbody tr:nth-child(odd) td { background: #f8fafc !important; }
-    .mt tbody tr:nth-child(even) td { background: white !important; }
+    /* SATIRLAR */
+    .mt tbody { display:table-row-group !important; }
+    .mt tbody td { border:1px solid #94a3b8 !important; padding:1px !important; text-align:center !important; vertical-align:middle !important; background:white !important; height:1% !important; overflow:hidden !important; }
+    .mt tbody tr:nth-child(odd) td { background:#f8fafc !important; }
+    .mt tbody tr:nth-child(even) td { background:white !important; }
 
     /* BÖLGE SÜTUNU */
-    .tdl {
-      background: #dbeafe !important;
-      color: #1e3a8a !important;
-      font-weight: 700 !important;
-      font-size: 7.5pt !important;
-      text-align: left !important;
-      padding-left: 3pt !important;
-      white-space: nowrap !important;
-    }
-    .mt tbody tr:nth-child(odd) .tdl { background: #bfdbfe !important; }
+    .tdl { background:#dbeafe !important; color:#1e3a8a !important; font-weight:700 !important; font-size:7.5pt !important; text-align:left !important; padding-left:3pt !important; white-space:nowrap !important; }
+    .mt tbody tr:nth-child(odd) .tdl { background:#bfdbfe !important; }
+    .tdw { background:#e2e8f0 !important; }
+    .mt tbody tr:nth-child(odd) .tdw { background:#cbd5e1 !important; }
 
-    .tdw { background: #e2e8f0 !important; }
-    .mt tbody tr:nth-child(odd) .tdw { background: #cbd5e1 !important; }
-
-    /* İSİM — sade, net, büyük */
+    /* İSİM — dikey yazı */
     .pill {
-      display: inline !important;
-      background: none !important;
-      border: none !important;
-      padding: 0 !important;
-      border-radius: 0 !important;
-      font-size: 8pt !important;
-      font-weight: 700 !important;
+      display:block !important;
+      background:none !important;
+      border:none !important;
+      padding:0 !important;
+      border-radius:0 !important;
+      /* DİKEY YAZ */
+      writing-mode: vertical-rl !important;
+      text-orientation: mixed !important;
+      transform: rotate(180deg) !important;
+      font-size: 7.5pt !important;
+      font-weight: 600 !important;
       color: #0f172a !important;
       white-space: nowrap !important;
-      overflow: visible !important;
-      max-width: none !important;
+      overflow: hidden !important;
+      max-height: 100% !important;
+      margin: 0 auto !important;
+      line-height: 1 !important;
     }
 
-    .tlbl {
-      font-size: 7pt !important;
-      font-weight: 700 !important;
-      color: #92400e !important;
-    }
-    .edot { color: #94a3b8 !important; font-size: 7pt !important; }
-
-    /* TATİL SÜTUNLARI — baskıda gizle */
-    .print-hide { display: none !important; }
+    .tlbl { font-size:7pt !important; font-weight:700 !important; color:#92400e !important; writing-mode:vertical-rl !important; transform:rotate(180deg) !important; }
+    .edot { color:#94a3b8 !important; font-size:7pt !important; }
+    .print-hide { display:none !important; }
   }
 </style>
 </head>
@@ -273,10 +206,7 @@
 <div class="app">
 <header>
   <div class="logo">&#128737;</div>
-  <div>
-    <h1 id="okul-adi">NOBET CIZELGESI</h1>
-    <p id="hsub">Yukleniyor...</p>
-  </div>
+  <div><h1 id="okul-adi">NOBET CIZELGESI</h1><p id="hsub">Yukleniyor...</p></div>
   <div class="hbadge" id="hbadge">yukleniyor</div>
 </header>
 
@@ -334,8 +264,7 @@
     <div>
       <div class="card">
         <div class="ct">Genel Ayarlar</div>
-        <label>Baslangic Tarihi</label>
-        <input type="date" id="asd"/>
+        <label>Baslangic Tarihi</label><input type="date" id="asd"/>
         <div class="row2" style="margin-top:0">
           <div><label>Bolge Sayisi</label><input type="number" id="abc" value="8" min="1" max="20" onchange="rebuildB()"/></div>
           <div><label>Calisma Gunleri</label>
@@ -374,9 +303,7 @@
         <button class="btn btn-o btn-sm" style="margin-bottom:10px" onclick="autoF()">Ornek Isim Doldur</button>
         <div class="ggs" id="agg"></div>
       </div>
-      <button class="btn btn-s" style="width:100%;justify-content:center;font-size:15px;padding:14px" onclick="jsonIndir()">
-        JSON Dosyasini Indir
-      </button>
+      <button class="btn btn-s" style="width:100%;justify-content:center;font-size:15px;padding:14px" onclick="jsonIndir()">JSON Dosyasini Indir</button>
       <button class="btn btn-o btn-sm" style="margin-top:12px" onclick="adminCikis()">Cikis</button>
     </div>
   </div>
@@ -558,7 +485,6 @@ function jsonIndir(){
   D=yD;
   alert('nobet_data.json indirildi!\nGitHub > Add file > Upload files > Commit changes');
 }
-
 function cwn(date){const s=new Date(D.startDate);s.setHours(0,0,0,0);const d=new Date(date);d.setHours(0,0,0,0);return Math.floor((d-s)/(7*86400000));}
 function isTW(cw){
   const ws=addDays(D.startDate,cw*7);ws.setHours(0,0,0,0);
@@ -588,20 +514,13 @@ function renderM(){
   const today=new Date();today.setHours(0,0,0,0);
   const dim=new Date(year,month+1,0).getDate();
   const days=[];for(let d=1;d<=dim;d++)days.push(new Date(year,month,d));
-
-  // Tatil olan günleri belirle (tam gün tatil mi?)
-  const isTatilGun=(day)=>{
-    const dow=day.getDay()===0?6:day.getDay()-1;
-    if(dow>=D.workDays)return false;
-    const cw=cwn(day);
-    return isTW(cw);
-  };
+  const isTatilGun=(day)=>{const dow=day.getDay()===0?6:day.getDay()-1;if(dow>=D.workDays)return false;return isTW(cwn(day));};
 
   let leg='';
   for(let b=0;b<D.bolgeCount;b++){const c=C[b%C.length];leg+=`<div class="li"><span class="ld" style="background:${c.t}"></span>${D.bolgeNames[b]}</div>`;}
   document.getElementById('leg').innerHTML=leg;
 
-  // THEAD — tatil günleri ekranda göster ama baskıda gizle
+  // THEAD — tarih ve gün adı dikey görünsün diye span'lara sar
   let th='<tr><th class="thl">BOLGE</th>';
   days.forEach(day=>{
     const dow=day.getDay()===0?6:day.getDay()-1;
@@ -609,14 +528,15 @@ function renderM(){
     const isT=day.getTime()===today.getTime();
     const isTat=!isWe&&isTatilGun(day);
     const cls=isT?'tht':isWe?'thw':'';
-    // Tatil haftası günleri baskıda gizlenecek
     const phide=isTat?' print-hide':'';
-    th+=`<th class="${cls}${phide}"><div style="font-size:11px;font-weight:600">${day.getDate()}</div><div style="font-size:9px;opacity:.7">${DS[dow]}</div></th>`;
+    th+=`<th class="${cls}${phide}">
+      <span class="dnum">${day.getDate()}</span>
+      <span class="dname">${DS[dow]}</span>
+    </th>`;
   });
   th+='</tr>';
   document.getElementById('mth').innerHTML=th;
 
-  // TBODY
   let tb='';
   for(let b=0;b<D.bolgeCount;b++){
     const bc=C[b%C.length];
@@ -628,12 +548,8 @@ function renderM(){
       const isTat=!isWe&&isTatilGun(day);
       const tc=isT?' tdt':'';
       const phide=isTat?' print-hide':'';
-
       if(isWe){tb+=`<td class="tdw${tc}${phide}"><span class="edot">-</span></td>`;return;}
-      if(isTat){
-        // Ekranda TAT göster, baskıda gizle
-        tb+=`<td class="tdtat${tc}${phide}"><span class="tlbl">TAT</span></td>`;return;
-      }
+      if(isTat){tb+=`<td class="tdtat${tc}${phide}"><span class="tlbl">TAT</span></td>`;return;}
       const sch=getSch(day);
       const p=sch&&sch.find(x=>x.bolgeIndex===b);
       if(p){
@@ -647,7 +563,6 @@ function renderM(){
   }
   document.getElementById('mtb').innerHTML=tb;
 }
-
 function prevM(){mo--;renderM();}
 function nextM(){mo++;renderM();}
 function goNow(){const n=new Date();mo=(n.getFullYear()-D.startDate.getFullYear())*12+(n.getMonth()-D.startDate.getMonth());renderM();}
@@ -664,7 +579,7 @@ function renderK(){
   let th='<tr><th style="text-align:left;min-width:150px;padding-left:12px">NOBETCI</th><th style="text-align:center;min-width:45px">Gun</th>';
   wdl.forEach(({day,dow})=>{
     const isT=day.getTime()===today.getTime();const cw=cwn(day),isTat=cw>=0&&isTW(cw);
-    const cls=isT?'tht':isTat?'thtat':'';
+    const cls=isT?'tht':isTat?'':'';
     th+=`<th class="${cls}"><div style="font-size:11px;font-weight:600">${day.getDate()}</div><div style="font-size:9px;opacity:.7">${DS[dow]}</div></th>`;
   });
   th+='</tr>';
