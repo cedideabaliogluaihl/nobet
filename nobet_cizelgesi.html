@@ -17,7 +17,94 @@
   header p{font-size:12px;color:var(--text2);margin-top:2px}
   .hbadge{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--accent2);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);padding:4px 10px;border-radius:20px;white-space:nowrap}
   .tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content}
-  .tab{padding:8px 20px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+  .tab{padding:8px 20px;border-radius:7px;border:none;background:transparent;color:var(--{
+  "okul": "CEDİDE ABALIOĞLU ANADOLU İMAM HATİP LİSESİ",
+  "mudur": "Ahmet SOYSAL",
+  "imzaTarihi": "26.02.2026",
+  "baslamaTarihi": "2026-03-02",
+  "bolgeCount": 8,
+  "workDays": 5,
+  "bolgeNames": [
+    "Ön Bahçe",
+    "Kantin / Arka Bahçe",
+    "Zemin",
+    "A Blok 1.Kat",
+    "B Blok 1.Kat",
+    "A Blok 2.Kat",
+    "B Blok 2.Kat",
+    "B Blok 3.Kat"
+  ],
+  "gunNobetcileri": {
+    "0": [
+      "Sevim Özyılmaz",
+      "Kemal Akın",
+      "Osman Şevik",
+      "Müzeyyen Üçel",
+      "İsmail Aslan",
+      "Yunus Emre Kalaycı",
+      "Emre Çalışkan",
+      "Hasan Çöklü"
+    ],
+    "1": [
+      "Zeliha Sarıkaya Öztürk",
+      "Zekeriya Karahan",
+      "Nesibe Gümüş",
+      "Hasan Fehmi Sevimli",
+      "M.Esat Arslan",
+      "Murat Karakuş",
+      "Mehmet Elçin",
+      "Fatih Öğünç"
+    ],
+    "2": [
+      "Cihan Hamza",
+      "Ahsen Ece Kuş",
+      "Tuğba Şentürk",
+      "Yaren İm",
+      "Fatih Altuntepe",
+      "Bartu Selek",
+      "Hilal Zehra Güven",
+      "Meral Yılmaz"
+    ],
+    "3": [
+      "Fatih Şahan",
+      "İsmail Karayürek",
+      "Özlem Gökçe",
+      "Hadice Nur Sarıkaya",
+      "Gülizar Öztürk",
+      "Elif Tosun",
+      "Mine Baş",
+      "Mustafa Alp"
+    ],
+    "4": [
+      "Hakan Bektaş",
+      "Osman Nuri Dural",
+      "M.Raşit Yılmaz",
+      "Lütfi Gürsoy",
+      "Sinan Güzeler",
+      "M.Said Çil",
+      "Fatih İmre",
+      "Özlem Bayoğlu Özkaya"
+    ]
+  },
+  "tatiller": [
+    {
+      "id": 1,
+      "ad": "Tatil Haftası",
+      "pazartesi": "2026-03-16",
+      "haftaSayisi": 1
+    }
+  ],
+  "nobetciGorevleri": [
+    "Nöbet başlama saati 08.30'dur.",
+    "Nöbetçi öğretmenler katındaki sınıf, tuvalet ve yangın merdiveninden sorumludur.",
+    "Öğle arası nöbetçi öğretmenler yerinde bulunacaklardır.",
+    "Nöbetçi öğretmenler kız-erkek merdiveni kuralını takip edeceklerdir.",
+    "Nöbetçi öğretmenin son dersi boş olsa da gitmeyecek, nöbet bitiş saati ders bitiminden 10 dakika sonradır.",
+    "Öğretmen zili çalmadan nöbetçi öğretmen yerini terketmeyecektir.",
+    "Nöbet sonunda okul nöbet defterine nöbet süresi içerisinde önemli olayları ve aldığı tedbirleri belirten raporu yazmak."
+  ]
+}
+text2);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
   .tab.active{background:var(--accent);color:white}
   .tab:hover:not(.active){background:var(--surface2);color:var(--text)}
   .tab.atab{border:1px solid rgba(245,158,11,.3);color:var(--warn)}
@@ -37,66 +124,38 @@
   .sbox{padding:8px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;transition:border-color .2s;width:220px}
   .sbox:focus{border-color:var(--accent)}
 
-  /* AYLIK TABLO — satır=tarih, sütun=bölge */
+  /* TABLO */
   .twrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
   .mt{border-collapse:collapse;font-size:12px;width:100%}
-
-  /* Başlık — bölge adları */
-  .mt thead th{
-    background:var(--surface2);padding:10px 8px;
-    font-family:var(--mono);font-size:11px;color:var(--text2);
-    border-bottom:1px solid var(--border);text-align:center;white-space:nowrap
-  }
-  .mt thead th.th-tarih{
-    text-align:left;min-width:110px;color:var(--accent2);padding-left:14px
-  }
-  .mt thead th.th-gun{
-    min-width:40px;color:var(--text3)
-  }
-
-  /* Satırlar — her gün bir satır */
-  .mt tbody td{
-    padding:8px 6px;border-bottom:1px solid rgba(42,48,64,.4);
-    border-right:1px solid rgba(42,48,64,.2);text-align:center;vertical-align:middle
-  }
+  .mt thead th{background:var(--surface2);padding:10px 8px;font-family:var(--mono);font-size:11px;color:var(--text2);border-bottom:1px solid var(--border);text-align:center;white-space:nowrap}
+  .mt thead th.th-tarih{text-align:left;min-width:110px;color:var(--accent2);padding-left:14px}
+  .mt thead th.th-gun{min-width:40px;color:var(--text3)}
+  .mt tbody td{padding:8px 6px;border-bottom:1px solid rgba(42,48,64,.4);border-right:1px solid rgba(42,48,64,.2);text-align:center;vertical-align:middle}
   .mt tbody tr:last-child td{border-bottom:none}
   .mt tbody td:last-child{border-right:none}
   .mt tbody tr:hover td{background:rgba(28,32,48,.4)}
-
-  /* Tarih sütunu */
-  .td-tarih{
-    text-align:left!important;font-family:var(--mono);font-size:12px;font-weight:600;
-    background:var(--surface)!important;padding-left:14px!important;white-space:nowrap;
-    color:var(--text)!important
-  }
-  .td-gun{
-    font-family:var(--mono);font-size:11px;color:var(--text2);
-    background:var(--surface)!important;text-align:center!important
-  }
-
-  /* Tatil satırı */
+  .td-tarih{text-align:left!important;font-family:var(--mono);font-size:12px;font-weight:600;background:var(--surface)!important;padding-left:14px!important;white-space:nowrap;color:var(--text)!important}
+  .td-gun{font-family:var(--mono);font-size:11px;color:var(--text2);background:var(--surface)!important;text-align:center!important}
   .tr-tatil td{background:rgba(245,158,11,.06)!important}
-  .tr-tatil .td-tarih{color:var(--warn)!important}
-  .tr-tatil .td-gun{color:var(--warn)!important}
+  .tr-tatil .td-tarih,.tr-tatil .td-gun{color:var(--warn)!important}
   .tatil-cell{font-size:11px;color:var(--warn);font-family:var(--mono);font-weight:600}
-
-  /* Hafta sonu satırı */
   .tr-we td{background:rgba(255,255,255,.01)!important;opacity:.5}
-
-  /* Bugün satırı */
   .tr-today td{background:rgba(59,130,246,.06)!important}
   .tr-today .td-tarih{color:var(--accent)!important}
-
-  /* Hafta ayırıcı */
   .tr-hafta-basi td{border-top:2px solid rgba(59,130,246,.3)!important}
-
-  /* İsim kutusu */
-  .pill{
-    display:inline-block;font-size:11px;padding:3px 8px;border-radius:8px;
-    white-space:nowrap;cursor:default;line-height:1.4;
-    max-width:140px;overflow:hidden;text-overflow:ellipsis
-  }
+  .pill{display:inline-block;font-size:11px;padding:3px 8px;border-radius:8px;white-space:nowrap;cursor:default;line-height:1.4}
   .edot{color:var(--text3);font-size:10px}
+
+  /* NOBET KURALLARI ALTI */
+  .kurallar-wrap{margin-top:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;gap:40px;align-items:flex-start}
+  .kurallar-liste{flex:1}
+  .kurallar-baslik{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--accent2);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+  .kural-item{font-size:12px;color:var(--text2);line-height:1.7;display:flex;gap:8px}
+  .kural-no{font-family:var(--mono);font-size:11px;color:var(--accent);flex-shrink:0;min-width:20px}
+  .mudur-wrap{text-align:right;flex-shrink:0;min-width:180px}
+  .mudur-tarih{font-size:11px;color:var(--text3);font-family:var(--mono);margin-bottom:6px}
+  .mudur-ad{font-size:13px;font-weight:600;color:var(--text)}
+  .mudur-unvan{font-size:11px;color:var(--text2);margin-top:2px}
 
   /* Admin */
   .agrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -106,9 +165,10 @@
   .ct::before{content:'';width:3px;height:14px;background:var(--accent2);border-radius:2px;flex-shrink:0}
   .ctw{color:var(--warn)}.ctw::before{background:var(--warn)}
   label{display:block;font-size:12px;color:var(--text2);font-weight:500;margin-bottom:5px;margin-top:12px}
-  input[type=text],input[type=date],input[type=number],input[type=password],select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;transition:border-color .2s}
-  input:focus,select:focus{border-color:var(--accent)}
+  input[type=text],input[type=date],input[type=number],input[type=password],select,textarea{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:var(--mono);font-size:13px;outline:none;transition:border-color .2s}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent)}
   select option{background:var(--bg)}
+  textarea{resize:vertical;min-height:120px;line-height:1.7;font-size:12px}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .blist{display:flex;flex-direction:column;gap:5px;max-height:220px;overflow-y:auto}
   .bi{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 10px}
@@ -128,7 +188,7 @@
   .nn{font-family:var(--mono);font-size:10px;color:var(--text3);min-width:18px}
   .ni input{border:none;background:transparent;padding:0;font-size:12px;flex:1;min-width:0}
   .ni input:focus{outline:none}
-  .tlist{display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto}
+  .tlist{display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto}
   .tr2{display:flex;align-items:center;gap:10px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:8px 12px}
   .tn{font-size:13px;font-weight:500;color:var(--warn);flex:1}
   .td2{font-size:11px;color:var(--text3);font-family:var(--mono)}
@@ -156,16 +216,14 @@
   .ebox h3{font-size:16px;margin-bottom:8px}
   .ebox p{font-size:13px;color:var(--text2);line-height:1.7}
   .ebox code{background:var(--surface2);padding:2px 8px;border-radius:4px;font-family:var(--mono);font-size:12px;color:var(--accent2)}
-  .ibox{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.8}
-  .ibox strong{color:var(--accent2)}
-  @media(max-width:900px){.agrid{grid-template-columns:1fr}}
+  @media(max-width:900px){.agrid{grid-template-columns:1fr}.kurallar-wrap{flex-direction:column}.mudur-wrap{text-align:left}}
   @media(max-width:600px){header h1{font-size:15px}.mlabel{min-width:130px;font-size:13px}.sbox{width:100%}}
 
   /* ===== A4 YAZDIR ===== */
   @media print {
     @page { size: A4 portrait; margin: 8mm 10mm; }
     * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
-    html,body { background:white !important; color:black !important; margin:0; padding:0; }
+    html,body { background:white !important; color:black !important; margin:0; padding:0; font-size:9pt; }
     body::before { display:none !important; }
     .app { padding:0 !important; max-width:100% !important; }
     .tabs,.toolbar,.lov { display:none !important; }
@@ -173,68 +231,45 @@
     #pk,#pa { display:none !important; }
     #pm { display:block !important; }
 
-    header { border-bottom:2px solid #1e3a8a !important; margin-bottom:6px !important; padding-bottom:4px !important; }
+    /* BAŞLIK */
+    header { border-bottom:2px solid #1e3a8a !important; margin-bottom:5px !important; padding-bottom:3px !important; }
     header .logo { display:none !important; }
     header h1 { font-size:11pt !important; color:#1e3a8a !important; font-weight:700 !important; }
     header p { display:none !important; }
-    .hbadge { font-size:8pt !important; color:#475569 !important; background:none !important; border:none !important; padding:0 !important; }
+    .hbadge { font-size:7.5pt !important; color:#475569 !important; background:none !important; border:none !important; padding:0 !important; }
 
-    .twrap { overflow:visible !important; border:none !important; border-radius:0 !important; width:100% !important; }
+    /* TABLO */
+    .twrap { overflow:visible !important; border:none !important; border-radius:0 !important; }
     .mt { width:100% !important; border-collapse:collapse !important; font-size:8pt !important; }
-
-    /* Başlık — bölge adları */
-    .mt thead th {
-      background:#1e3a8a !important; color:white !important;
-      border:1px solid #1e40af !important; padding:5px 4px !important;
-      font-size:7.5pt !important; font-weight:700 !important; text-align:center !important;
-    }
-    .mt thead th.th-tarih { text-align:left !important; padding-left:6px !important; width:55pt !important; }
-    .mt thead th.th-gun { width:22pt !important; }
-
-    /* Satırlar */
-    .mt tbody td {
-      border:1px solid #94a3b8 !important; padding:4px 3px !important;
-      text-align:center !important; vertical-align:middle !important;
-    }
-    .td-tarih {
-      background:#f1f5f9 !important; color:#1e3a8a !important;
-      font-weight:700 !important; font-size:8pt !important;
-      text-align:left !important; padding-left:5px !important; white-space:nowrap !important;
-    }
-    .td-gun {
-      background:#f1f5f9 !important; color:#64748b !important;
-      font-size:7pt !important; text-align:center !important;
-    }
-
-    /* Tatil satırı */
+    .mt thead th { background:#1e3a8a !important; color:white !important; border:1px solid #1e40af !important; padding:5px 4px !important; font-size:7.5pt !important; font-weight:700 !important; text-align:center !important; white-space:nowrap !important; }
+    .mt thead th.th-tarih { text-align:left !important; padding-left:5px !important; width:60pt !important; }
+    .mt thead th.th-gun { width:20pt !important; }
+    .mt tbody td { border:1px solid #94a3b8 !important; padding:4px 3px !important; text-align:center !important; vertical-align:middle !important; background:white !important; }
+    .mt tbody tr:nth-child(even) td { background:#f9fafb !important; }
+    .td-tarih { background:#eff6ff !important; color:#1e3a8a !important; font-weight:700 !important; font-size:8pt !important; text-align:left !important; padding-left:4px !important; white-space:nowrap !important; }
+    .td-gun { background:#eff6ff !important; color:#64748b !important; font-size:7pt !important; }
+    .mt tbody tr:nth-child(even) .td-tarih { background:#dbeafe !important; }
+    .mt tbody tr:nth-child(even) .td-gun { background:#dbeafe !important; }
     .tr-tatil td { background:#fffbeb !important; }
-    .tr-tatil .td-tarih { color:#92400e !important; }
-    .tr-tatil .td-gun { color:#92400e !important; }
-    .tatil-cell { font-size:7.5pt !important; color:#92400e !important; font-weight:700 !important; }
-
-    /* Hafta sonu */
+    .tr-tatil .td-tarih,.tr-tatil .td-gun { color:#92400e !important; background:#fef3c7 !important; }
+    .tatil-cell { font-size:8pt !important; color:#92400e !important; font-weight:700 !important; }
     .tr-we td { background:#f8fafc !important; opacity:1 !important; }
-    .tr-we .td-tarih { color:#94a3b8 !important; }
-    .tr-we .td-gun { color:#94a3b8 !important; }
-
-    /* Bugün */
+    .tr-we .td-tarih,.tr-we .td-gun { color:#94a3b8 !important; background:#f1f5f9 !important; }
     .tr-today td { background:#dbeafe !important; }
     .tr-today .td-tarih { color:#1d4ed8 !important; font-weight:900 !important; }
-
-    /* Hafta başı kalın çizgi */
     .tr-hafta-basi td { border-top:2px solid #1e40af !important; }
-
-    /* İsim */
-    .pill {
-      display:inline !important; background:none !important; border:none !important;
-      padding:0 !important; border-radius:0 !important;
-      font-size:8pt !important; font-weight:600 !important; color:#0f172a !important;
-      white-space:nowrap !important; max-width:none !important; overflow:visible !important;
-    }
+    .pill { display:inline !important; background:none !important; border:none !important; padding:0 !important; border-radius:0 !important; font-size:7.5pt !important; font-weight:600 !important; color:#0f172a !important; white-space:nowrap !important; max-width:none !important; overflow:visible !important; }
     .edot { color:#94a3b8 !important; }
 
-    /* Zebra */
-    .mt tbody tr:nth-child(even) td:not(.td-tarih):not(.td-gun) { background:#f9fafb !important; }
+    /* KURALLAR ALTI */
+    .kurallar-wrap { margin-top:10px !important; background:none !important; border:none !important; border-top:1px solid #cbd5e1 !important; border-radius:0 !important; padding:8px 0 0 0 !important; display:flex !important; gap:20px !important; align-items:flex-start !important; }
+    .kurallar-baslik { font-size:8pt !important; color:#1e3a8a !important; font-weight:700 !important; margin-bottom:4px !important; }
+    .kural-item { font-size:7pt !important; color:#334155 !important; line-height:1.6 !important; }
+    .kural-no { font-size:7pt !important; color:#1e40af !important; }
+    .mudur-wrap { text-align:right !important; }
+    .mudur-tarih { font-size:7pt !important; color:#64748b !important; }
+    .mudur-ad { font-size:9pt !important; font-weight:700 !important; color:#0f172a !important; }
+    .mudur-unvan { font-size:7pt !important; color:#475569 !important; }
   }
 </style>
 </head>
@@ -273,6 +308,19 @@
     </div>
   </div>
   <div class="twrap"><table class="mt"><thead id="mth"></thead><tbody id="mtb"></tbody></table></div>
+
+  <!-- KURALLAR & MÜDÜR -->
+  <div class="kurallar-wrap" id="kurallarWrap" style="display:none">
+    <div class="kurallar-liste">
+      <div class="kurallar-baslik">NOBETCI OGRETMENIN GOREVLERI</div>
+      <div id="kurallarListesi"></div>
+    </div>
+    <div class="mudur-wrap">
+      <div class="mudur-tarih" id="mudurTarih"></div>
+      <div class="mudur-ad" id="mudurAd"></div>
+      <div class="mudur-unvan">Okul Muduru</div>
+    </div>
+  </div>
 </div>
 
 <!-- KİŞİ BAZLI -->
@@ -313,6 +361,11 @@
             </select>
           </div>
         </div>
+        <label>Okul Adi</label><input type="text" id="aokul" placeholder="Okul adi"/>
+        <label>Mudur Adi Soyadi</label><input type="text" id="amudur" placeholder="Ad Soyad"/>
+        <label>Imza Tarihi</label><input type="text" id="aimzaTarih" placeholder="ornek: 26.02.2026"/>
+        <label>Nobet Kurallari (her satir bir kural)</label>
+        <textarea id="akurallar" rows="8" placeholder="Her satira bir kural yazin..."></textarea>
       </div>
       <div class="card">
         <div class="ct">Bolgeler</div>
@@ -378,15 +431,6 @@ const C=[
 ];
 let D=null,mo=0,mok=0,aok=false;
 
-function kisaIsim(ad){
-  if(!ad||!ad.trim())return '';
-  const p=ad.trim().split(/\s+/);
-  if(p.length===1)return p[0];
-  const soyad=p[p.length-1];
-  const kisalt=p.slice(0,p.length-1).map(x=>x.charAt(0).toUpperCase()+'.').join('');
-  return kisalt+' '+soyad;
-}
-
 window.onload=async()=>{
   try{
     const r=await fetch('nobet_data.json?v='+Date.now());
@@ -399,17 +443,34 @@ window.onload=async()=>{
     mok=mo;
     document.getElementById('loadingDiv').style.display='none';
     document.getElementById('tabBar').style.display='';
-    if(D.okul)document.getElementById('okul-adi').textContent=D.okul+' - NOBET CIZELGESI';
+    const baslik=(D.okul||'NOBET CIZELGESI')+' - '+MT[now.getMonth()]+' AYI OGRETMEN NOBET CIZELGESI';
+    document.getElementById('okul-adi').textContent=baslik;
     showP('pm');
     const tot=Object.values(D.gunNobetcileri).reduce((s,a)=>s+a.filter(x=>x).length,0);
     document.getElementById('hsub').textContent='Haftada 1 gun nobet - Haftalik bolge rotasyonu';
     document.getElementById('hbadge').textContent=tot+' nobetci - '+D.bolgeCount+' bolge';
+    renderKurallar();
     renderM();
   }catch(e){
     document.getElementById('loadingDiv').style.display='none';
     document.getElementById('errorDiv').style.display='block';
   }
 };
+
+function renderKurallar(){
+  if(!D)return;
+  const kurallar=D.nobetciGorevleri||[];
+  const mudur=D.mudur||'';
+  const imzaTarih=D.imzaTarihi||'';
+  if(!kurallar.length&&!mudur){document.getElementById('kurallarWrap').style.display='none';return;}
+  document.getElementById('kurallarWrap').style.display='flex';
+  document.getElementById('kurallarListesi').innerHTML=kurallar.map((k,i)=>
+    `<div class="kural-item"><span class="kural-no">${i+1}-</span><span>${k}</span></div>`
+  ).join('');
+  document.getElementById('mudurAd').textContent=mudur;
+  document.getElementById('mudurTarih').textContent=imzaTarih;
+  document.getElementById('mudurUnvan')?document.getElementById('mudurUnvan').textContent='Okul Muduru':'';
+}
 
 function showTab(n,btn){showP(n);document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');if(n==='pm')renderM();if(n==='pk')renderK();}
 function showP(n){['pm','pk','pa'].forEach(id=>{const el=document.getElementById(id);el.style.display='none';el.classList.remove('active');});const el=document.getElementById(n);el.style.display='block';el.classList.add('active');}
@@ -427,16 +488,22 @@ function lcheck(){
   }else{document.getElementById('lerr').textContent='Sifre yanlis!';document.getElementById('lp').value='';document.getElementById('lp').focus();}
 }
 function adminCikis(){aok=false;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelector('.tab').classList.add('active');showP('pm');renderM();}
+
 function loadAF(){
   if(!D)return;
   document.getElementById('asd').value=D.baslamaTarihi;
   document.getElementById('abc').value=D.bolgeCount;
   document.getElementById('awd').value=D.workDays;
+  document.getElementById('aokul').value=D.okul||'';
+  document.getElementById('amudur').value=D.mudur||'';
+  document.getElementById('aimzaTarih').value=D.imzaTarihi||'';
+  document.getElementById('akurallar').value=(D.nobetciGorevleri||[]).join('\n');
   const now=new Date();const diff=now.getDay()===0?-6:1-now.getDay();
   const mon=new Date(now);mon.setDate(now.getDate()+diff);
   document.getElementById('att').value=iso(mon);
   rebuildB();rebuildG();renderATL();
 }
+
 function rebuildB(){
   const count=parseInt(document.getElementById('abc').value)||8;
   const list=document.getElementById('abl');
@@ -501,9 +568,15 @@ function renderATL(){
   }).join('');
 }
 function rmT(id){D.tatiller=D.tatiller.filter(t=>t.id!==id);renderATL();}
+
 function jsonIndir(){
+  const kurallarText=document.getElementById('akurallar').value;
+  const kurallar=kurallarText.split('\n').map(s=>s.trim()).filter(s=>s);
   const yD={
-    okul:D.okul||'',mudur:D.mudur||'',nobetciGorevleri:D.nobetciGorevleri||[],
+    okul:document.getElementById('aokul').value.trim(),
+    mudur:document.getElementById('amudur').value.trim(),
+    imzaTarihi:document.getElementById('aimzaTarih').value.trim(),
+    nobetciGorevleri:kurallar,
     baslamaTarihi:document.getElementById('asd').value,
     bolgeCount:parseInt(document.getElementById('abc').value),
     workDays:parseInt(document.getElementById('awd').value),
@@ -520,7 +593,7 @@ function jsonIndir(){
   const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download='nobet_data.json';a.click();
   yD.startDate=new Date(yD.baslamaTarihi+'T00:00:00');
   yD.tatiller.forEach(t=>{t.pd=new Date(t.pazartesi+'T00:00:00');});
-  D=yD;
+  D=yD;renderKurallar();
   alert('nobet_data.json indirildi!\nGitHub > Add file > Upload files > Commit changes');
 }
 
@@ -546,19 +619,22 @@ function getSch(date){
 }
 function getMI(off){const base=new Date(D.startDate.getFullYear(),D.startDate.getMonth()+off,1);return{year:base.getFullYear(),month:base.getMonth()};}
 
-// AYLIK ÇİZELGE — satır=tarih, sütun=bölge
 function renderM(){
   if(!D)return;
   const{year,month}=getMI(mo);
   document.getElementById('mlbl').textContent=MT[month]+' '+year;
+  // Başlık ayı güncelle
+  const baslik=(D.okul||'NOBET CIZELGESI')+' - '+MT[month].toUpperCase()+' AYI OGRETMEN NOBET CIZELGESI';
+  document.getElementById('okul-adi').textContent=baslik;
+
   const today=new Date();today.setHours(0,0,0,0);
   const dim=new Date(year,month+1,0).getDate();
   const days=[];for(let d=1;d<=dim;d++)days.push(new Date(year,month,d));
 
-  // THEAD — Tarih | Gün | Bölge1 | Bölge2 | ...
+  // THEAD
   let th='<tr>';
-  th+=`<th class="th-tarih">TARİH</th>`;
-  th+=`<th class="th-gun">GÜN</th>`;
+  th+=`<th class="th-tarih">TARIH</th>`;
+  th+=`<th class="th-gun">GUN</th>`;
   for(let b=0;b<D.bolgeCount;b++){
     const c=C[b%C.length];
     th+=`<th style="color:${c.t}">${D.bolgeNames[b]}</th>`;
@@ -566,7 +642,7 @@ function renderM(){
   th+='</tr>';
   document.getElementById('mth').innerHTML=th;
 
-  // TBODY — her gün bir satır
+  // TBODY
   let tb='';
   days.forEach((day,idx)=>{
     const dow=day.getDay()===0?6:day.getDay()-1;
@@ -574,35 +650,34 @@ function renderM(){
     const isToday=day.getTime()===today.getTime();
     const cw=cwn(day);
     const isTat=!isWe&&isTW(cw);
-    // Pazartesi ise hafta başı çizgisi
     const isHaftaBasi=dow===0&&idx>0;
 
     let rowCls='';
-    if(isToday) rowCls='tr-today';
-    else if(isTat) rowCls='tr-tatil';
-    else if(isWe) rowCls='tr-we';
-    if(isHaftaBasi) rowCls+=' tr-hafta-basi';
+    if(isToday)rowCls='tr-today';
+    else if(isTat)rowCls='tr-tatil';
+    else if(isWe)rowCls='tr-we';
+    if(isHaftaBasi)rowCls+=' tr-hafta-basi';
 
-    const tarihStr=`${String(day.getDate()).padStart(2,'0')}.${String(day.getMonth()+1).padStart(2,'0')}.${day.getFullYear()}`;
+    const dd=String(day.getDate()).padStart(2,'0');
+    const mm=String(day.getMonth()+1).padStart(2,'0');
+    const tarihStr=`${dd}.${mm}.${year}`;
 
     tb+=`<tr class="${rowCls}">`;
     tb+=`<td class="td-tarih">${tarihStr}</td>`;
     tb+=`<td class="td-gun">${DS[dow]}</td>`;
 
     if(isWe){
-      // Hafta sonu — tüm bölgeler boş
       for(let b=0;b<D.bolgeCount;b++) tb+=`<td><span class="edot">-</span></td>`;
     } else if(isTat){
-      // Tatil haftası
-      tb+=`<td colspan="${D.bolgeCount}" style="text-align:center"><span class="tatil-cell">&#127958; TATİL</span></td>`;
+      tb+=`<td colspan="${D.bolgeCount}" style="text-align:center"><span class="tatil-cell">&#127958; TATIL HAFTASI</span></td>`;
     } else {
       const sch=getSch(day);
       for(let b=0;b<D.bolgeCount;b++){
         const c=C[b%C.length];
         const p=sch&&sch.find(x=>x.bolgeIndex===b);
         if(p){
-          const ki=kisaIsim(p.name);
-          tb+=`<td><span class="pill" data-b="${b}" title="${p.name}" style="background:${c.bg};color:${c.t};border:1px solid ${c.b}">${ki}</span></td>`;
+          // TAM AD SOYAD — kısaltma yok
+          tb+=`<td><span class="pill" data-b="${b}" title="${p.name}" style="background:${c.bg};color:${c.t};border:1px solid ${c.b}">${p.name}</span></td>`;
         } else {
           tb+=`<td><span class="edot">&#183;</span></td>`;
         }
@@ -617,7 +692,6 @@ function prevM(){mo--;renderM();}
 function nextM(){mo++;renderM();}
 function goNow(){const n=new Date();mo=(n.getFullYear()-D.startDate.getFullYear())*12+(n.getMonth()-D.startDate.getMonth());renderM();}
 
-// KİŞİ BAZLI
 function renderK(){
   if(!D)return;
   const{year,month}=getMI(mok);
@@ -627,12 +701,12 @@ function renderK(){
   const dim=new Date(year,month+1,0).getDate();
   const wdl=[];
   for(let d=1;d<=dim;d++){const day=new Date(year,month,d);const dow=day.getDay()===0?6:day.getDay()-1;if(dow<D.workDays)wdl.push({day,dow});}
-  let th='<tr><th style="text-align:left;min-width:150px;padding-left:12px">NOBETCI</th><th style="text-align:center;min-width:45px">Gun</th>';
+  let th='<tr><th style="text-align:left;min-width:160px;padding-left:12px">NOBETCI</th><th style="min-width:45px">Gun</th>';
   wdl.forEach(({day,dow})=>{
     const isT=day.getTime()===today.getTime();
-    const cw=cwn(day),isTat=cw>=0&&isTW(cw);
-    const cls=isT?'tht':isTat?'thtat':'';
-    th+=`<th class="${cls}"><div style="font-size:11px;font-weight:600">${day.getDate()}</div><div style="font-size:9px;opacity:.7">${DS[dow]}</div></th>`;
+    th+=`<th${isT?' style="color:var(--accent)"':''}>
+      <div style="font-size:11px;font-weight:600">${day.getDate()}</div>
+      <div style="font-size:9px;opacity:.7">${DS[dow]}</div></th>`;
   });
   th+='</tr>';
   const allP=[];
@@ -641,14 +715,17 @@ function renderK(){
   allP.forEach(person=>{
     const isM=!search||person.name.toLowerCase().includes(search);
     const dc=C[person.dow%C.length];
-    tb+=`<tr style="${isM&&search?'background:rgba(59,130,246,.06)':''}"><td style="font-weight:500;white-space:nowrap;font-size:12px;padding-left:12px;${isM&&search?'color:var(--accent2)':''}">${person.name}</td><td style="text-align:center"><span style="font-family:var(--mono);font-size:10px;padding:2px 6px;border-radius:10px;background:${dc.bg};color:${dc.t};border:1px solid ${dc.b}">${DS[person.dow]}</span></td>`;
+    tb+=`<tr style="${isM&&search?'background:rgba(59,130,246,.06)':''}">
+      <td style="font-weight:500;white-space:nowrap;font-size:12px;padding-left:12px;${isM&&search?'color:var(--accent2)':''}">${person.name}</td>
+      <td style="text-align:center"><span style="font-family:var(--mono);font-size:10px;padding:2px 6px;border-radius:10px;background:${dc.bg};color:${dc.t};border:1px solid ${dc.b}">${DS[person.dow]}</span></td>`;
     wdl.forEach(({day,dow})=>{
       const isT=day.getTime()===today.getTime();const bg=isT?'background:rgba(59,130,246,.05);':'';
       if(dow!==person.dow){tb+=`<td style="${bg}"><span class="edot">&#183;</span></td>`;return;}
       const sch=getSch(day);
       if(sch===null){tb+=`<td style="${bg}"><span class="tatil-cell" style="font-size:9px">TAT</span></td>`;return;}
       const entry=sch&&sch.find(x=>x.slotIndex===person.slot);
-      if(entry){const bc=C[entry.bolgeIndex%C.length];const bname=D.bolgeNames[entry.bolgeIndex]||'B'+(entry.bolgeIndex+1);tb+=`<td style="text-align:center;${bg}"><span class="pill" data-b="${entry.bolgeIndex}" title="${bname}" style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b};font-size:10px">${bname}</span></td>`;}
+      if(entry){const bc=C[entry.bolgeIndex%C.length];const bn=D.bolgeNames[entry.bolgeIndex]||'B'+(entry.bolgeIndex+1);
+        tb+=`<td style="text-align:center;${bg}"><span class="pill" data-b="${entry.bolgeIndex}" style="background:${bc.bg};color:${bc.t};border:1px solid ${bc.b};font-size:10px">${bn}</span></td>`;}
       else tb+=`<td style="${bg}"><span class="edot">&#183;</span></td>`;
     });
     tb+='</tr>';
@@ -669,10 +746,9 @@ function expCSV(){
   for(let b=0;b<D.bolgeCount;b++) csv+=',"'+D.bolgeNames[b]+'"';
   csv+='\n';
   days.forEach(day=>{
-    const dow=day.getDay()===0?6:day.getDay()-1;
-    if(dow>=D.workDays)return;
-    const tarih=`${String(day.getDate()).padStart(2,'0')}.${String(day.getMonth()+1).padStart(2,'0')}.${day.getFullYear()}`;
-    csv+=`"${tarih}","${DS[dow]}"`;
+    const dow=day.getDay()===0?6:day.getDay()-1;if(dow>=D.workDays)return;
+    const dd=String(day.getDate()).padStart(2,'0'),mm=String(day.getMonth()+1).padStart(2,'0');
+    csv+=`"${dd}.${mm}.${year}","${DS[dow]}"`;
     const sch=getSch(day);
     for(let b=0;b<D.bolgeCount;b++){
       if(sch===null){csv+=',"TATIL"';continue;}
