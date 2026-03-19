@@ -19,93 +19,7 @@
   .tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content}
   .tab{padding:8px 20px;border-radius:7px;border:none;background:transparent;color:var(--text2);font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
   .tab.active{background:var(--accent);color:white}
-  .tab:hover:not(.active){background:var(--surface2);color:var(--text)}{
-  "okul": "CEDİDE ABALIOĞLU ANADOLU İMAM HATİP LİSESİ",
-  "mudur": "Ahmet SOYSAL",
-  "imzaTarihi": "",
-  "nobetciGorevleri": [
-    "Nöbet başlama saati 08.30'dur.",
-    "Nöbetçi öğretmenler katındaki sınıf, tuvalet ve yangın merdiveninden sorumludur.",
-    "Öğle arası nöbetçi öğretmenler yerinde bulunacaklardır.",
-    "Nöbetçi öğretmenler kız-erkek merdiveni kuralını takip edeceklerdir.",
-    "Nöbetçi öğretmenin son dersi boş olsa da gitmeyecek, nöbet bitiş saati ders bitiminden 10 dakika sonradır.",
-    "Öğretmen zili çalmadan nöbetçi öğretmen yerini terketmeyecektir.",
-    "Nöbet sonunda okul nöbet defterine nöbet süresi içerisinde önemli olayları ve aldığı tedbirleri belirten raporu yazmak."
-  ],
-  "baslamaTarihi": "2026-03-02",
-  "bolgeCount": 8,
-  "workDays": 5,
-  "bolgeNames": [
-    "Ön Bahçe",
-    "Kantin / Arka Bahçe",
-    "Zemin",
-    "A Blok 1.Kat",
-    "B Blok 1.Kat",
-    "A Blok 2.Kat",
-    "B Blok 2.Kat",
-    "B Blok 3.Kat"
-  ],
-  "gunNobetcileri": {
-    "0": [
-      "Sevim Özyılmaz",
-      "Kemal Akın",
-      "Osman Şevik",
-      "Müzeyyen Üçel",
-      "İsmail Aslan",
-      "Yunus Emre Kalaycı",
-      "Emre Çalışkan",
-      "Hasan Çöklü"
-    ],
-    "1": [
-      "Zeliha Sarıkaya Öztürk",
-      "Zekeriya Karahan",
-      "Nesibe Gümüş",
-      "Hasan Fehmi Sevimli",
-      "M.Esat Arslan",
-      "Murat Karakuş",
-      "Mehmet Elçin",
-      "Fatih Öğünç"
-    ],
-    "2": [
-      "Cihan Hamza",
-      "Ahsen Ece Kuş",
-      "Tuğba Şentürk",
-      "Yaren İm",
-      "Fatih Altuntepe",
-      "Bartu Selek",
-      "Hilal Zehra Güven",
-      "Meral Yılmaz"
-    ],
-    "3": [
-      "Fatih Şahan",
-      "İsmail Karayürek",
-      "Özlem Gökçe",
-      "Hadice Nur Sarıkaya",
-      "Gülizar Öztürk",
-      "Elif Tosun",
-      "Mine Baş",
-      "Mustafa Alp"
-    ],
-    "4": [
-      "Hakan Bektaş",
-      "Osman Nuri Dural",
-      "M.Raşit Yılmaz",
-      "Lütfi Gürsoy",
-      "Sinan Güzeler",
-      "M.Said Çil",
-      "Fatih İmre",
-      "Özlem Bayoğlu Özkaya"
-    ]
-  },
-  "tatiller": [
-    {
-      "id": 1,
-      "ad": "Tatil Haftası",
-      "pazartesi": "2026-03-16",
-      "haftaSayisi": 1
-    }
-  ]
-}
+  .tab:hover:not(.active){background:var(--surface2);color:var(--text)}
   .tab.atab{border:1px solid rgba(245,158,11,.3);color:var(--warn)}
   .tab.atab.active{background:var(--warn);color:white;border-color:var(--warn)}
   .panel{display:none}.panel.active{display:block}
@@ -153,7 +67,7 @@
   .tarih-seridi{background:var(--accent);color:white;border-radius:8px;padding:8px 16px;text-align:center;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:1px;margin-bottom:8px;width:100%}
   .mudur-ad{font-size:16px;font-weight:700;color:var(--text);text-align:right}
   .mudur-unvan{font-size:13px;color:var(--text2);text-align:right}
-  .mudur-imza{width:80px;border-bottom:1px solid var(--border);margin:8px auto}
+  .mudur-imza{width:80px;border-bottom:1px solid var(--border);margin:8px 0 8px auto}
 
   /* Admin */
   .agrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -237,16 +151,16 @@
 
     /* TABLO */
     .twrap { overflow:visible !important; border:none !important; border-radius:0 !important; }
-    .mt { width:100% !important; border-collapse:collapse !important; font-size:8pt !important; }
+    .mt { width:100% !important; border-collapse:collapse !important; font-size:9pt !important; }
     .mt thead th {
       background:#1e3a8a !important; color:white !important;
-      border:1px solid #1e40af !important; padding:5px 3px !important;
-      font-size:7.5pt !important; font-weight:700 !important; text-align:center !important; white-space:nowrap !important;
+      border:1px solid #1e40af !important; padding:7px 4px !important;
+      font-size:8.5pt !important; font-weight:700 !important; text-align:center !important; white-space:nowrap !important;
     }
-    .mt thead th.th-tarih { text-align:left !important; padding-left:5px !important; width:58pt !important; }
-    .mt thead th.th-gun { width:18pt !important; }
+    .mt thead th.th-tarih { text-align:left !important; padding-left:5px !important; width:62pt !important; }
+    .mt thead th.th-gun { width:20pt !important; }
     .mt tbody td {
-      border:1px solid #94a3b8 !important; padding:5px 3px !important;
+      border:1px solid #94a3b8 !important; padding:9px 3px !important;
       text-align:center !important; vertical-align:middle !important; background:white !important;
     }
     /* Zebra */
@@ -277,7 +191,7 @@
     .kurallar-baslik { font-size:7.5pt !important; color:#1e3a8a !important; font-weight:700 !important; margin-bottom:4px !important; }
     .kural-item { font-size:8.5pt !important; color:#334155 !important; line-height:1.85 !important; }
     .kural-no { font-size:8.5pt !important; color:#1e40af !important; }
-    .imza-kisim { width:170px !important; padding:10px 14px !important; background:#f8fafc !important; border-left:none !important; align-items:flex-end !important; }
+    .imza-kisim { width:170px !important; padding:10px 14px !important; background:#f8fafc !important; border-left:none !important; display:flex !important; flex-direction:column !important; align-items:flex-end !important; justify-content:center !important; }
     .tarih-seridi { background:#1e3a8a !important; color:white !important; font-size:10pt !important; padding:6px 12px !important; border-radius:4px !important; margin-bottom:10px !important; text-align:center !important; width:100% !important; }
     .mudur-imza { border-bottom:1px solid #64748b !important; width:100% !important; margin:10px 0 !important; }
     .mudur-ad { font-size:10.5pt !important; color:#0f172a !important; font-weight:700 !important; text-align:right !important; }
